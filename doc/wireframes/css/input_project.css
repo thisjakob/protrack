@@ -1,0 +1,357 @@
+body {
+  background-color: rgb(255, 255, 255);
+  font: 400 1em/1.38 Helvetica;
+  color: rgb(0, 0, 0);
+}
+
+.text {
+  position: relative;
+  float: left;
+  margin-top: 8px;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.38;
+}
+
+._button {
+  display: block;
+  position: relative;
+  float: left;
+  clear: both;
+  width: 1.9166666666%;
+  height: 20px;
+  margin-left: 14.08073%;
+  border-radius: 3px;
+  background-color: rgb(222, 222, 222);
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.38;
+  text-align: center;
+  color: rgb(0, 0, 0);
+}
+
+._input {
+  display: block;
+  float: left;
+  padding: 0 10px;
+  background-color: rgb(242, 242, 242);
+  font-size: 0.813em;
+  font-weight: 400;
+  line-height: 1.38;
+  color: rgb(0, 0, 0);
+}
+
+.text-1 {
+  clear: both;
+  z-index: 0;
+  margin-left: 16.79948%;
+  color: rgb(0, 0, 0);
+}
+
+.text-2 {
+  z-index: 40;
+  margin-left: 3.11719%;
+  color: rgb(0, 0, 0);
+}
+
+.text-3 {
+  z-index: 1;
+  margin-left: 2.14714%;
+  color: rgb(0, 0, 0);
+}
+
+.text-4 {
+  z-index: 2;
+  margin-left: 8.34896%;
+  color: rgb(0, 0, 0);
+}
+
+.text-5 {
+  z-index: 3;
+  margin-left: 10.84896%;
+  color: rgb(0, 0, 0);
+}
+
+.text-6 {
+  z-index: 38;
+  margin-left: 4.96875%;
+  color: rgb(252, 0, 0);
+}
+
+._button-1 {
+  z-index: 34;
+  margin-top: 10px;
+}
+
+._button-2 {
+  z-index: 33;
+  margin-top: 15px;
+}
+
+._button-3 {
+  z-index: 37;
+  margin-top: 22px;
+}
+
+._input-1 {
+  width: 200%;
+  height: 18px;
+}
+
+._input-10 {
+  position: relative;
+  z-index: 15;
+  width: 18.8190104166%;
+  height: 20px;
+  margin: 12px 0 0 1.57422%;
+}
+
+._input-11 {
+  position: relative;
+  clear: both;
+  z-index: 10;
+  width: 12%;
+  height: 20px;
+  margin: 11px 0 0 44%;
+}
+
+._input-12 {
+  position: relative;
+  z-index: 16;
+  width: 18.8190104166%;
+  height: 20px;
+  margin: 11px 0 0 1.59896%;
+}
+
+._input-13 {
+  position: relative;
+  clear: both;
+  z-index: 11;
+  width: 12%;
+  height: 20px;
+  margin: 11px 0 0 44%;
+}
+
+._input-14 {
+  position: relative;
+  z-index: 17;
+  width: 18.8190104166%;
+  height: 20px;
+  margin: 11px 0 0 1.59896%;
+}
+
+._input-15 {
+  position: relative;
+  clear: both;
+  z-index: 12;
+  width: 12%;
+  height: 20px;
+  margin: 12px 0 0 44%;
+}
+
+._input-16 {
+  position: relative;
+  z-index: 18;
+  width: 18.8190104166%;
+  height: 20px;
+  margin: 12px 0 0 1.59896%;
+}
+
+._input-17 {
+  position: relative;
+  z-index: 19;
+  width: 12%;
+  height: 20px;
+  margin: 15px 0 0 0.79948%;
+}
+
+._input-18 {
+  position: relative;
+  z-index: 20;
+  width: 12%;
+  height: 20px;
+  margin: 15px 0 0 1.59896%;
+}
+
+._input-19 {
+  position: relative;
+  z-index: 21;
+  width: 12%;
+  height: 20px;
+  margin: 15px 0 0 1.59896%;
+}
+
+._input-2 {
+  position: relative;
+  z-index: 5;
+  width: 6%;
+  height: 20px;
+  margin: 10px 0 0 0.83594%;
+}
+
+._input-20 {
+  position: relative;
+  z-index: 27;
+  width: 18.8190104166%;
+  height: 20px;
+  margin: 15px 0 0 1.59896%;
+}
+
+._input-21 {
+  position: relative;
+  clear: both;
+  z-index: 22;
+  width: 12%;
+  height: 20px;
+  margin: 11px 0 0 44%;
+}
+
+._input-22 {
+  position: relative;
+  z-index: 28;
+  width: 18.8190104166%;
+  height: 20px;
+  margin: 11px 0 0 1.57422%;
+}
+
+._input-23 {
+  position: relative;
+  clear: both;
+  z-index: 23;
+  width: 12%;
+  height: 20px;
+  margin: 12px 0 0 44%;
+}
+
+._input-24 {
+  position: relative;
+  z-index: 29;
+  width: 18.8190104166%;
+  height: 20px;
+  margin: 12px 0 0 1.57422%;
+}
+
+._input-25 {
+  position: relative;
+  clear: both;
+  z-index: 24;
+  width: 12%;
+  height: 20px;
+  margin: 11px 0 0 44%;
+}
+
+._input-26 {
+  position: relative;
+  z-index: 30;
+  width: 18.8190104166%;
+  height: 20px;
+  margin: 11px 0 0 1.59896%;
+}
+
+._input-27 {
+  position: relative;
+  clear: both;
+  z-index: 25;
+  width: 12%;
+  height: 20px;
+  margin: 11px 0 0 44%;
+}
+
+._input-28 {
+  position: relative;
+  z-index: 31;
+  width: 18.8190104166%;
+  height: 20px;
+  margin: 11px 0 0 1.59896%;
+}
+
+._input-29 {
+  position: relative;
+  clear: both;
+  z-index: 26;
+  width: 12%;
+  height: 20px;
+  margin: 12px 0 0 44%;
+}
+
+._input-3 {
+  position: relative;
+  z-index: 39;
+  width: 6%;
+  height: 20px;
+  margin: 10px 0 0 0.76563%;
+}
+
+._input-30 {
+  position: relative;
+  z-index: 32;
+  width: 18.8190104166%;
+  height: 20px;
+  margin: 12px 0 0 1.59896%;
+}
+
+._input-31 {
+  position: relative;
+  z-index: 35;
+  width: 12%;
+  height: 20px;
+  margin: 22px 0 0 0.79948%;
+}
+
+._input-32 {
+  position: relative;
+  z-index: 36;
+  width: 12%;
+  height: 20px;
+  margin: 22px 0 0 1.59896%;
+}
+
+._input-4 {
+  position: relative;
+  z-index: 6;
+  width: 12%;
+  height: 20px;
+  margin: 10px 0 0 0.79297%;
+}
+
+._input-5 {
+  position: relative;
+  z-index: 7;
+  width: 12%;
+  height: 20px;
+  margin: 10px 0 0 1.59896%;
+}
+
+._input-6 {
+  position: relative;
+  z-index: 13;
+  width: 18.8192708333%;
+  height: 20px;
+  margin: 10px 0 0 1.59896%;
+}
+
+._input-7 {
+  position: relative;
+  clear: both;
+  z-index: 8;
+  width: 12%;
+  height: 20px;
+  margin: 11px 0 0 44%;
+}
+
+._input-8 {
+  position: relative;
+  z-index: 14;
+  width: 18.8190104166%;
+  height: 20px;
+  margin: 11px 0 0 1.57422%;
+}
+
+._input-9 {
+  position: relative;
+  clear: both;
+  z-index: 9;
+  width: 12%;
+  height: 20px;
+  margin: 12px 0 0 44%;
+}

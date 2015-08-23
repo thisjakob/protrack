@@ -1,0 +1,68 @@
+body {
+  background-color: rgb(255, 255, 255);
+  font: 400 1em/1.38 Helvetica;
+  color: rgb(0, 0, 0);
+}
+
+.element {
+  position: relative;
+  float: left;
+  z-index: 0;
+  width: 83.3333333333%;
+  height: 82px;
+  margin-left: 7.5%;
+  background-color: rgb(222, 222, 222);
+}
+
+.text {
+  position: relative;
+  float: left;
+  clear: both;
+  z-index: 4;
+  width: 22.5%;
+  min-height: 37px;
+  margin: -75px 0 0 8.41667%;
+  font-size: 1.5em;
+  font-weight: 400;
+  line-height: 1.38;
+  color: rgb(0, 0, 0);
+}
+
+._button {
+  display: block;
+  position: relative;
+  float: left;
+  height: 38px;
+  margin-top: -38px;
+  border-radius: 3px;
+  background-color: rgb(222, 222, 222);
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.38;
+  text-align: center;
+  color: rgb(0, 0, 0);
+}
+
+._button-1 {
+  z-index: 5;
+  width: 5.1666666666%;
+  margin-left: 10%;
+}
+
+._button-2 {
+  z-index: 1;
+  width: 9.5833333333%;
+  margin-left: 16.83073%;
+}
+
+._button-3 {
+  z-index: 2;
+  width: 14.4999999999%;
+  margin-left: 23.59896%;
+}
+
+._button-4 {
+  z-index: 3;
+  width: 14.4999999999%;
+  margin-left: 40.41667%;
+}
