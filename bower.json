@@ -1,5 +1,5 @@
 {
-  "name": "testfirebase",
+  "name": "protrack",
   "version": "0..0",
   "dependencies": {
     "modernizr": "2.8.x",

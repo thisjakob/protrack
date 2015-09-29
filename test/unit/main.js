@@ -3,7 +3,7 @@
 describe('controllers', function(){
   var scope;
 
-  beforeEach(module('testfirebase'));
+  beforeEach(module('protrack'));
 
   beforeEach(inject(function($rootScope) {
   	scope = $rootScope.$new();
