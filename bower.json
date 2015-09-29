@@ -1,6 +1,6 @@
 {
   "name": "protrack",
-  "version": "0..0",
+  "version": "0.1.0",
   "dependencies": {
     "modernizr": "2.8.x",
     "angular": "1.4.x",
