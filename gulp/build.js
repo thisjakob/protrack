@@ -35,7 +35,7 @@ gulp.task('partials', function () {
       quotes: true
     }))
     .pipe($.ngHtml2js({
-      moduleName: 'testfirebase',
+      moduleName: 'protrack',
       prefix: 'partials/'
     }))
     .pipe(gulp.dest('.tmp/partials'))
