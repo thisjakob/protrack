@@ -18,32 +18,20 @@
   <body>
   <nav class="navbar navbar-static-top navbar-inverse">
     <div class="navbar-header">
+      <a class="navbar-brand" ui-sref="home">Protrack</a>
     </div>
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
       <ul class="nav navbar-nav">
-        <li class="active"><a ng-href="#">Home</a></li>
-        <li><a ng-href="#">About</a></li>
-        <li><a ng-href="#">Contact</a></li>
+        <li><a ui-sref="home">Home</a></li>
+        <li><a ui-sref="about">About</a></li>
       </ul>
-    </div>
   </nav>
 
   <!--[if lt IE 10]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-  <div class="row" ng-controller="MainCtrl">
-    <table>
-      <tr ng-repeat="work in works">
-        <td>{{ work.date }}</td>
-        <td>{{ work.tag }}</td>
-        <td>{{ work.desc }}</td>
-        <td>{{ work.time }}</td>
-      </tr>
-    </table>
-  </div>
-    <!--div ng-view></div-->
+  <div ui-view></div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
@@ -67,6 +55,7 @@
     <script src="bower_components/firebase/firebase.js"></script>
     <script src="bower_components/angularfire/dist/angularfire.js"></script>
     <script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
