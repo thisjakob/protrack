@@ -7,11 +7,19 @@ angular.module('protrack', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
           .state('home', {
             url: '/',
             templateUrl: 'partials/main.html',
-              controller: 'MainCtrl'
+              controller: 'MainCtrl as vm'
           })
-          .state('about', {
+          .state('projects', {
+              url: '/',
+              templateUrl: '../partials/projects.html'
+          })
+          .state('reports', {
+              url: '/',
+              templateUrl: '../partials/reports.html'
+          })
+          .state('settings', {
             url: '/',
-            templateUrl: 'partials/about.html'
+            templateUrl: '../partials/settings.html'
           });
         $urlRouterProvider.otherwise('/');
   });

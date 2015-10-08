@@ -1,9 +1,16 @@
 <div class="container">
+    <input ng-model="vm.date">
+    <input ng-model="vm.title">
+    <input ng-model="vm.tag">
+    <input ng-model="vm.desc">
+    <input ng-model="vm.time">
+    <button ng-click="vm.save()">save</button>
 
-  <div class="row" ng-controller="MainCtrl">
+  <div class="row">
     <table>
-      <tr ng-repeat="work in works">
-        <td>{{ work.date }}</td>
+        <tr ng-repeat="work in vm.works">
+            <td id={{work.id}}>{{ work.date }}</td>
+          <td>{{ work.title }}</td>
         <td>{{ work.tag }}</td>
         <td>{{ work.desc }}</td>
         <td>{{ work.time }}</td>

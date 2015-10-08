@@ -11,3 +11,5 @@ gulp
 # start
 gulp serve
 
+# dev tools
+vulcan: firebase inspector and editor for chrome devtools
