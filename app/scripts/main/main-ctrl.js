@@ -6,7 +6,9 @@ angular.module('protrack')
         var vm =this;
 
         function getRandomId() {
-            return Math.floor((Math.random()*6)+1);
+            var min = 10000000;
+            var max = min * 10 - 1;
+            return Math.floor(Math.random() * (max - min + 1)) + min;
         }
         vm.works = dataService.getData();
         vm.save = function() {
