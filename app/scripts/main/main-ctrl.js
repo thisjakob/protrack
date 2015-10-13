@@ -5,22 +5,26 @@ angular.module('protrack')
     .controller('MainCtrl', ['dataService', function (dataService) {
         var vm =this;
 
-        function getRandomId() {
-            var min = 10000000;
-            var max = min * 10 - 1;
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
-        vm.works = dataService.getData();
+        vm.tracks = dataService.getData();
+
         vm.save = function() {
             console.log('Datum: ' + vm.date);
             dataService.addData({
-                'id' : getRandomId(),
                 'date' : vm.date,
                 'title' : vm.title,
                 'tag' : vm.tag,
                 'desc' : vm.desc,
                 'time' : vm.time
             });
+        };
+
+        vm.deleteItem = function(id){
+            console.log('Delete Item: ' + id);
+            dataService.delData(id);
+        };
+
+        vm.writeID = function(id) {
+            console.log('Edit Item: ' + id);
         };
     }]);
 

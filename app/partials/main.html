@@ -6,22 +6,26 @@
     <input ng-model="vm.time">
     <button ng-click="vm.save()">save</button>
 
-  <div class="row">
-    <table>
-        <tr ng-repeat="work in vm.works">
-            <td id={{work.id}}>{{ work.date }}</td>
-          <td>{{ work.title }}</td>
-        <td>{{ work.tag }}</td>
-        <td>{{ work.desc }}</td>
-        <td>{{ work.time }}</td>
-      </tr>
-    </table>
-  </div>
+    <div class="row">
+        <table>
+            <tr ng-repeat="(key,track) in vm.tracks">
+                <td>{{ track.date }}</td>
+                <td>{{ track.title }}</td>
+                <td>{{ track.tag }}</td>
+                <td>{{ track.desc }}</td>
+                <td>{{ track.time }}</td>
+                <td>
+                    <button class='btn btn-warning btn-mini' ng-click='vm.deleteItem(track.$id)'>X</button>
+                    <button ng-click="vm.writeID(track.$id)">log id</button><hr>
+                </td>
+            </tr>
+        </table>
+    </div>
 
 
-  <hr>
+    <hr>
 
-  <div class="footer">
-    <p>copyright protrack from protrack</p>
-  </div>
+    <div class="footer">
+        <p>copyright protrack from protrack</p>
+    </div>
 </div>
