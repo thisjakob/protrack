@@ -7,7 +7,21 @@
                 .state('home', {
                     url: '/',
                     templateUrl: '../partials/tracks.html',
-                    controller: 'MainCtrl as vm'
+                    controller: 'TracksCtrl as tracksCtrl'
+                })
+                .state('login', {
+                    url: '/login',
+                    controller: 'AuthCtrl as authCtrl',
+                    templateUrl: '../partials/login.html',
+                    resolve: {
+                        requireNoAuth: function($state, Auth){
+                            return Auth.$requireAuth().then(function(auth){
+                                $state.go('home');
+                            }, function(error){
+                                return;
+                            });
+                        }
+                    }
                 })
                 .state('projects', {
                     url: '/',

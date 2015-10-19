@@ -10,21 +10,21 @@
                     <td style="width:25%">Beschreibung</td>
                     <td style="width:6%">Zeit [h]</td>
                     <td>
-                        <button class="btn btn-default" ng-click="vm.showAddTrack()" ng-hide="vm.addTrackVisible">Add track</button>
-                        <button class="btn btn-default" ng-click="vm.hideAddTrack()" ng-show="vm.addTrackVisible">Cancel</button>
+                        <button class="btn btn-default" ng-click="tracksCtrl.showAddTrack()" ng-hide="tracksCtrl.addTrackVisible">Add track</button>
+                        <button class="btn btn-default" ng-click="tracksCtrl.hideAddTrack()" ng-show="tracksCtrl.addTrackVisible">Cancel</button>
                     </td>
                 </tr>
             </thead>
             <tbody>
-                <tr id="addRow" ng-show="vm.addTrackVisible">
-                    <td><input ng-model="vm.date"></td>
-                    <td><input ng-model="vm.title"></td>
-                    <td><input ng-model="vm.tag"></td>
-                    <td><input ng-model="vm.desc"></td>
-                    <td><input ng-model="vm.time"></td>
-                    <td><button ng-click="vm.save()"><i class="fa fa-save fa-lg"></i></button></td>
+                <tr id="addRow" ng-show="tracksCtrl.addTrackVisible">
+                    <td><input ng-model="tracksCtrl.date"></td>
+                    <td><input ng-model="tracksCtrl.title"></td>
+                    <td><input ng-model="tracksCtrl.tag"></td>
+                    <td><input ng-model="tracksCtrl.desc"></td>
+                    <td><input ng-model="tracksCtrl.time"></td>
+                    <td><button ng-click="tracksCtrl.save()"><i class="fa fa-save fa-lg"></i></button></td>
                 </tr>
-                <tr ng-repeat="(key,track) in vm.tracks">
+                <tr ng-repeat="(key,track) in tracksCtrl.tracks">
                     <td>
                         <span editable-text="track.date" e-name="date" e-class="form-control input-sm" e-form="rowform" e-required>{{ track.date || 'empty' }}</span>
                     </td>
@@ -43,7 +43,7 @@
                     </td>
                     <td style="white-space: nowrap">
                         <!-- form -->
-                        <form editable-form name="rowform" onaftersave="vm.updateTrack($data, track.$id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == user">
+                        <form editable-form name="rowform" onaftersave="tracksCtrl.updateTrack($data, track.$id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == user">
                             <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-default btn-xs"><i class="fa fa-save fa-lg"></i></button>
                             <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default btn-xs"><i class="fa fa-times fa-lg"></i></button>
                         </form>
@@ -51,7 +51,7 @@
                           <button ng-hide="confirm" class="btn btn-default btn-xs" type="button" ng-click="rowform.$show()"><span class="fa fa-edit" aria-hidden="true"></span></button>
                           <button ng-hide="confirm" class="btn btn-default btn-xs" type="button" ng-click="confirm=true"><span class="fa fa-trash" aria-hidden="true"></span></button>
                           <div ng-show="confirm">
-                            <button class="btn btn-danger btn-xs" title="Track wirklich löschen?" ng-click="vm.deleteItem(track.$id)"><span class="fa fa-trash" aria-hidden="true"></span>?</button>
+                            <button class="btn btn-danger btn-xs" title="Track wirklich löschen?" ng-click="tracksCtrl.deleteItem(track.$id)"><span class="fa fa-trash" aria-hidden="true"></span>?</button>
                             <button class="btn btn-default btn-xs" title="Abbrechen" ng-click="confirm=false"><span class="fa fa-times fa-lg" aria-hidden="true"></span></button>
                           </div>
                         </div>

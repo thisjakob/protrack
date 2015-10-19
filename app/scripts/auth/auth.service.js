@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('protrack')
     .factory('Auth', [$firebaseAuth, FirebaseUrl, function($firebaseAuth, FirebaseUrl){
         var ref = new Firebase(FirebaseUrl);

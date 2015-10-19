@@ -50,6 +50,5 @@ angular.module('protrack').factory('dataService', ['$firebaseArray', '$q', 'Fire
 
 }]);
 
-// TODO update track
 // remember: '$q' promises : http://www.42id.com/articles/angular-js-and-firebase/
 // data : TODO Datenstruktur bestimmen
