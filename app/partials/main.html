@@ -1,28 +1,65 @@
 <div class="container">
-    <input ng-model="vm.date">
-    <input ng-model="vm.title">
-    <input ng-model="vm.tag">
-    <input ng-model="vm.desc">
-    <input ng-model="vm.time">
-    <button ng-click="vm.save()">save</button>
 
     <div class="row">
-        <table>
-            <tr ng-repeat="(key,track) in vm.tracks">
-                <td>{{ track.date }}</td>
-                <td>{{ track.title }}</td>
-                <td>{{ track.tag }}</td>
-                <td>{{ track.desc }}</td>
-                <td>{{ track.time }}</td>
-                <td>
-                    <button class='btn btn-warning btn-mini' ng-click='vm.deleteItem(track.$id)'>X</button>
-                    <button ng-click="vm.writeID(track.$id)">log id</button><hr>
-                </td>
-            </tr>
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+                <tr style="font-weight: bold">
+                    <td style="width:15%">Datum</td>
+                    <td style="width:20%">Titel</td>
+                    <td style="width:10%">Tag</td>
+                    <td style="width:25%">Beschreibung</td>
+                    <td style="width:6%">Zeit [h]</td>
+                    <td>
+                        <button class="btn btn-default" ng-click="vm.showAddTrack()" ng-hide="vm.addTrackVisible">Add track</button>
+                        <button class="btn btn-default" ng-click="vm.hideAddTrack()" ng-show="vm.addTrackVisible">Cancel</button>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="addRow" ng-show="vm.addTrackVisible">
+                    <td><input ng-model="vm.date"></td>
+                    <td><input ng-model="vm.title"></td>
+                    <td><input ng-model="vm.tag"></td>
+                    <td><input ng-model="vm.desc"></td>
+                    <td><input ng-model="vm.time"></td>
+                    <td><button ng-click="vm.save()"><i class="fa fa-save fa-lg"></i></button></td>
+                </tr>
+                <tr ng-repeat="(key,track) in vm.tracks">
+                    <td>
+                        <span editable-text="track.date" e-name="date" e-class="form-control input-sm" e-form="rowform" e-required>{{ track.date || 'empty' }}</span>
+                    </td>
+                    <td>
+                        <span editable-text="track.title" e-name="title" e-class="form-control input-sm" e-form="rowform" e-required>{{ track.title || 'empty' }}</span>
+                    </td>
+                    <td>
+                        <span editable-text="track.tag" e-name="tag" e-class="form-control input-sm" e-form="rowform" e-required>{{ track.tag || 'empty' }}</span>
+                    </td>
+                    <td>
+                     <!--span editable-text="row.description.de" e-class="form-control input-sm" e-name="emaServerDescriptionDe" e-form="rowform" e-size="100"-->
+                        <span editable-text="track.desc" e-name="name" e-class="form-control input-sm" e-form="rowform" e-required>{{ track.desc || 'empty' }}</span>
+                    </td>
+                    <td>
+                        <span editable-text="track.time" e-name="name" e-class="form-control input-sm" e-form="rowform" e-required>{{ track.time || 'empty' }}</span>
+                    </td>
+                    <td style="white-space: nowrap">
+                        <!-- form -->
+                        <form editable-form name="rowform" onaftersave="vm.updateTrack($data, track.$id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == user">
+                            <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-default btn-xs"><i class="fa fa-save fa-lg"></i></button>
+                            <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default btn-xs"><i class="fa fa-times fa-lg"></i></button>
+                        </form>
+                        <div class="buttons" ng-show="!rowform.$visible">
+                          <button ng-hide="confirm" class="btn btn-default btn-xs" type="button" ng-click="rowform.$show()"><span class="fa fa-edit" aria-hidden="true"></span></button>
+                          <button ng-hide="confirm" class="btn btn-default btn-xs" type="button" ng-click="confirm=true"><span class="fa fa-trash" aria-hidden="true"></span></button>
+                          <div ng-show="confirm">
+                            <button class="btn btn-danger btn-xs" title="Track wirklich löschen?" ng-click="vm.deleteItem(track.$id)"><span class="fa fa-trash" aria-hidden="true"></span>?</button>
+                            <button class="btn btn-default btn-xs" title="Abbrechen" ng-click="confirm=false"><span class="fa fa-times fa-lg" aria-hidden="true"></span></button>
+                          </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
-
-
     <hr>
 
     <div class="footer">

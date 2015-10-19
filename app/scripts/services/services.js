@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('protrack').factory('dataService', ['$firebaseArray', '$q', function ($firebaseArray, $q) {
-    var url = 'https://boiling-inferno-5742.firebaseio.com';
+angular.module('protrack').factory('dataService', ['$firebaseArray', '$q', 'FirebaseUrl', function ($firebaseArray, $q, FirebaseUrl) {
+    var url = FirebaseUrl;
     var tracks = 'tracks';
 
     var firebaseRef= new Firebase(url);
@@ -15,24 +15,34 @@ angular.module('protrack').factory('dataService', ['$firebaseArray', '$q', funct
     };
 
     var getData = function(callback){
+      //console.log("dataService get data!");
         var ref = getTrackNodes();
         return $firebaseArray(ref);
     };
 
     var addData = function(data){
+        //console.log("dataService add data!");
         var ref = getTrackNodes();
         return  ref.push(data);
     };
 
     var delData = function(id) {
+        //console.log("dataService remove data: " + id);
         var itemRef = new Firebase(url + '/' + tracks + '/' + id);
-        itemRef.remove()
+        itemRef.remove();
+    };
+
+    var updateData = function(id, data) {
+        //console.log("dataService update data: " + id);
+      var itemRef = new Firebase(url + '/' + tracks + '/' + id);
+      itemRef.update(data);
     };
 
     var service = {
         addData : addData,
-        getData: getData,
-        delData: delData,
+        getData : getData,
+        delData : delData,
+        updateData : updateData,
         getTrackNodes: getTrackNodes
     };
 
