@@ -6,7 +6,7 @@
             $stateProvider
                 .state('home', {
                     url: '/',
-                    templateUrl: 'partials/main.html',
+                    templateUrl: '../partials/tracks.html',
                     controller: 'MainCtrl as vm'
                 })
                 .state('projects', {
