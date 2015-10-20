@@ -1,3 +1,51 @@
 <div class="container">
-    <p>Projects</p>
-</div>
+    <div class="row">
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+            <tr style="font-weight: bold">
+                <td style="width:15%">Projekt</td>
+                <td style="width:20%">Tag</td>
+                <td style="width:25%">Beschreibung</td>
+                <td>
+                        <button class="btn btn-default btn-xs" ng-click="projectsCtrl.showAddProject()" ng-hide="projectsCtrl.addProjectVisible"><i class="fa fa-plus-square-o fa-lg"></i></button>
+                    <button class="btn btn-default btn-xs" ng-click="projectsCtrl.hideAddProject()" ng-show="projectsCtrl.addProjectVisible"><i class="fa fa-times fa-lg"></i></button>
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr id="addRow" ng-show="projectsCtrl.addProjectVisible">
+                <td><input ng-model="projectsCtrl.title"></td>
+                <td><input ng-model="projectsCtrl.tag"></td>
+                <td><input ng-model="projectsCtrl.desc"></td>
+                <td><button class="btn btn-default btn-xs" ng-click="projectsCtrl.save()"><i class="fa fa-save fa-lg"></i></button></td>
+            </tr>
+            <tr ng-repeat="(key,project) in projectsCtrl.projects">
+                <td>
+                    <span editable-text="project.title" e-name="title" e-class="form-control input-sm" e-form="rowform" e-required>{{ project.title || 'empty' }}</span>
+                </td>
+                <td>
+                    <span editable-text="project.tag" e-name="tag" e-class="form-control input-sm" e-form="rowform" e-required>{{ project.tag || 'empty' }}</span>
+                </td>
+                <td>
+                    <span editable-text="project.desc" e-name="desc" e-class="form-control input-sm" e-form="rowform" e-required>{{ project.desc || 'empty' }}</span>
+                </td>
+                <td style="white-space: nowrap">
+                    <!-- form -->
+                    <form editable-form name="rowform" onaftersave="projectsCtrl.updateTrack($data, track.$id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="false">
+                        <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-default btn-xs"><i class="fa fa-save fa-lg"></i></button>
+                        <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default btn-xs"><i class="fa fa-times fa-lg"></i></button>
+                    </form>
+                    <div class="buttons" ng-show="!rowform.$visible">
+                        <button ng-hide="confirm" class="btn btn-default btn-xs" type="button" ng-click="rowform.$show()"><span class="fa fa-edit" aria-hidden="true"></span></button>
+                        <button ng-hide="confirm" class="btn btn-default btn-xs" type="button" ng-click="confirm=true"><span class="fa fa-trash" aria-hidden="true"></span></button>
+                        <div ng-show="confirm">
+                            <button class="btn btn-danger btn-xs" title="Track wirklich löschen?" ng-click="projectsCtrl.deleteItem(track.$id)"><span class="fa fa-trash" aria-hidden="true"></span>?</button>
+                            <button class="btn btn-default btn-xs" title="Abbrechen" ng-click="confirm=false"><span class="fa fa-times fa-lg" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr></div>
