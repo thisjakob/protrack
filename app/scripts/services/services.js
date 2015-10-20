@@ -3,7 +3,6 @@
 
 angular.module('protrack').factory('dataService', ['$firebaseArray', '$q', 'FirebaseUrl', function ($firebaseArray, $q, FirebaseUrl) {
     var url = FirebaseUrl;
-    var tracks = 'tracks';
 
     var firebaseRef= new Firebase(url);
 
@@ -11,31 +10,31 @@ angular.module('protrack').factory('dataService', ['$firebaseArray', '$q', 'Fire
         return firebaseRef;
     };
 
-    var getTrackNodes = function(){
-        return getFirebaseRoot().child('tracks');
+    var getNodes = function(type){
+        return getFirebaseRoot().child(type);
     };
 
-    var getData = function(callback){
+    var getData = function(type){
       //console.log("dataService get data!");
-        var ref = getTrackNodes();
+        var ref = getNodes(type);
         return $firebaseArray(ref);
     };
 
-    var addData = function(data){
+    var addData = function(type, data){
         //console.log("dataService add data!");
-        var ref = getTrackNodes();
+        var ref = getNodes(type);
         return  ref.push(data);
     };
 
-    var delData = function(id) {
+    var delData = function(type, id) {
         //console.log("dataService remove data: " + id);
-        var itemRef = new Firebase(url + '/' + tracks + '/' + id);
+        var itemRef = new Firebase(url + '/' + type + '/' + id);
         itemRef.remove();
     };
 
-    var updateData = function(id, data) {
+    var updateData = function(type, id, data) {
         //console.log("dataService update data: " + id);
-      var itemRef = new Firebase(url + '/' + tracks + '/' + id);
+      var itemRef = new Firebase(url + '/' + type + '/' + id);
       itemRef.update(data);
     };
 
@@ -44,7 +43,7 @@ angular.module('protrack').factory('dataService', ['$firebaseArray', '$q', 'Fire
         getData : getData,
         delData : delData,
         updateData : updateData,
-        getTrackNodes: getTrackNodes
+        getNodes: getNodes
     };
 
     return service;

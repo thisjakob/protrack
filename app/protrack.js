@@ -5,37 +5,66 @@
             $urlRouterProvider.otherwise('/home');
             $stateProvider
                 .state('home', {
-                    url: '/home',
+                    url: '/timer',
                     templateUrl: 'partials/tracks.html',
                     controller: 'TracksCtrl as tracksCtrl'
-                })
-                .state('login', {
-                    url: '/login',
-                    templateUrl: 'partials/login.html',
-                    controller: 'AuthCtrl as authCtrl',
- /*                   resolve: {
-                        requireNoAuth: function($state, Auth){
-                            return Auth.$requireAuth().then(function(auth){
-                                $state.go('home');
-                            }, function(error){
-                                return;
+/*                    resolve: {
+                        auth: function($state, Auth){
+                            return Auth.$requireAuth().catch(function(auth){
+                                $state.go('login');
                             });
                         }
                     }*/
                 })
                 .state('projects', {
-                    url: '/',
-                    templateUrl: 'partials/projects.html'
+                    url: '/projects',
+                    templateUrl: 'partials/projects.html',
+                    controller: 'ProjectsCtrl as projectsCtrl'
+                    /*                    resolve: {
+                     auth: function($state, Auth){
+                     return Auth.$requireAuth().catch(function(auth){
+                     $state.go('login');
+                     });
+                     }
+                     }*/
                 })
                 .state('reports', {
-                    url: '/',
+                    url: '/reports',
                     templateUrl: 'partials/reports.html'
+                    /*                    resolve: {
+                     auth: function($state, Auth){
+                     return Auth.$requireAuth().catch(function(auth){
+                     $state.go('login');
+                     });
+                     }
+                     }*/
                 })
                 .state('settings', {
-                    url: '/',
+                    url: '/settings',
                     templateUrl: 'partials/settings.html'
+                    /*                    resolve: {
+                     auth: function($state, Auth){
+                     return Auth.$requireAuth().catch(function(auth){
+                     $state.go('login');
+                     });
+                     }
+                     }*/
+                })
+                .state('login', {
+                    url: '/login',
+                    templateUrl: 'partials/login.html',
+                    controller: 'AuthCtrl as authCtrl',
+                    /*                    resolve: {
+                     requireNoAuth: function($state, Auth){
+                     return Auth.$requireAuth().then(function(auth){
+                     $state.go('home');
+                     }, function(error){
+                     return;
+                     });
+                     }
+                     }*/
                 });
         })
-        //.constant('FirebaseUrl', 'https://boiling-inferno-5742.firebaseio.com');
-        .constant('FirebaseUrl', 'https://protrack2.firebaseio.com');
+        .constant('FirebaseUrl', 'https://boiling-inferno-5742.firebaseio.com');
+        //.constant('FirebaseUrl', 'https://protrack2.firebaseio.com');
 }());
