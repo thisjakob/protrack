@@ -2,12 +2,21 @@
 'use strict';
 
 angular.module('protrack').factory('dataService', ['$firebaseArray', '$q', 'FirebaseUrl', function ($firebaseArray, $q, FirebaseUrl) {
-    var url = FirebaseUrl;
+    var firebaseUrl = FirebaseUrl.url;
 
-    var firebaseRef= new Firebase(url);
+    //var firebaseRef= new Firebase(firebaseUrl);
+
+    var getUrl = function() {
+        return firebaseUrl;
+    };
+
+    var setUrl = function(url) {
+        firebaseUrl = url;
+        FirebaseUrl.url = url;
+    };
 
     var getFirebaseRoot = function(){
-        return firebaseRef;
+        return new Firebase(firebaseUrl);
     };
 
     var getNodes = function(type){
@@ -28,17 +37,19 @@ angular.module('protrack').factory('dataService', ['$firebaseArray', '$q', 'Fire
 
     var delData = function(type, id) {
         //console.log("dataService remove data: " + id);
-        var itemRef = new Firebase(url + '/' + type + '/' + id);
+        var itemRef = new Firebase(firebaseUrl + '/' + type + '/' + id);
         itemRef.remove();
     };
 
     var updateData = function(type, id, data) {
         //console.log("dataService update data: " + id);
-      var itemRef = new Firebase(url + '/' + type + '/' + id);
+      var itemRef = new Firebase(firebaseUrl + '/' + type + '/' + id);
       itemRef.update(data);
     };
 
     var service = {
+        getUrl: getUrl,
+        setUrl: setUrl,
         addData : addData,
         getData : getData,
         delData : delData,

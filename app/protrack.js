@@ -41,7 +41,8 @@
                 })
                 .state('settings', {
                     url: '/settings',
-                    templateUrl: 'partials/settings.html'
+                    templateUrl: 'partials/settings.html',
+                    controller: 'SettingsCtrl as settingsCtrl'
                     /*                    resolve: {
                      auth: function($state, Auth){
                      return Auth.$requireAuth().catch(function(auth){
@@ -65,6 +66,6 @@
                      }*/
                 });
         })
-        .constant('FirebaseUrl', 'https://boiling-inferno-5742.firebaseio.com');
+        .value('FirebaseUrl', { url : 'https://boiling-inferno-5742.firebaseio.com'});
         //.constant('FirebaseUrl', 'https://protrack2.firebaseio.com');
 }());
