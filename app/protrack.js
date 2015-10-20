@@ -2,10 +2,10 @@
 ;(function () {
     angular.module('protrack', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'firebase', 'ui.router', 'xeditable'])
         .config(function ($stateProvider, $urlRouterProvider) {
-            $urlRouterProvider.otherwise('/');
+            $urlRouterProvider.otherwise('/home');
             $stateProvider
                 .state('home', {
-                    url: '/',
+                    url: '/home',
                     templateUrl: 'partials/tracks.html',
                     controller: 'TracksCtrl as tracksCtrl'
                 })
@@ -36,5 +36,6 @@
                     templateUrl: 'partials/settings.html'
                 });
         })
-        .constant('FirebaseUrl', 'https://boiling-inferno-5742.firebaseio.com');
+        //.constant('FirebaseUrl', 'https://boiling-inferno-5742.firebaseio.com');
+        .constant('FirebaseUrl', 'https://protrack2.firebaseio.com');
 }());

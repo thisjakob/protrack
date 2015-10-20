@@ -1,9 +1,15 @@
 # protrack
-Firebase URL: boiling-inferno-5742.firebaseio.com
+record working time
 
-#  Install
+# install protrack
 - npm install
 - bower install
+
+# create firebase db
+- create firebase account -> http://www.firebase.com
+- create app -> dashboard
+- set login data -> manage app -> Login & Auth -> Email & Password -> Add User
+- set url in protrack -> copy firebase (data) url to protrack.js (".constant('FirebaseUrl', 'https://<<FIREBASE_APP_NAME>>.firebaseio.com'");
 
 # build
 gulp
