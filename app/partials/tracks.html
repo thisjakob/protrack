@@ -10,8 +10,8 @@
                     <td style="width:25%">Beschreibung</td>
                     <td style="width:6%">Zeit [h]</td>
                     <td>
-                        <button class="btn btn-default" ng-click="tracksCtrl.showAddTrack()" ng-hide="tracksCtrl.addTrackVisible">Add track</button>
-                        <button class="btn btn-default" ng-click="tracksCtrl.hideAddTrack()" ng-show="tracksCtrl.addTrackVisible">Cancel</button>
+                        <button class="btn btn-default btn-xs" ng-click="tracksCtrl.showAddTrack()" ng-hide="tracksCtrl.addTrackVisible"><i class="fa fa-plus-square-o fa-lg"></i></button>
+                        <button class="btn btn-default btn-xs" ng-click="tracksCtrl.hideAddTrack()" ng-show="tracksCtrl.addTrackVisible"><i class="fa fa-times fa-lg"></i></button>
                     </td>
                 </tr>
             </thead>
@@ -22,7 +22,7 @@
                     <td><input ng-model="tracksCtrl.tag"></td>
                     <td><input ng-model="tracksCtrl.desc"></td>
                     <td><input ng-model="tracksCtrl.time"></td>
-                    <td><button ng-click="tracksCtrl.save()"><i class="fa fa-save fa-lg"></i></button></td>
+                    <td><button class="btn btn-default btn-xs" ng-click="tracksCtrl.save()"><i class="fa fa-save fa-lg"></i></button></td>
                 </tr>
                 <tr ng-repeat="(key,track) in tracksCtrl.tracks">
                     <td>
@@ -43,7 +43,7 @@
                     </td>
                     <td style="white-space: nowrap">
                         <!-- form -->
-                        <form editable-form name="rowform" onaftersave="tracksCtrl.updateTrack($data, track.$id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == user">
+                        <form editable-form name="rowform" onaftersave="tracksCtrl.updateTrack($data, track.$id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="false">
                             <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-default btn-xs"><i class="fa fa-save fa-lg"></i></button>
                             <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default btn-xs"><i class="fa fa-times fa-lg"></i></button>
                         </form>
