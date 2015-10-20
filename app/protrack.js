@@ -6,14 +6,14 @@
             $stateProvider
                 .state('home', {
                     url: '/',
-                    templateUrl: '../partials/tracks.html',
+                    templateUrl: 'partials/tracks.html',
                     controller: 'TracksCtrl as tracksCtrl'
                 })
                 .state('login', {
                     url: '/login',
+                    templateUrl: 'partials/login.html',
                     controller: 'AuthCtrl as authCtrl',
-                    templateUrl: '../partials/login.html',
-                    resolve: {
+ /*                   resolve: {
                         requireNoAuth: function($state, Auth){
                             return Auth.$requireAuth().then(function(auth){
                                 $state.go('home');
@@ -21,19 +21,19 @@
                                 return;
                             });
                         }
-                    }
+                    }*/
                 })
                 .state('projects', {
                     url: '/',
-                    templateUrl: '../partials/projects.html'
+                    templateUrl: 'partials/projects.html'
                 })
                 .state('reports', {
                     url: '/',
-                    templateUrl: '../partials/reports.html'
+                    templateUrl: 'partials/reports.html'
                 })
                 .state('settings', {
                     url: '/',
-                    templateUrl: '../partials/settings.html'
+                    templateUrl: 'partials/settings.html'
                 });
         })
         .constant('FirebaseUrl', 'https://boiling-inferno-5742.firebaseio.com');

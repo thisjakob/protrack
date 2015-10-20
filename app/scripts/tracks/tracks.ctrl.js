@@ -1,4 +1,3 @@
-/* global Firebase */
 'use strict';
 
 angular.module('protrack')
