@@ -66,6 +66,5 @@
                      }*/
                 });
         })
-        .value('FirebaseUrl', { url : 'https://boiling-inferno-5742.firebaseio.com'});
-        //.constant('FirebaseUrl', 'https://protrack2.firebaseio.com');
+        .value('FirebaseUrl', { url : 'https://protrack.firebaseio.com'});
 }());
