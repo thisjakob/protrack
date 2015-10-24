@@ -1,45 +1,40 @@
+/* global $, moment */
 'use strict';
 
 angular.module('protrack')
     .controller('TracksCtrl', ['dataService', function (dataService) {
         var tracksCtrl = this;
-        var type = 'tracks';
+        var path = 'users/iduser1/tracks';
+        tracksCtrl.sumAdd = 0;
+        tracksCtrl.tracks = dataService.getData(path);
 
-        tracksCtrl.addTrackVisible = false;
-
-        tracksCtrl.tracks = dataService.getData(type);
-
-        tracksCtrl.showAddTrack = function() {
-            tracksCtrl.addTrackVisible = true;
-        };
-        tracksCtrl.hideAddTrack = function() {
-            tracksCtrl.addTrackVisible = false;
-        };
-
-        // TODO neues Element zuerst leer erzeugen und dann wird es editable angezeigt bzw. danach update element
-
-        tracksCtrl.save = function() {
-            console.log('Datum: ' + tracksCtrl.date);
-            dataService.addData(type, {
-                'date' : tracksCtrl.date,
-                'title' : tracksCtrl.title,
-                'tag' : tracksCtrl.tag,
-                'desc' : tracksCtrl.desc,
-                'time' : tracksCtrl.time
-            });
+        // create track and save it to compare to show form
+        tracksCtrl.createTrackElement = function () {
+            $('#addtrack').prop('disabled', true);
+            tracksCtrl.newTrack = {
+                starttime: moment().format('DD.MM.YYYY HH:mm:ss'),
+                project: '',
+                desc: '',
+                tags: {},
+                endtime: '', // with http://vitalets.github.io/combodate/
+                record: false
+            };
+            dataService.addData(path, tracksCtrl.newTrack);
         };
 
-        tracksCtrl.updateTrack = function(data, key) {
+        tracksCtrl.updateTrack = function (data, key) {
             console.log('update track: ' + key);
-            dataService.updateData(type, key, data);
+            dataService.updateData(path, key, data);
+            $('#addtrack').prop('disabled', false);
         };
 
-        tracksCtrl.deleteItem = function(id){
+        tracksCtrl.deleteItem = function (id) {
             console.log('Delete Item: ' + id);
-            dataService.delData(type, id);
+            dataService.delData(path, id);
+            $('#addtrack').prop('disabled', false);
         };
 
-        tracksCtrl.writeID = function(id) {
+        tracksCtrl.writeID = function (id) {
             console.log('Edit Item: ' + id);
         };
     }]);

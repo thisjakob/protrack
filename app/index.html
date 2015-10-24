@@ -21,11 +21,11 @@
     <body>
         <nav class="navbar navbar-static-top navbar-inverse">
             <div class="navbar-header">
-                <a class="navbar-brand" ui-sref="home">Protrack</a>
+                <a class="navbar-brand" ui-sref="timer">Protrack</a>
             </div>
 
             <ul class="nav navbar-nav">
-                <li><a ui-sref="home">Timer</a></li>
+                <li><a ui-sref="timer">Timer</a></li>
                 <li><a ui-sref="projects">Projects</a></li>
                 <li><a ui-sref="reports">Reports</a></li>
                 <li><a ui-sref="settings">Settings</a></li>
@@ -74,6 +74,7 @@
         <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
         <script src="bower_components/moment/moment.js"></script>
+        <script src="bower_components/angular-moment/angular-moment.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
@@ -81,7 +82,7 @@
         <script src="protrack.js"></script>
         <script src="scripts/auth/auth.service.js"></script>
         <script src="scripts/auth/auth.ctrl.js"></script>
-        <script src="scripts/services/services.js"></script>
+        <script src="scripts/services/dataServices.js"></script>
         <script src="scripts/tracks/tracks.ctrl.js"></script>
         <script src="scripts/projects/projects.ctrl.js"></script>
         <script src="scripts/settings/settings.ctrl.js"></script>

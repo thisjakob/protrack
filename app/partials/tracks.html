@@ -4,46 +4,40 @@
         <table class="table table-bordered table-hover table-condensed">
             <thead>
                 <tr style="font-weight: bold">
-                    <td style="width:15%">Datum</td>
+                    <td style="width:15%">Startzeit</td>
                     <td style="width:20%">Projekt</td>
                     <td style="width:10%">Tag</td>
                     <td style="width:25%">Beschreibung</td>
-                    <td style="width:6%">Zeit [h]</td>
+                    <td style="width:6%">Endzeit</td>
                     <td>
-                        <button class="btn btn-default btn-xs" ng-click="tracksCtrl.showAddTrack()" ng-hide="tracksCtrl.addTrackVisible"><i class="fa fa-plus-square-o fa-lg"></i></button>
-                        <button class="btn btn-default btn-xs" ng-click="tracksCtrl.hideAddTrack()" ng-show="tracksCtrl.addTrackVisible"><i class="fa fa-times fa-lg"></i></button>
+                        <button id="addtrack" class="btn btn-default btn-xs" ng-click="tracksCtrl.createTrackElement()"><i class="fa fa-plus-square-o fa-lg"></i></button>
                     </td>
                 </tr>
             </thead>
             <tbody>
-                <tr id="addRow" ng-show="tracksCtrl.addTrackVisible">
-                    <td><input ng-model="tracksCtrl.date"></td>
-                    <td><input ng-model="tracksCtrl.title"></td>
-                    <td><input ng-model="tracksCtrl.tag"></td>
-                    <td><input ng-model="tracksCtrl.desc"></td>
-                    <td><input ng-model="tracksCtrl.time"></td>
-                    <td><button class="btn btn-default btn-xs" ng-click="tracksCtrl.save()"><i class="fa fa-save fa-lg"></i></button></td>
-                </tr>
-                <tr ng-repeat="(key,track) in tracksCtrl.tracks">
+                <tr ng-repeat="(key,track) in tracksCtrl.tracks | orderBy:'date':true">
                     <td>
-                        <span editable-text="track.date" e-name="date" e-class="form-control input-sm" e-form="rowform" e-required>{{ track.date || 'empty' }}</span>
+                        <span editable-text="track.starttime" e-name="starttime" e-class="form-control input-sm" e-form="rowform" e-required>{{ track.starttime || 'empty' }}</span>
                     </td>
                     <td>
-                        <span editable-text="track.title" e-name="title" e-class="form-control input-sm" e-form="rowform" e-required>{{ track.title || 'empty' }}</span>
+                        <span editable-text="track.project" e-name="project" e-class="form-control input-sm" e-form="rowform" e-required>{{ track.project || 'empty' }}</span>
+        <!--span editable-select="tracksCtrl.projects" e-name="title" e-form="rowform" e-ng-options="g.id as g.text for g in groups">
+          {{ showGroup(user) }}
+        </span-->
                     </td>
                     <td>
-                        <span editable-text="track.tag" e-name="tag" e-class="form-control input-sm" e-form="rowform" e-required>{{ track.tag || 'empty' }}</span>
+                        <span editable-text="track.tags" e-name="tags" e-class="form-control input-sm" e-form="rowform">{{ track.tags || 'empty' }}</span>
                     </td>
                     <td>
                      <!--span editable-text="row.description.de" e-class="form-control input-sm" e-name="emaServerDescriptionDe" e-form="rowform" e-size="100"-->
-                        <span editable-text="track.desc" e-name="desc" e-class="form-control input-sm" e-form="rowform" e-required>{{ track.desc || 'empty' }}</span>
+                        <span editable-text="track.desc" e-name="desc" e-class="form-control input-sm" e-form="rowform">{{ track.desc || 'empty' }}</span>
                     </td>
                     <td>
-                        <span editable-text="track.time" e-name="time" e-class="form-control input-sm" e-form="rowform" e-required>{{ track.time || 'empty' }}</span>
+                        <span editable-text="track.endtime" e-name="endtime" e-class="form-control input-sm" e-form="rowform">{{ track.endtime || 'empty' }}</span>
                     </td>
                     <td style="white-space: nowrap">
                         <!-- form -->
-                        <form editable-form name="rowform" onaftersave="tracksCtrl.updateTrack($data, track.$id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="false">
+                        <form editable-form name="rowform" onaftersave="tracksCtrl.updateTrack($data, track.$id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="tracksCtrl.newTrack.starttime == track.starttime">
                             <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-default btn-xs"><i class="fa fa-save fa-lg"></i></button>
                             <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default btn-xs"><i class="fa fa-times fa-lg"></i></button>
                         </form>

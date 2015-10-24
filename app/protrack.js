@@ -2,9 +2,9 @@
 ;(function () {
     angular.module('protrack', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'firebase', 'ui.router', 'xeditable'])
         .config(function ($stateProvider, $urlRouterProvider) {
-            $urlRouterProvider.otherwise('/home');
+            $urlRouterProvider.otherwise('/timer');
             $stateProvider
-                .state('home', {
+                .state('timer', {
                     url: '/timer',
                     templateUrl: 'partials/tracks.html',
                     controller: 'TracksCtrl as tracksCtrl'
@@ -16,10 +16,9 @@
                         }
                     }*/
                 })
-                .state('projects', {
-                    url: '/projects',
-                    templateUrl: 'partials/projects.html',
-                    controller: 'ProjectsCtrl as projectsCtrl'
+                .state('reports', {
+                    url: '/reports',
+                    templateUrl: 'partials/reports.html'
                     /*                    resolve: {
                      auth: function($state, Auth){
                      return Auth.$requireAuth().catch(function(auth){
@@ -28,9 +27,10 @@
                      }
                      }*/
                 })
-                .state('reports', {
-                    url: '/reports',
-                    templateUrl: 'partials/reports.html'
+                .state('projects', {
+                    url: '/projects',
+                    templateUrl: 'partials/projects.html',
+                    controller: 'ProjectsCtrl as projectsCtrl'
                     /*                    resolve: {
                      auth: function($state, Auth){
                      return Auth.$requireAuth().catch(function(auth){

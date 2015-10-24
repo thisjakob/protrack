@@ -24,3 +24,16 @@ table {
 .settings {
   width: 300px;
 }
+
+.twocolums {
+  width: 100%;
+}
+
+.columnone {
+  width: 45%;
+  float: left;
+}
+.columntwo {
+  width: 45%;
+  float: right;
+}
