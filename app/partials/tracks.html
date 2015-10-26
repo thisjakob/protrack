@@ -28,10 +28,9 @@
                     </span>
             </td>
                 <td>
-                    <!--span editable-text="track.tags" e-name="tags" e-class="form-control input-sm" e-form="rowform">{{ track.tags || 'empty' }}</span-->
-                    <span editable-select="track.tags" e-name="tags" e-form="rowform" e-class="form-control input-sm"
+                    <span editable-select="track.tags" e-name="tags" e-form="rowform" e-multiple e-class="form-control input-sm"
                           e-ng-options="t.$id as t.name for t in tracksCtrl.tags">
-                        {{ tracksCtrl.showTag(track) }}
+                        {{ tracksCtrl.showTags(track.tags) }}
                     </span>
                 </td>
                 <td>

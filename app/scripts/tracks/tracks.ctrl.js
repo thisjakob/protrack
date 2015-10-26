@@ -34,9 +34,16 @@ angular.module('protrack')
             return (project && selected.length) ? selected[0].name : 'Not set';
         };
 
-        tracksCtrl.showTag = function(track) {
-            var selected = $filter('filter')(tracksCtrl.tags, {$id: track.tags});
-            return (track.tags && selected.length) ? selected[0].name : 'Not set';
+        tracksCtrl.showTags = function(tags) {
+          var selected = [];
+          angular.forEach(tracksCtrl.tags, function(tag) {
+            angular.forEach(tags, function(tagproject) {
+              if (tag.$id.indexOf(tagproject) >= 0) {
+                selected.push(tag.name);
+              }
+            });
+          });
+          return selected.length ? selected.join(', ') : 'Not set';
         };
 
         tracksCtrl.deleteItem = function (id) {
