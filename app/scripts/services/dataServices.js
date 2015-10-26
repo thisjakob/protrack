@@ -10,8 +10,8 @@ angular.module('protrack').factory('dataService', ['$firebaseArray', 'FirebaseUr
     };
 
     var setUrl = function(url) {
-        firebaseUrl = url;
-        FirebaseUrl.url = url;
+        /*firebaseUrl = url;
+        FirebaseUrl.url = url;*/
     };
 
     var getFirebaseRoot = function(){
