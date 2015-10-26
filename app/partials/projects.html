@@ -14,8 +14,16 @@
                 <tbody>
                 <tr ng-repeat="(key,project) in projectsCtrl.projects | orderBy:'name':false">
                     <td>
-            <span editable-text="project.name" e-name="name" e-class="form-control input-sm" e-form="rowform"
-                  e-required>{{ project.name || 'empty' }}</span>
+                        <span editable-text="project.name" e-name="name" e-class="form-control input-sm"
+                              e-form="rowform"
+                              e-required>{{ project.name || 'empty' }}</span>
+                    </td>
+                    <td>
+                        <span editable-select="project.tags" e-name="tag" e-class="form-control input-sm"
+                              e-ng-options="t.value as t.text for t in project.tags">
+                                    {{ (statuses | filter:{value: user.status})[0].text || 'Not set' }}
+                        </span>
+
                     </td>
                     <td style="white-space: nowrap">
                         <!-- form -->

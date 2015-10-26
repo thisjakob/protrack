@@ -2,11 +2,11 @@
 'use strict';
 
 angular.module('protrack')
-    .controller('TracksCtrl', ['dataService', function (dataService) {
+    .controller('TracksCtrl', ['dataService', '$filter', function (dataService, $filter) {
         var tracksCtrl = this;
         var path = 'users/iduser1/tracks';
-        tracksCtrl.sumAdd = 0;
         tracksCtrl.tracks = dataService.getData(path);
+        tracksCtrl.projects = dataService.getData('users/iduser1/projects');
 
         // create track and save it to compare to show form
         tracksCtrl.createTrackElement = function () {
@@ -26,6 +26,11 @@ angular.module('protrack')
             console.log('update track: ' + key);
             dataService.updateData(path, key, data);
             $('#addtrack').prop('disabled', false);
+        };
+
+        tracksCtrl.showProject = function(project) {
+            var selected = $filter('filter')(tracksCtrl.projects, {$id: project});
+            return (project && selected.length) ? selected[0].name : 'Not set';
         };
 
         tracksCtrl.deleteItem = function (id) {
