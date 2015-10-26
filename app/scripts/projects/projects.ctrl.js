@@ -12,6 +12,7 @@ angular.module('protrack')
         projectsCtrl.createProject = function() {
             $('#addproject').prop('disabled', true);
             projectsCtrl.newProject = {
+                //id: projectsCtrl.projects.length+1,
                 name: ''
             };
             dataService.addData(path + 'projects', projectsCtrl.newProject);

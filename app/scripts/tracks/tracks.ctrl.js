@@ -7,6 +7,7 @@ angular.module('protrack')
         var path = 'users/iduser1/tracks';
         tracksCtrl.tracks = dataService.getData(path);
         tracksCtrl.projects = dataService.getData('users/iduser1/projects');
+        tracksCtrl.tags = dataService.getData('users/iduser1/tags');
 
         // create track and save it to compare to show form
         tracksCtrl.createTrackElement = function () {
@@ -15,7 +16,7 @@ angular.module('protrack')
                 starttime: moment().format('DD.MM.YYYY HH:mm:ss'),
                 project: '',
                 desc: '',
-                tags: {},
+                tags: '',
                 endtime: '', // with http://vitalets.github.io/combodate/
                 record: false
             };
@@ -31,6 +32,11 @@ angular.module('protrack')
         tracksCtrl.showProject = function(project) {
             var selected = $filter('filter')(tracksCtrl.projects, {$id: project});
             return (project && selected.length) ? selected[0].name : 'Not set';
+        };
+
+        tracksCtrl.showTag = function(track) {
+            var selected = $filter('filter')(tracksCtrl.tags, {$id: track.tags});
+            return (track.tags && selected.length) ? selected[0].name : 'Not set';
         };
 
         tracksCtrl.deleteItem = function (id) {

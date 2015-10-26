@@ -22,14 +22,17 @@
                           e-form="rowform" e-required>{{ track.starttime || 'empty' }}</span>
                 </td>
                 <td>
-                    <!--span editable-text="track.project" e-name="project" e-class="form-control input-sm" e-form="rowform" e-required>{{ track.project || 'empty' }}</span-->
-                        <span editable-select="track.project" e-name="project" e-form="rowform" e-class="form-control input-sm"
-                              e-ng-options="p.$id as p.name for p in tracksCtrl.projects">
-                            {{ tracksCtrl.showProject(track.project) }}
-                        </span>
-                </td>
+                    <span editable-select="track.project" e-name="project" e-form="rowform" e-class="form-control input-sm"
+                          e-ng-options="p.$id as p.name for p in tracksCtrl.projects">
+                        {{ tracksCtrl.showProject(track.project) }}
+                    </span>
+            </td>
                 <td>
-                    <span editable-text="track.tags" e-name="tags" e-class="form-control input-sm" e-form="rowform">{{ track.tags || 'empty' }}</span>
+                    <!--span editable-text="track.tags" e-name="tags" e-class="form-control input-sm" e-form="rowform">{{ track.tags || 'empty' }}</span-->
+                    <span editable-select="track.tags" e-name="tags" e-form="rowform" e-class="form-control input-sm"
+                          e-ng-options="t.$id as t.name for t in tracksCtrl.tags">
+                        {{ tracksCtrl.showTag(track) }}
+                    </span>
                 </td>
                 <td>
                     <!--span editable-text="row.description.de" e-class="form-control input-sm" e-name="emaServerDescriptionDe" e-form="rowform" e-size="100"-->
