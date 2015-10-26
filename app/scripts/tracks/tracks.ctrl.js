@@ -4,10 +4,10 @@
 angular.module('protrack')
     .controller('TracksCtrl', ['dataService', '$filter', function (dataService, $filter) {
         var tracksCtrl = this;
-        var path = 'users/iduser1/tracks';
-        tracksCtrl.tracks = dataService.getData(path);
-        tracksCtrl.projects = dataService.getData('users/iduser1/projects');
-        tracksCtrl.tags = dataService.getData('users/iduser1/tags');
+        var path = 'users/iduser1/';
+        tracksCtrl.tracks = dataService.getData(path + 'tracks');
+        tracksCtrl.projects = dataService.getData(path + 'projects');
+        tracksCtrl.tags = dataService.getData(path + 'tags');
 
         // create track and save it to compare to show form
         tracksCtrl.createTrackElement = function () {
@@ -20,12 +20,12 @@ angular.module('protrack')
                 endtime: '', // with http://vitalets.github.io/combodate/
                 record: false
             };
-            dataService.addData(path, tracksCtrl.newTrack);
+            dataService.addData(path + 'tracks', tracksCtrl.newTrack);
         };
 
         tracksCtrl.updateTrack = function (data, key) {
             console.log('update track: ' + key);
-            dataService.updateData(path, key, data);
+            dataService.updateData(path + 'tracks', key, data);
             $('#addtrack').prop('disabled', false);
         };
 
@@ -46,9 +46,9 @@ angular.module('protrack')
           return selected.length ? selected.join(', ') : 'Not set';
         };
 
-        tracksCtrl.deleteItem = function (id) {
+        tracksCtrl.deleteTrack = function (id) {
             console.log('Delete Item: ' + id);
-            dataService.delData(path, id);
+            dataService.delData(path + 'tracks', id);
             $('#addtrack').prop('disabled', false);
         };
 

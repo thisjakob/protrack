@@ -4,7 +4,8 @@
             <table class="table table-bordered table-hover table-condensed">
                 <thead>
                 <tr style="font-weight: bold">
-                    <td style="width:15%">Projekt</td>
+                    <td style="width:30%">Projekt</td>
+                    <td style="width:70%">Tags</td>
                     <td>
                         <button id="addproject" class="btn btn-default btn-xs" ng-click="projectsCtrl.createProject()">
                             <i class="fa fa-plus-square-o fa-lg"></i></button>
@@ -19,11 +20,9 @@
                               e-required>{{ project.name || 'empty' }}</span>
                     </td>
                     <td>
-                        <span editable-select="project.tags" e-name="tag" e-class="form-control input-sm"
-                              e-ng-options="t.value as t.text for t in project.tags">
-                                    {{ (statuses | filter:{value: user.status})[0].text || 'Not set' }}
+                        <span editable-select="project.tags" e-name="tags" e-multiple e-class="form-control input-sm" e-ng-options="t.$id as t.name for t in tracksCtrl.tags">
+                          {{ projectsCtrl.showTags(project.tags) }}
                         </span>
-
                     </td>
                     <td style="white-space: nowrap">
                         <!-- form -->

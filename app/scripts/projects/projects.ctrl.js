@@ -9,16 +9,16 @@ angular.module('protrack')
         projectsCtrl.projects = dataService.getData(path + 'projects');
         projectsCtrl.tags = dataService.getData(path + 'tags');
 
-        projectsCtrl.createProject = function() {
+        projectsCtrl.createProject = function () {
             $('#addproject').prop('disabled', true);
             projectsCtrl.newProject = {
-                //id: projectsCtrl.projects.length+1,
-                name: ''
+                name: '',
+                tags: ''
             };
             dataService.addData(path + 'projects', projectsCtrl.newProject);
         };
 
-        projectsCtrl.createTag = function() {
+        projectsCtrl.createTag = function () {
             $('#addtag').prop('disabled', true);
             projectsCtrl.newTag = {
                 name: '',
@@ -27,25 +27,37 @@ angular.module('protrack')
             dataService.addData(path + 'tags', projectsCtrl.newTag);
         };
 
-        projectsCtrl.updateProject = function(data, key) {
+        projectsCtrl.updateProject = function (data, key) {
             console.log('update project: ' + key);
             dataService.updateData(path + 'projects', key, data);
             $('#addproject').prop('disabled', false);
         };
 
-        projectsCtrl.updateTag = function(data, key) {
+        projectsCtrl.updateTag = function (data, key) {
             console.log('update tag: ' + key);
             dataService.updateData(path + 'tags', key, data);
             $('#addtag').prop('disabled', false);
         };
 
-        projectsCtrl.deleteItem = function(item, id){
+        projectsCtrl.showTags = function (tags) {
+            var selected = [];
+            angular.forEach(projectsCtrl.tags, function (tag) {
+                angular.forEach(tags, function (tagproject) {
+                    if (tag.$id.indexOf(tagproject) >= 0) {
+                        selected.push(tag.name);
+                    }
+                });
+            });
+            return selected.length ? selected.join(', ') : 'Not set';
+        };
+
+        projectsCtrl.deleteItem = function (item, id) {
             console.log('Delete ' + item + ': ' + id);
             dataService.delData(path + item + 's', id);
             $('#add' + item).prop('disabled', false);
         };
 
-        projectsCtrl.writeID = function(id) {
+        projectsCtrl.writeID = function (id) {
             console.log('Edit Item: ' + id);
         };
     }]);

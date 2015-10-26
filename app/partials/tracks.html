@@ -6,7 +6,7 @@
             <tr style="font-weight: bold">
                 <td style="width:15%">Startzeit</td>
                 <td style="width:20%">Projekt</td>
-                <td style="width:10%">Tag</td>
+                <td style="width:10%">Tags</td>
                 <td style="width:25%">Beschreibung</td>
                 <td style="width:6%">Endzeit</td>
                 <td>
@@ -22,19 +22,20 @@
                           e-form="rowform" e-required>{{ track.starttime || 'empty' }}</span>
                 </td>
                 <td>
-                    <span editable-select="track.project" e-name="project" e-form="rowform" e-class="form-control input-sm"
+                    <span editable-select="track.project" e-name="project" e-form="rowform"
+                          e-class="form-control input-sm"
                           e-ng-options="p.$id as p.name for p in tracksCtrl.projects">
                         {{ tracksCtrl.showProject(track.project) }}
                     </span>
-            </td>
+                </td>
                 <td>
-                    <span editable-select="track.tags" e-name="tags" e-form="rowform" e-multiple e-class="form-control input-sm"
+                    <span editable-select="track.tags" e-name="tags" e-form="rowform" e-multiple
+                          e-class="form-control input-sm"
                           e-ng-options="t.$id as t.name for t in tracksCtrl.tags">
                         {{ tracksCtrl.showTags(track.tags) }}
                     </span>
                 </td>
                 <td>
-                    <!--span editable-text="row.description.de" e-class="form-control input-sm" e-name="emaServerDescriptionDe" e-form="rowform" e-size="100"-->
                     <span editable-text="track.desc" e-name="desc" e-class="form-control input-sm" e-form="rowform">{{ track.desc || 'empty' }}</span>
                 </td>
                 <td>
@@ -58,8 +59,8 @@
                             <span class="fa fa-trash" aria-hidden="true"></span></button>
                         <div ng-show="confirm">
                             <button class="btn btn-danger btn-xs" title="Track wirklich löschen?"
-                                    ng-click="tracksCtrl.deleteItem(track.$id)"><span class="fa fa-trash"
-                                                                                      aria-hidden="true"></span>?
+                                    ng-click="tracksCtrl.deleteTrack(track.$id)"><span class="fa fa-trash"
+                                                                                       aria-hidden="true"></span>?
                             </button>
                             <button class="btn btn-default btn-xs" title="Abbrechen" ng-click="confirm=false"><span
                                     class="fa fa-times fa-lg" aria-hidden="true"></span></button>

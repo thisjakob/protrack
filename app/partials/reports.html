@@ -1,3 +1,32 @@
 <div class="container">
-    <p>Reports</p>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+        <tr style="font-weight: bold">
+            <td style="width:15%">Startzeit</td>
+            <td style="width:20%">Projekt</td>
+            <td style="width:10%">Tags</td>
+            <td style="width:25%">Beschreibung</td>
+            <td style="width:6%">Endzeit</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="(key,track) in reportsCtrl.tracks | orderBy:'endtime':false">
+            <td>
+                {{ track.starttime }}
+            </td>
+            <td>
+                {{ track.project }}
+            </td>
+            <td>
+                {{ track.tags }}
+            </td>
+            <td>
+                {{ track.desc }}
+            </td>
+            <td>
+                {{ track.endtime }}
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>

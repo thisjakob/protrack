@@ -18,7 +18,8 @@
                 })
                 .state('reports', {
                     url: '/reports',
-                    templateUrl: 'partials/reports.html'
+                    templateUrl: 'partials/reports.html',
+                    controller: 'ReportsCtrl as reportsCtrl'
                     /*                    resolve: {
                      auth: function($state, Auth){
                      return Auth.$requireAuth().catch(function(auth){
