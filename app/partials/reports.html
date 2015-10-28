@@ -10,7 +10,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="(key,track) in reportsCtrl.tracks | orderBy:'endtime':false">
+        <tr ng-repeat="(key,track) in reportsCtrl.tracks | orderBy:'project':false">
             <td>
                 {{ track.starttime }}
             </td>
