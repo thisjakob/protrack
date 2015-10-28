@@ -20,7 +20,7 @@
                               e-required>{{ project.name || 'empty' }}</span>
                     </td>
                     <td>
-                        <span editable-select="project.tags" e-name="tags" e-multiple e-class="form-control input-sm" e-ng-options="t.$id as t.name for t in tracksCtrl.tags">
+                        <span editable-select="project.tags" e-name="tags" e-multiple e-class="form-control input-sm" e-form="rowform" e-ng-options="t.$id as t.name for t in projectsCtrl.tags">
                           {{ projectsCtrl.showTags(project.tags) }}
                         </span>
                     </td>
