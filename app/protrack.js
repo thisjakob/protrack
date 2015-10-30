@@ -55,7 +55,7 @@
                 .state('login', {
                     url: '/login',
                     templateUrl: 'partials/login.html',
-                    controller: 'AuthCtrl as authCtrl',
+                    controller: 'AuthCtrl as authCtrl'
                     /*                    resolve: {
                      requireNoAuth: function($state, Auth){
                      return Auth.$requireAuth().then(function(auth){
@@ -65,6 +65,11 @@
                      });
                      }
                      }*/
+                })
+                .state('register',{
+                    url: '/register',
+                    templateUrl: 'partials/register.html',
+                    controller: 'RegisterCtrl as regCtrl'
                 });
         })
         .value('FirebaseUrl', { url : 'https://protrack.firebaseio.com'});

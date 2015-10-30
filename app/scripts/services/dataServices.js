@@ -28,6 +28,12 @@ angular.module('protrack').factory('dataService', ['$firebaseArray', 'FirebaseUr
         return $firebaseArray(ref);
     };
 
+    var setData = function(path, data){
+        console.log('dataService add data: ' + path + ' / ' + data);
+        var ref = getNodes(path);
+        return ref.set(data);
+    };
+
     var addData = function(path, data){
         console.log('dataService add data: ' + path + ' / ' + data);
         var ref = getNodes(path);
@@ -49,6 +55,7 @@ angular.module('protrack').factory('dataService', ['$firebaseArray', 'FirebaseUr
     var service = {
         getUrl: getUrl,
         setUrl: setUrl,
+        setData : setData,
         addData : addData,
         getData : getData,
         delData : delData,
