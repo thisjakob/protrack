@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('protrack')
-    .controller('AuthCtrl', ['Auth','$state', function(Auth, $scope, $state){
+    .controller('AuthCtrl', ['Auth','$state', function(Auth, $state){
         var authCtrl = this;
 
+        authCtrl.message = 'Message: ';
         authCtrl.auth = Auth;
 
         // any time auth status updates, add the user data to scope
@@ -11,30 +12,35 @@ angular.module('protrack')
             authCtrl.authData = authData;
         });
 
+
         authCtrl.login = function(){
-            // login with username/password
+            authCtrl.auth.$authWithPassword({
+                email:authCtrl.email,
+                password:authCtrl.password
+            })
+            .then(function(authData){
+                authCtrl.email = '';
+                authCtrl.password = '';
+                authCtrl.message = 'You are logged in as ' + authData.uid;
+            })
+            .catch(function(error){
+                authCtrl.error = error;
+            });
         };
 
         authCtrl.logout = function(){
-            // logout username/password
+            authCtrl.auth.$unauth()
         };
 
-        authCtrl.register = function(){
-            // register for a new account with username/password
-        };
-
-        // create a user
-        authCtrl.createUser = function() {
-            authCtrl.message = null;
-            authCtrl.error = null;
-
-            Auth.$createUser({
-                email: authCtrl.email,
-                password: authCtrl.password
-            }).then(function(userData) {
-                authCtrl.message = "User created with uid: " + userData.uid;
-            }).catch(function(error) {
-                authCtrl.error = error;
+        authCtrl.sendPwdReset = function(){
+            Auth.$resetPassword({
+                email:authCtrl.email
+            }, function(error){
+                if ( error === null ) {
+                    authCtrl.message = 'Password reset e-mail was sent to: ' + authCtrl.email;
+                } else {
+                    authCtrl.message = 'Error sending password reset email:' + error;
+                }
             });
         };
 
@@ -52,19 +58,4 @@ angular.module('protrack')
                 authCtrl.error = error;
             });
         };
-
-        /*
-        authCtrl.user = {
-            email: '',
-            password: ''
-        };
-
-        authCtrl.login = function (){
-            Auth.$authWithPassword(authCtrl.user).then(function (auth){
-                $state.go('home');
-            }, function (error){
-                authCtrl.error = error;
-            });
-        };
-        */
     }]);
