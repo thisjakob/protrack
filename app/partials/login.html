@@ -1,37 +1,35 @@
 <div class="page-wrapper">
 
-    <div class="page-header">
-        <h1>Login to Protrack</h1>
-    </div>
+    <h1>Login</h1>
 
-    <!--
-    <div ng-show="authCtrl.error">
-        <span>{{ authCtrl.error.message }}</span>
-    </div>
-
-    <form ng-submit="authCtrl.login()">
+    <form ng-submit="authCtrl.login()" name="form">
         <div class="input-group">
-            <input type="email" class="form-control" placeholder="Email" ng-model="authCtrl.user.email">
+            <label for="email">Email</label>
+            <input name="email" id="email" type="email" class="form-control" placeholder="Email" ng-model="authCtrl.email">
+            <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">email is required</span>
         </div>
         <div class="input-group">
-            <input type="password" class="form-control" placeholder="Password" ng-model="authCtrl.user.password">
+            <label for="password">Password</label>
+            <input name="password" id="password" type="password" class="form-control" placeholder="Password" ng-model="authCtrl.password">
+            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
         </div>
-        <input type="submit" class="btn btn-default" value="Log In">
+        <div class="form-actions">
+            <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Login</button>
+            <a ng-href="#/register">Register</a>
+        </div>
+
     </form>
-    -->
+
+    <hr>
 
     <div ng-controller="AuthCtrl">
         <div ng-show="authCtrl.authData">
             <p>Hello, {{ authCtrl.authData.github.displayName }}</p>
-            <button ng-click="authCtrl.auth.$unauth()">Logout</button>
+            <button ng-click="authCtrl.logout()">Logout</button>
         </div>
         <div ng-hide="authCtrl.authData">
             <p>Welcome, please log in.</p>
-            <button ng-click="authCtrl.auth.$authWithOAuthPopup('github')">Login With Github</button>
+            <button ng-click="authCtrl.login()">Login With Google</button>
         </div>
     </div>
-
-    <hr>
-
-
 </div>
