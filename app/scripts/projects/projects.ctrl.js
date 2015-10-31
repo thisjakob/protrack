@@ -6,8 +6,9 @@ angular.module('protrack')
         var projectsCtrl = this;
         var path = 'users/iduser1/';
 
-        projectsCtrl.projects = dataService.getData(path + 'projects');
-        projectsCtrl.tags = dataService.getData(path + 'tags');
+        projectsCtrl.projectsArray = dataService.getData(path + 'projects', true);
+        projectsCtrl.tags = dataService.getData(path + 'tags', false);
+        projectsCtrl.tagsArray = dataService.getData(path + 'tags', true);
 
         projectsCtrl.createProject = function () {
             $('#addproject').prop('disabled', true);
@@ -41,7 +42,7 @@ angular.module('protrack')
 
         projectsCtrl.showTags = function (tags) {
             var selected = [];
-            angular.forEach(projectsCtrl.tags, function (tag) {
+            angular.forEach(projectsCtrl.tagsArray, function (tag) {
                 angular.forEach(tags, function (tagproject) {
                     if (tag.$id.indexOf(tagproject) >= 0) {
                         selected.push(tag.name);
@@ -61,3 +62,5 @@ angular.module('protrack')
             console.log('Edit Item: ' + id);
         };
     }]);
+
+// TODO  projektspezifische Tags und nicht projektspezifische Tags (in keinem Projekt zugeordnet) in der Liste anzeigen

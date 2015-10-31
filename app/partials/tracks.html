@@ -16,30 +16,31 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="(key,track) in tracksCtrl.tracks | orderBy:'date':true">
+            <tr ng-repeat="(key,track) in tracksCtrl.tracksArray | orderBy:'date':true">
                 <td>
-                    <span editable-text="track.starttime" e-name="starttime" e-class="form-control input-sm"
-                          e-form="rowform" e-required>{{ track.starttime || 'empty' }}</span>
+                    <span editable-datetime="track.starttime" e-name="starttime" e-class="form-control input-sm"
+                          e-form="rowform">{{ track.starttime || 'empty' }}</span>
                 </td>
                 <td>
                     <span editable-select="track.project" e-name="project" e-form="rowform"
                           e-class="form-control input-sm"
-                          e-ng-options="p.$id as p.name for p in tracksCtrl.projects">
+                          e-ng-options="p.$id as p.name for p in tracksCtrl.projectsArray">
                         {{ tracksCtrl.showProject(track.project) }}
                     </span>
                 </td>
                 <td>
-                    <span editable-select="track.tags" e-name="tags" e-form="rowform" e-multiple
-                          e-class="form-control input-sm"
-                          e-ng-options="t.$id as t.name for t in tracksCtrl.tags">
-                        {{ tracksCtrl.showTags(track.tags) }}
+                    <!-- onshow="tracksCtrl.loadTags(track.project)" -->
+                    <span editable-select="track.tags" e-name="tags" e-form="rowform"  e-multiple
+                          e-class="form-control input-sm" e-ng-focus=""
+                          e-ng-options="t.$id as t.name for t in tracksCtrl.loadTags(track.project)">
+                        {{ tracksCtrl.showTags(track.project, track.tags) }}
                     </span>
                 </td>
                 <td>
                     <span editable-text="track.desc" e-name="desc" e-class="form-control input-sm" e-form="rowform">{{ track.desc || 'empty' }}</span>
                 </td>
                 <td>
-                    <span editable-text="track.endtime" e-name="endtime" e-class="form-control input-sm"
+                    <span editable-datetime="track.endtime" e-name="endtime" e-class="form-control input-sm"
                           e-form="rowform">{{ track.endtime || 'empty' }}</span>
                 </td>
                 <td style="white-space: nowrap">

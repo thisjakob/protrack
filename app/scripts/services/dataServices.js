@@ -1,7 +1,7 @@
 /* global Firebase */
 'use strict';
 
-angular.module('protrack').factory('dataService', ['$firebaseArray', 'FirebaseUrl', function ($firebaseArray, FirebaseUrl) {
+angular.module('protrack').factory('dataService', ['$firebaseArray', '$firebaseObject', 'FirebaseUrl', function ($firebaseArray, $firebaseObject, FirebaseUrl) {
     var firebaseUrl = FirebaseUrl.url;
     var firebaseRef= new Firebase(firebaseUrl);
 
@@ -22,8 +22,19 @@ angular.module('protrack').factory('dataService', ['$firebaseArray', 'FirebaseUr
         return getFirebaseRoot().child(path);
     };
 
-    var getData = function(path){
-        console.log('dataService get data from ' + path);
+    var getData = function(path, array){
+        var ref = getNodes(path);
+        if (array) {
+            console.log('dataService get data as array from ' + path);
+            return $firebaseArray(ref);
+        } else {
+            console.log('dataService get data as object from ' + path);
+            return $firebaseObject(ref);
+        }
+    };
+
+    var getDataArray = function(path){
+        console.log('dataService get data as array from ' + path);
         var ref = getNodes(path);
         return $firebaseArray(ref);
     };
@@ -58,6 +69,7 @@ angular.module('protrack').factory('dataService', ['$firebaseArray', 'FirebaseUr
         setData : setData,
         addData : addData,
         getData : getData,
+        getDataArray : getDataArray,
         delData : delData,
         updateData : updateData,
         getNodes: getNodes

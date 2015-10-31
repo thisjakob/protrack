@@ -5,9 +5,11 @@ angular.module('protrack')
     .controller('TracksCtrl', ['dataService', '$filter', function (dataService, $filter) {
         var tracksCtrl = this;
         var path = 'users/iduser1/';
-        tracksCtrl.tracks = dataService.getData(path + 'tracks');
-        tracksCtrl.projects = dataService.getData(path + 'projects');
-        tracksCtrl.tags = dataService.getData(path + 'tags');
+        tracksCtrl.tracksArray = dataService.getData(path + 'tracks', true);
+        tracksCtrl.projectsArray = dataService.getData(path + 'projects', true);
+        tracksCtrl.projects = dataService.getData(path + 'projects', false);
+        tracksCtrl.tagsAll = dataService.getData(path + 'tags', false);
+        tracksCtrl.tags = [];
 
         // create track and save it to compare to show form
         tracksCtrl.createTrackElement = function () {
@@ -30,16 +32,32 @@ angular.module('protrack')
         };
 
         tracksCtrl.showProject = function(project) {
-            var selected = $filter('filter')(tracksCtrl.projects, {$id: project});
+            var selected = $filter('filter')(tracksCtrl.projectsArray, {$id: project});
             return (project && selected.length) ? selected[0].name : 'Not set';
         };
 
-        tracksCtrl.showTags = function(tags) {
+        tracksCtrl.loadTags = function(project) {
+            var tags = [];
+            if (tracksCtrl.tags.length === 0) {
+                angular.forEach(tracksCtrl.projects[project].tags, function(tagid) {
+                    var tag = tracksCtrl.tagsAll[tagid];
+                    if (tag !== undefined) {
+                        tag.$id = tagid;
+                        tags.push(tag);
+                    }
+                });
+            }
+            return tags;
+        };
+
+        tracksCtrl.showTags = function(project, tags) {
           var selected = [];
-          angular.forEach(tracksCtrl.tags, function(tag) {
+          angular.forEach(tracksCtrl.loadTags(project), function(tag) {
             angular.forEach(tags, function(tagproject) {
               if (tag.$id.indexOf(tagproject) >= 0) {
-                selected.push(tag.name);
+                  if (tag.name !== undefined) {
+                      selected.push(tag.name);
+                  }
               }
             });
           });

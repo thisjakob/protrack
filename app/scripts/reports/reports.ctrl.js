@@ -5,5 +5,5 @@ angular.module('protrack')
         var reportsCtrl = this;
         var path = 'users/iduser1/';
 
-        reportsCtrl.tracks = dataService.getData(path + 'tracks');
+        reportsCtrl.tracks = dataService.getData(path + 'tracks', true);
     }]);

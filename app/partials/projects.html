@@ -13,14 +13,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="(key,project) in projectsCtrl.projects | orderBy:'name':false">
+                <tr ng-repeat="(key,project) in projectsCtrl.projectsArray | orderBy:'name':false">
                     <td>
                         <span editable-text="project.name" e-name="name" e-class="form-control input-sm"
                               e-form="rowform"
                               e-required>{{ project.name || 'empty' }}</span>
                     </td>
                     <td>
-                        <span editable-select="project.tags" e-name="tags" e-multiple e-class="form-control input-sm" e-form="rowform" e-ng-options="t.$id as t.name for t in projectsCtrl.tags">
+                        <span editable-select="project.tags" e-name="tags" e-multiple e-class="form-control input-sm" e-form="rowform" e-ng-options="t.$id as t.name for t in projectsCtrl.tagsArray">
                           {{ projectsCtrl.showTags(project.tags) }}
                         </span>
                     </td>
@@ -69,7 +69,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="(key,tag) in projectsCtrl.tags | orderBy:'name':false">
+                <tr ng-repeat="(key,tag) in projectsCtrl.tagsArray | orderBy:'name':false">
                     <td>
                         <span editable-text="tag.name" e-name="name" e-class="form-control input-sm" e-form="rowform"
                               e-required>{{ tag.name || 'empty' }}</span>
