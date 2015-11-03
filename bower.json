@@ -22,10 +22,10 @@
     "angular-moment": "~0.10.3",
     "angular-ui-tree": "~2.10.0",
     "angular-mocks": "1.4.7",
-    "bootstrap-social-buttons": "~1.0.0"
+    "bootstrap-social-buttons": "~1.0.0",
+    "ng-tags-input": "~3.0.0"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "resolutions": {
     "angular": "1.2.x",
     "modernizr": "2.8.x",
