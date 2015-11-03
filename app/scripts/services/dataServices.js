@@ -23,6 +23,12 @@
             return getFirebaseRoot().child(path);
         };
 
+        /**
+         * TODO
+         * @param path
+         * @param array boolean true = array
+         * @returns {*}
+         */
         var getData = function (path, array) {
             var ref = getNodes(path);
             if (array) {
@@ -33,19 +39,25 @@
                 return $firebaseObject(ref);
             }
         };
-
-        var getDataArray = function (path) {
-            console.log('dataService get data as array from ' + path);
-            var ref = getNodes(path);
-            return $firebaseArray(ref);
-        };
-
+        
+        /**
+         * TODO
+         * @param path
+         * @param data
+         * @returns {*}
+         */
         var setData = function (path, data) {
             console.log('dataService add data: ' + path + ' / ' + data);
             var ref = getNodes(path);
             return ref.set(data);
         };
 
+        /**
+         * TODO
+         * @param path
+         * @param data
+         * @returns {*}
+         */
         var addData = function (path, data) {
             console.log('dataService add data: ' + path + ' / ' + data);
             var ref = getNodes(path);
@@ -70,7 +82,6 @@
             setData: setData,
             addData: addData,
             getData: getData,
-            getDataArray: getDataArray,
             delData: delData,
             updateData: updateData,
             getNodes: getNodes
