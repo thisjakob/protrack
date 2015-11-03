@@ -14,8 +14,6 @@
     "firebase": "~2.3.0",
     "angularfire": "~1.1.3",
     "bootstrap-sass": "bootstrap-sass-official#~3.3.5",
-    "bower": "*",
-    "install": "~1.0.4",
     "angular-ui-router": "~0.2.15",
     "angular-xeditable": "~0.1.9",
     "bootstrap": "~3.3.5",
