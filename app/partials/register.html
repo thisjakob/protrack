@@ -1,27 +1,32 @@
 <div class="container">
-    <h1>Register</h1>
-    <div>{{regCtrl.message}}</div>
-    <div>{{regCtrl.error}}</div>
-    <form name="form" ng-submit="regCtrl.register()" role="form">
-        <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
-            <label for="firstName">First name</label>
-            <input type="text" name="firstName" id="firstName" class="form-control" ng-model="regCtrl.firstName" required />
-        </div>
-        <div class="form-group" ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
-            <label for="lastName">Last name</label>
-            <input type="text" name="lastName" id="lastName" class="form-control" ng-model="regCtrl.lastName" required />
-        </div>
-        <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
-            <label for="email">E-Mail</label>
-            <input type="text" name="emial" id="email" class="form-control" ng-model="regCtrl.email" required />
-        </div>
-        <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" class="form-control" ng-model="regCtrl.password" required />
-        </div>
-        <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Register</button>
-            <a href="#/login" class="btn btn-link">Cancel</a>
-        </div>
-    </form>
+    <div class="row">
+        <h1>Register</h1>
+        <div>{{regCtrl.message}}</div>
+        <div>{{regCtrl.error}}</div>
+        <form name="form" ng-submit="regCtrl.register()" role="form">
+            <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
+                <label for="firstName" class="sr-only">First name</label>
+                <input type="text" name="firstName" id="firstName" class="form-control" ng-model="regCtrl.firstName" placeholder="First name" required />
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
+                <label for="lastName" class="sr-only">Last name</label>
+                <input type="text" name="lastName" id="lastName" class="form-control" ng-model="regCtrl.lastName" placeholder="Last name" required />
+            </div>
+            <div class="input-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
+                <span class="input-group-addon" id="sizing-addon1">@</span>
+                <label for="email" class="sr-only">E-Mail</label>
+                <input type="text" name="email" id="email" class="form-control" ng-model="regCtrl.email" placeholder="E-Mail" required />
+            </div>
+            <div class="input-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+                <span class="input-group-addon" id="sizing-addon1">&#128274;</span>
+                <label for="password" class="sr-only">Password</label>
+                <input type="password" name="password" id="password" class="form-control" ng-model="regCtrl.password" placeholder="Password" required />
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Register</button>
+                <a href="#/login" class="btn btn-link">Cancel</a>
+            </div>
+        </form>
+
+    </div>
 </div>
