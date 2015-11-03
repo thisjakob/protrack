@@ -12,7 +12,7 @@ angular.module('protrack')
         authCtrl.auth.$onAuth(function(authData) {
             if ( authData ) {
                 authCtrl.authData = authData;
-                dataService.getDataObj('users/' + authData.uid + '/firstname').$loaded(function(data){
+                dataService.getData('users/' + authData.uid + '/firstname').$loaded(function(data){
                     authCtrl.firstname = data.$value;
                 });
             }
