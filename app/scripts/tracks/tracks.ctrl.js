@@ -40,7 +40,7 @@ angular.module('protrack')
 
         tracksCtrl.loadTags = function(project) {
             var tags = [];
-            if (tracksCtrl.tags.length === 0) {
+            if (project !== '' && tracksCtrl.tags.length === 0) {
                 angular.forEach(tracksCtrl.projects[project].tags, function(tagid) {
                     var tag = tracksCtrl.tagsAll[tagid];
                     if (tag !== undefined) {
