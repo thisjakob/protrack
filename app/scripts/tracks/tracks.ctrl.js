@@ -2,9 +2,11 @@
 'use strict';
 
 angular.module('protrack')
-    .controller('TracksCtrl', ['dataService', '$filter', function (dataService, $filter) {
+    .controller('TracksCtrl', ['dataService', '$filter', 'Auth', function (dataService, $filter, Auth) {
         var tracksCtrl = this;
-        var path = 'users/iduser1/';
+        var auth = Auth.$getAuth();
+        var path = 'users/' + auth.uid + '/';
+
         tracksCtrl.tracksArray = dataService.getData(path + 'tracks', true);
         tracksCtrl.projectsArray = dataService.getData(path + 'projects', true);
         tracksCtrl.projects = dataService.getData(path + 'projects', false);
