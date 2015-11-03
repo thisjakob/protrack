@@ -1,12 +1,14 @@
-'use strict';
+(function () {
+    'use strict';
 
-angular.module('protrack')
-    .controller('SettingsCtrl', ['dataService', function (dataService) {
-        var settingsCtrl = this;
+    angular.module('protrack')
+        .controller('SettingsCtrl', ['dataService', function (dataService) {
+            var settingsCtrl = this;
 
-        /*settingsCtrl.firebaseUrl = dataService.getUrl();
+            /*settingsCtrl.firebaseUrl = dataService.getUrl();
 
-        settingsCtrl.setUrl = function() {
-            dataService.setUrl(settingsCtrl.firebaseUrl);
-        };*/
-    }]);
+             settingsCtrl.setUrl = function() {
+             dataService.setUrl(settingsCtrl.firebaseUrl);
+             };*/
+        }]);
+})();
