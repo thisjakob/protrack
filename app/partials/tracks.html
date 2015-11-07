@@ -1,70 +1,80 @@
+<link rel="stylesheet" href="styles/track.css">
 <div class="container">
 
     <div class="row">
-        <table class="table table-bordered table-hover table-condensed">
-            <thead>
-            <tr style="font-weight: bold">
-                <td style="width:15%">Startzeit</td>
-                <td style="width:20%">Projekt</td>
-                <td style="width:10%">Tags</td>
-                <td style="width:25%">Beschreibung</td>
-                <td style="width:6%">Endzeit</td>
-                <td>
-                    <button id="addtrack" class="btn btn-default btn-xs" ng-click="tracksCtrl.createTrackElement()"><i
-                            class="fa fa-plus-square-o fa-lg"></i></button>
-                </td>
-            </tr>
-            </thead>
+        <div>
+            <button id="addtrack" class="mdl-button mdl-js-button mdl-button--fab"
+                    ng-click="tracksCtrl.createTrackElement()"><i
+                    class="material-icons">add</i></button>
+        </div>
+        <table class="tracklist mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
             <tbody>
-            <tr ng-repeat="(key,track) in tracksCtrl.tracksArray | orderBy:'date':true">
+            <tr class="tracklistelement mdl-data-table__cell--non-numeric"
+                ng-repeat="(key,track) in tracksCtrl.tracksArray | orderBy:'date':true">
                 <td>
+                    <div class="starttime">
                     <span editable-datetime="track.starttime" e-name="starttime" e-class="form-control input-sm"
                           e-form="rowform">{{ track.starttime || 'empty' }}</span>
-                </td>
-                <td>
+                    </div>
+                    <div class="project">
                     <span editable-select="track.project" e-name="project" e-form="rowform"
-                          e-class="form-control input-sm"
+                          e-class="form-control input-sm" e-ng-change="tracksCtrl.updateProject($data, track.$id)"
                           e-ng-options="p.$id as p.name for p in tracksCtrl.projectsArray">
                         {{ tracksCtrl.showProject(track.project) }}
                     </span>
-                </td>
-                <td>
-                    <!-- onshow="tracksCtrl.loadTags(track.project)" -->
-                    <span editable-select="track.tags" e-name="tags" e-form="rowform"  e-multiple
-                          e-class="form-control input-sm" e-ng-focus=""
-                          e-ng-options="t.$id as t.name for t in tracksCtrl.loadTags(track.project)">
-                        {{ tracksCtrl.showTags(track.project, track.tags) }}
-                    </span>
-                </td>
-                <td>
-                    <span editable-text="track.desc" e-name="desc" e-class="form-control input-sm" e-form="rowform">{{ track.desc || 'empty' }}</span>
-                </td>
-                <td>
+                    </div>
+                    <div class="tags">
+                                <!--span editable-ui-select="track.tags" e-ng-model="track.tags" e-name="tags" name="tags"
+                                      e-form="rowform">
+                                  {{track.tags}}
+                                  <editable-ui-select-match placeholder="Tags ..." style="width:500px">
+                                      {{$select.selected.name}}
+                                  </editable-ui-select-match>
+                                  <editable-ui-select-choices repeat="t.$id as t.name for t in tracksCtrl.loadTags(track.project) | filter:$select.search">
+                                      {{tracksCtrl.showTags(track.project, track.tags) }}
+                                  </editable-ui-select-choices>
+                                </span-->
+
+                        <!-- onshow="tracksCtrl.loadTags(track.project)" -->
+                        <span editable-select="track.tags" e-name="tags" e-form="rowform" e-multiple
+                              e-class="form-control input-sm" e-ng-change="tracksCtrl.changeData($data)"
+                              e-ng-options="t.$id as t.name for t in tracksCtrl.loadTags(track.project)">
+                            {{ tracksCtrl.showTags(track.project, track.tags) }}
+                        </span>
+
+                    </div>
+                    <div class="desc">
+                        <span editable-text="track.desc" e-name="desc" e-class="form-control input-sm" e-form="rowform">{{ track.desc || 'empty' }}</span>
+                    </div>
+                    <div class="endtime">
                     <span editable-datetime="track.endtime" e-name="endtime" e-class="form-control input-sm"
                           e-form="rowform">{{ track.endtime || 'empty' }}</span>
-                </td>
-                <td style="white-space: nowrap">
-                    <!-- form -->
-                    <form editable-form name="rowform" onaftersave="tracksCtrl.updateTrack($data, track.$id)"
-                          ng-show="rowform.$visible" class="form-buttons form-inline"
-                          shown="tracksCtrl.newTrack.starttime == track.starttime">
-                        <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-default btn-xs"><i
-                                class="fa fa-save fa-lg"></i></button>
-                        <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()"
-                                class="btn btn-default btn-xs"><i class="fa fa-times fa-lg"></i></button>
-                    </form>
-                    <div class="buttons" ng-show="!rowform.$visible">
-                        <button ng-hide="confirm" class="btn btn-default btn-xs" type="button"
-                                ng-click="rowform.$show()"><span class="fa fa-edit" aria-hidden="true"></span></button>
-                        <button ng-hide="confirm" class="btn btn-default btn-xs" type="button" ng-click="confirm=true">
-                            <span class="fa fa-trash" aria-hidden="true"></span></button>
-                        <div ng-show="confirm">
-                            <button class="btn btn-danger btn-xs" title="Track wirklich löschen?"
-                                    ng-click="tracksCtrl.deleteTrack(track.$id)"><span class="fa fa-trash"
-                                                                                       aria-hidden="true"></span>?
+                    </div>
+                    <div style="white-space: nowrap">
+                        <!-- form -->
+                        <form editable-form name="rowform" onaftersave="tracksCtrl.updateTrack($data, track.$id)"
+                              ng-show="rowform.$visible" class="form-buttons form-inline"
+                              shown="tracksCtrl.newTrack.starttime == track.starttime">
+                            <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-default btn-xs"><i
+                                    class="fa fa-save fa-lg"></i></button>
+                            <button type="button" ng-disabled="rowform.$waiting" ng-click="tracksCtrl.setProjectBackup(track.$id); rowform.$cancel()"
+                                    class="btn btn-default btn-xs"><i class="fa fa-times fa-lg"></i></button>
+                        </form>
+                        <div class="buttons" ng-show="!rowform.$visible">
+                            <button ng-hide="confirm" class="btn btn-default btn-xs" type="button"
+                                    ng-click="tracksCtrl.editTrack(track.$id); rowform.$show()"><span class="fa fa-edit" aria-hidden="true"></span>
                             </button>
-                            <button class="btn btn-default btn-xs" title="Abbrechen" ng-click="confirm=false"><span
-                                    class="fa fa-times fa-lg" aria-hidden="true"></span></button>
+                            <button ng-hide="confirm" class="btn btn-default btn-xs" type="button"
+                                    ng-click="confirm=true">
+                                <span class="fa fa-trash" aria-hidden="true"></span></button>
+                            <div ng-show="confirm">
+                                <button class="btn btn-danger btn-xs" title="Track wirklich löschen?"
+                                        ng-click="tracksCtrl.deleteTrack(track.$id)"><span class="fa fa-trash"
+                                                                                           aria-hidden="true"></span>?
+                                </button>
+                                <button class="btn btn-default btn-xs" title="Abbrechen" ng-click="confirm=false"><span
+                                        class="fa fa-times fa-lg" aria-hidden="true"></span></button>
+                            </div>
                         </div>
                     </div>
                 </td>

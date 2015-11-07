@@ -5,18 +5,22 @@
     angular.module('protrack')
         .controller('TracksCtrl', ['dataService', '$filter', 'Auth', function (dataService, $filter, Auth) {
             var tracksCtrl = this;
+
             var auth = Auth.$getAuth();
-            var path = 'users/' + auth.uid + '/';
+            var path = 'users/';
 
-            tracksCtrl.tracksArray = dataService.getData(path + 'tracks', true);
-            tracksCtrl.projectsArray = dataService.getData(path + 'projects', true);
-            tracksCtrl.projects = dataService.getData(path + 'projects', false);
-            tracksCtrl.tagsAll = dataService.getData(path + 'tags', false);
-            tracksCtrl.tags = [];
+            if (auth === null || auth.uid === null) {
+                alert("Authentification failure: login first");
+            } else {
+                path = path + auth.uid + '/';
 
-            tracksCtrl.changeData = function (data) {
-                console.log("Data " + data);
-            };
+                tracksCtrl.tracksArray = dataService.getData(path + 'tracks', true);
+                tracksCtrl.projects = dataService.getData(path + 'projects', false);
+                tracksCtrl.projectsArray = dataService.getData(path + 'projects', true);
+                tracksCtrl.tagsAll = dataService.getData(path + 'tags', false);
+                tracksCtrl.tags = [];
+                tracksCtrl.projectBackup = '';
+            }
 
             // create track and save it to compare to show form
             tracksCtrl.createTrackElement = function () {
@@ -32,10 +36,25 @@
                 dataService.addData(path + 'tracks', tracksCtrl.newTrack);
             };
 
+            tracksCtrl.editTrack = function(key) {
+                tracksCtrl.projectBackup = dataService.getData(path + 'tracks/' + key + '/project' + tracksCtrl.projectBackup);
+            };
+
             tracksCtrl.updateTrack = function (data, key) {
                 console.log('update track: ' + key);
+                tracksCtrl.projectBackup = data.project;
                 dataService.updateData(path + 'tracks', key, data);
                 $('#addtrack').prop('disabled', false);
+            };
+
+            tracksCtrl.updateProject = function (project, key) {
+                console.log('update project in track: ' + key);
+                dataService.setData(path + 'tracks/' + key + '/project', project);
+            };
+
+            tracksCtrl.setProjectBackup = function (key) {
+                console.log('update project backup in track: ' + key);
+                dataService.setData(path + 'tracks/' + key + '/project', tracksCtrl.projectBackup);
             };
 
             tracksCtrl.showProject = function (project) {
@@ -45,14 +64,23 @@
 
             tracksCtrl.loadTags = function (project) {
                 var tags = [];
-                if (project !== '' && tracksCtrl.tags.length === 0) {
-                    angular.forEach(tracksCtrl.projects[project].tags, function (tagid) {
-                        var tag = tracksCtrl.tagsAll[tagid];
-                        if (tag !== undefined) {
-                            tag.$id = tagid;
-                            tags.push(tag);
-                        }
-                    });
+                if (tracksCtrl.tags.length === 0) {
+                    if (project !== '') {
+                        // load project tags
+                        angular.forEach(tracksCtrl.projects[project].tags, function (tagid) {
+                            var tag = tracksCtrl.tagsAll[tagid];
+                            if (tag !== undefined) {
+                                tag.$id = tagid;
+                                tags.push(tag);
+                            }
+                        });
+                    }
+                    // load tags without projects
+                    /*       angular.forEach(tracksCtrl.tagsAll, function (tag) {
+                     if (tag.project !== true) {
+                     tags.push(tag);
+                     }
+                     });*/
                 }
                 return tags;
             };

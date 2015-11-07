@@ -1,5 +1,5 @@
 /* global $ */
-(function () {
+;(function () {
     'use strict';
 
     angular.module('protrack')
@@ -25,13 +25,20 @@
                 $('#addtag').prop('disabled', true);
                 projectsCtrl.newTag = {
                     name: '',
-                    desc: ''
+                    desc: '',
+                    project: false
                 };
+                // TODO erhält nicht immer eine $id nach lesen mit dataService.getData(path + 'tags', false);
                 dataService.addData(path + 'tags', projectsCtrl.newTag);
             };
 
             projectsCtrl.updateProject = function (data, key) {
                 console.log('update project: ' + key);
+                angular.forEach(data.tags, function(tagid){
+                    // TODO ev project id hinterlegen, damit auch wieder gelöscht werden kann (wird benötigt,
+                    // damit projektunabhängige Tags angezeigt werden können
+                    dataService.updateData(path + 'tags', tagid, {project: true});
+                });
                 dataService.updateData(path + 'projects', key, data);
                 $('#addproject').prop('disabled', false);
             };
@@ -44,6 +51,7 @@
 
             projectsCtrl.showTags = function (tags) {
                 var selected = [];
+                // TODO überarbeiten wirklich 2 Schleifen notwendig?
                 angular.forEach(projectsCtrl.tagsArray, function (tag) {
                     angular.forEach(tags, function (tagproject) {
                         if (tag.$id.indexOf(tagproject) >= 0) {
@@ -54,6 +62,7 @@
                 return selected.length ? selected.join(', ') : 'Not set';
             };
 
+            // TODO nach delete entsprechende Referenzen entfernen
             projectsCtrl.deleteItem = function (item, id) {
                 console.log('Delete ' + item + ': ' + id);
                 dataService.delData(path + item + 's', id);

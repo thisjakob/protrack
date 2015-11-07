@@ -1,5 +1,5 @@
 'use strict';
-;(function () {
+(function () {
     angular.module('protrack', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'firebase', 'ui.router', 'xeditable'])
         .config(function ($stateProvider, $urlRouterProvider) {
             $urlRouterProvider.otherwise('/timer');
@@ -8,7 +8,7 @@
                     url: '/timer',
                     templateUrl: 'partials/tracks.html',
                     controller: 'TracksCtrl as tracksCtrl'
-/*                    resolve: {
+/*                   resolve: {
                         auth: function($state, Auth){
                             return Auth.$requireAuth().catch(function(auth){
                                 $state.go('login');
