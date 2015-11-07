@@ -36,8 +36,10 @@
                 dataService.addData(path + 'tracks', tracksCtrl.newTrack);
             };
 
-            tracksCtrl.editTrack = function(key) {
-                tracksCtrl.projectBackup = dataService.getData(path + 'tracks/' + key + '/project' + tracksCtrl.projectBackup);
+            tracksCtrl.editTrack = function(project) {
+                if (project !== undefined) {
+                    tracksCtrl.projectBackup = project;
+                }
             };
 
             tracksCtrl.updateTrack = function (data, key) {
@@ -59,13 +61,13 @@
 
             tracksCtrl.showProject = function (project) {
                 var selected = $filter('filter')(tracksCtrl.projectsArray, {$id: project});
-                return (project && selected.length) ? selected[0].name : 'Not set';
+                return (project && selected.length) ? selected[0].name : 'No project';
             };
 
             tracksCtrl.loadTags = function (project) {
                 var tags = [];
                 if (tracksCtrl.tags.length === 0) {
-                    if (project !== '') {
+                    if (project !== '' && tracksCtrl.projects[project].tags !== undefined) {
                         // load project tags
                         angular.forEach(tracksCtrl.projects[project].tags, function (tagid) {
                             var tag = tracksCtrl.tagsAll[tagid];
@@ -96,7 +98,7 @@
                         }
                     });
                 });
-                return selected.length ? selected.join(', ') : 'Not set';
+                return selected.length ? selected.join(', ') : 'No tag';
             };
 
             tracksCtrl.deleteTrack = function (id) {
