@@ -28,6 +28,7 @@
                         authCtrl.email = '';
                         authCtrl.password = '';
                         authCtrl.message = 'You are logged in as ' + authData.uid;
+                        $state.go('timer');
                     })
                     .catch(function (error) {
                         authCtrl.error = error;
@@ -38,6 +39,7 @@
                 authCtrl.auth.$unauth();
                 authCtrl.authData = null;
                 authCtrl.message = null;
+                $state.go('login');
             };
 
             authCtrl.sendPwdReset = function () {
