@@ -3,21 +3,15 @@
     'use strict';
 
     angular.module('protrack')
-        .controller('ProjectsCtrl', ['dataService', 'Auth', function (dataService, Auth) {
+        .controller('ProjectsCtrl', ['dataService', 'authData', function (dataService, authData) {
             var projectsCtrl = this;
-
-            var auth = Auth.$getAuth();
             var path = 'users/';
 
-            if (auth === null || auth.uid === null) {
-                alert("Authentification failure: login first");
-            } else {
-                path = path + auth.uid + '/';
+            path = path + authData.uid + '/';
 
-                projectsCtrl.projectsArray = dataService.getData(path + 'projects', true);
-                projectsCtrl.tags = dataService.getData(path + 'tags', false);
-                projectsCtrl.tagsArray = dataService.getData(path + 'tags', true);
-            }
+            projectsCtrl.projectsArray = dataService.getData(path + 'projects', true);
+            projectsCtrl.tags = dataService.getData(path + 'tags', false);
+            projectsCtrl.tagsArray = dataService.getData(path + 'tags', true);
 
             projectsCtrl.createProject = function () {
                 $('#addproject').prop('disabled', true);
