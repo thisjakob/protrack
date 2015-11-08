@@ -36,7 +36,7 @@
                 dataService.addData(path + 'tracks', tracksCtrl.newTrack);
             };
 
-            tracksCtrl.editTrack = function(project) {
+            tracksCtrl.editTrack = function (project) {
                 if (project !== undefined) {
                     tracksCtrl.projectBackup = project;
                 }
@@ -67,7 +67,8 @@
             tracksCtrl.loadTags = function (project) {
                 var tags = [];
                 if (tracksCtrl.tags.length === 0) {
-                    if (project !== '' && tracksCtrl.projects[project].tags !== undefined) {
+                    console.log('projects: ' + tracksCtrl.projects[project]);
+                    if (project !== '' && tracksCtrl.projects[project] !== undefined && tracksCtrl.projects[project].tags !== '') {
                         // load project tags
                         angular.forEach(tracksCtrl.projects[project].tags, function (tagid) {
                             var tag = tracksCtrl.tagsAll[tagid];
@@ -77,15 +78,20 @@
                                 tags.push(tag);
                             }
                         });
+                    } else {
+                        // load tags without projects
+                        angular.forEach(tracksCtrl.tagsAll, function (tag) {
+                            if (tag.project !== true) {
+                                tags.push(tag);
+                            }
+                        });
                     }
-                    // load tags without projects
-                    /*       angular.forEach(tracksCtrl.tagsAll, function (tag) {
-                     if (tag.project !== true) {
-                     tags.push(tag);
-                     }
-                     });*/
                 }
                 return tags;
+            };
+
+            tracksCtrl.loadTagname = function (tag) {
+                return tag.name + ": " + tag.desc;
             };
 
             tracksCtrl.showTags = function (project, tags) {

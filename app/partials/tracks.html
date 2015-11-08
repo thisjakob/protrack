@@ -38,7 +38,7 @@
                         <!-- onshow="tracksCtrl.loadTags(track.project)" -->
                         <span editable-select="track.tags" e-name="tags" e-form="rowform" e-multiple
                               e-class="form-control input-sm" e-ng-change="tracksCtrl.changeData($data)"
-                              e-ng-options="t.$id as t.name for t in tracksCtrl.loadTags(track.project)">
+                              e-ng-options="t.$id as tracksCtrl.loadTagname(t) for t in tracksCtrl.loadTags(track.project)">
                             {{ tracksCtrl.showTags(track.project, track.tags) }}
                         </span>
 

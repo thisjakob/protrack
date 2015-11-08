@@ -44,14 +44,17 @@
             };
 
             projectsCtrl.updateTag = function (data, key) {
-                console.log('update tag: ' + key);
+                console.log('update tag: ' + data.name + ': ' + data.desc + ' with key: ' + key);
                 dataService.updateData(path + 'tags', key, data);
                 $('#addtag').prop('disabled', false);
             };
 
+            projectsCtrl.loadTagname = function (tag) {
+                return tag.name + ": " + tag.desc;
+            };
+
             projectsCtrl.showTags = function (tags) {
                 var selected = [];
-                // TODO überarbeiten wirklich 2 Schleifen notwendig?
                 angular.forEach(projectsCtrl.tagsArray, function (tag) {
                     angular.forEach(tags, function (tagproject) {
                         if (tag.$id.indexOf(tagproject) >= 0) {
