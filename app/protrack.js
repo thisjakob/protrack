@@ -3,7 +3,7 @@
     angular.module('protrack', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'firebase', 'ui.router', 'xeditable'])
 
         .run(['$rootScope', '$state', function($rootScope, $state) {
-            // redirect unauthenticted users to the login page
+            // redirect unauthenticated users to the login page
             $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
                 // We can catch the error thrown when the $requireAuth promise is rejected
                 // and redirect the user back to the home page
@@ -14,8 +14,18 @@
         }])
 
         .config(function ($stateProvider, $urlRouterProvider) {
-            $urlRouterProvider.otherwise('/timer');
+            $urlRouterProvider.otherwise('/');
             $stateProvider
+                .state('home', {
+                    url: '/',
+                    templateUrl: 'partials/home.html',
+                    controller: 'HomeCtrl as homeCtrl',
+                    resolve: {
+                        'authData': ['Auth', function(Auth) {
+                            return Auth.$waitForAuth();
+                        }]
+                    }
+                })
                 .state('timer', {
                     url: '/timer',
                     templateUrl: 'partials/tracks.html',
