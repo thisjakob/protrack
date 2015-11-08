@@ -17,9 +17,17 @@
             $urlRouterProvider.otherwise('/');
             $stateProvider
                 .state('home', {
-                    url: '/',
-                    templateUrl: 'partials/home.html',
-                    controller: 'HomeCtrl as homeCtrl',
+                    url : '/',
+                    views : {
+                        'nav' : {
+                            templateUrl: 'partials/home.nav.html',
+                            controller: 'HomeNavCtrl as homeNavCtrl'
+                        },
+                        'content' : {
+                            templateUrl : 'partials/home.html',
+                            controller : 'HomeCtrl as homeCtrl'
+                        }
+                    },
                     resolve: {
                         'authData': ['Auth', function(Auth) {
                             return Auth.$waitForAuth();
@@ -28,8 +36,17 @@
                 })
                 .state('timer', {
                     url: '/timer',
-                    templateUrl: 'partials/tracks.html',
-                    controller: 'TracksCtrl as tracksCtrl',
+                    views : {
+                        'nav' : {
+                            templateUrl: 'partials/home.nav.html',
+                            controller: 'HomeNavCtrl as homeNavCtrl'
+                        },
+                        'content' : {
+                            templateUrl: 'partials/tracks.html',
+                            controller: 'TracksCtrl as tracksCtrl'
+                        }
+                    },
+
                     resolve: {
                         'authData': ['Auth', function(Auth) {
                             return Auth.$requireAuth();
@@ -38,8 +55,16 @@
                 })
                 .state('reports', {
                     url: '/reports',
-                    templateUrl: 'partials/reports.html',
-                    controller: 'ReportsCtrl as reportsCtrl',
+                    views : {
+                        'nav' : {
+                            templateUrl: 'partials/home.nav.html',
+                            controller: 'HomeNavCtrl as homeNavCtrl'
+                        },
+                        'content' : {
+                            templateUrl: 'partials/reports.html',
+                            controller: 'ReportsCtrl as reportsCtrl'
+                        }
+                    },
                     resolve: {
                         'authData': ['Auth', function(Auth) {
                             return Auth.$requireAuth();
@@ -48,8 +73,16 @@
                 })
                 .state('projects', {
                     url: '/projects',
-                    templateUrl: 'partials/projects.html',
-                    controller: 'ProjectsCtrl as projectsCtrl',
+                    views : {
+                        'nav' : {
+                            templateUrl: 'partials/home.nav.html',
+                            controller: 'HomeNavCtrl as homeNavCtrl'
+                        },
+                        'content' : {
+                            templateUrl: 'partials/projects.html',
+                            controller: 'ProjectsCtrl as projectsCtrl'
+                        }
+                    },
                     resolve: {
                         'authData': ['Auth', function(Auth) {
                             return Auth.$requireAuth();
@@ -58,8 +91,16 @@
                 })
                 .state('settings', {
                     url: '/settings',
-                    templateUrl: 'partials/settings.html',
-                    controller: 'SettingsCtrl as settingsCtrl',
+                    views : {
+                        'nav' : {
+                            templateUrl: 'partials/home.nav.html',
+                            controller: 'HomeNavCtrl as homeNavCtrl'
+                        },
+                        'content' : {
+                            templateUrl: 'partials/settings.html',
+                            controller: 'SettingsCtrl as settingsCtrl'
+                        }
+                    },
                     resolve: {
                         'authData': ['Auth', function(Auth) {
                             return Auth.$requireAuth();
@@ -68,8 +109,16 @@
                 })
                 .state('login', {
                     url: '/login',
-                    templateUrl: 'partials/login.html',
-                    controller: 'AuthCtrl as authCtrl',
+                    views : {
+                        'nav' : {
+                            templateUrl: 'partials/home.nav.html',
+                            controller: 'HomeNavCtrl as homeNavCtrl'
+                        },
+                        'content' : {
+                            templateUrl: 'partials/login.html',
+                            controller: 'AuthCtrl as authCtrl'
+                        }
+                    },
                     resolve: {
                         'authData': ['Auth', function(Auth) {
                             return Auth.$waitForAuth();
@@ -78,8 +127,16 @@
                 })
                 .state('register',{
                     url: '/register',
-                    templateUrl: 'partials/register.html',
-                    controller: 'RegisterCtrl as regCtrl',
+                    views : {
+                        'nav' : {
+                            templateUrl: 'partials/home.nav.html',
+                            controller: 'HomeNavCtrl as homeNavCtrl'
+                        },
+                        'content' : {
+                            templateUrl: 'partials/register.html',
+                            controller: 'RegisterCtrl as regCtrl',
+                        }
+                    },
                     resolve: {
                         'authData': ['Auth', function(Auth) {
                             return Auth.$waitForAuth();
