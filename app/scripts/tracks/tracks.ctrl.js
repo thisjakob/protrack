@@ -1,7 +1,7 @@
 /* global $, moment */
 (function () {
     'use strict';
-
+    //TODO icon google api lokal speichern!
     angular.module('protrack')
         .controller('TracksCtrl', ['dataService', '$filter', 'Auth', function (dataService, $filter, Auth) {
             var tracksCtrl = this;
@@ -67,23 +67,23 @@
             tracksCtrl.loadTags = function (project) {
                 var tags = [];
                 if (tracksCtrl.tags.length === 0) {
-                    console.log('projects: ' + tracksCtrl.projects[project]);
-                    if (project !== '' && tracksCtrl.projects[project] !== undefined && tracksCtrl.projects[project].tags !== '') {
+                    //if (tracksCtrl.projects[project] !== undefined) { console.log('projects: ' + tracksCtrl.projects[project].name); }
+                    if (project !== '' && tracksCtrl.projects[project] !== undefined && tracksCtrl.projects[project].tags !== undefined) {
                         // load project tags
                         angular.forEach(tracksCtrl.projects[project].tags, function (tagid) {
                             var tag = tracksCtrl.tagsAll[tagid];
                             if (tag !== undefined) {
-                                // TODO show tags mit desc!
+                                // set id in tag to select
                                 tag.$id = tagid;
                                 tags.push(tag);
                             }
                         });
                     } else {
                         // load tags without projects
-                        angular.forEach(tracksCtrl.tagsAll, function (tag) {
-                            if (tag.project !== true) {
-                                tags.push(tag);
-                            }
+                        angular.forEach(tracksCtrl.tagsAll, function (tag, tagid) {
+                            // set id in tag to select
+                            tag.$id = tagid;
+                            tags.push(tag);
                         });
                     }
                 }
@@ -98,24 +98,20 @@
                 var selected = [];
                 angular.forEach(tracksCtrl.loadTags(project), function (tag) {
                     angular.forEach(tags, function (tagproject) {
-                        if (tag.$id.indexOf(tagproject) >= 0) {
+                        if (tag.$id !== undefined && tag.$id.indexOf(tagproject) >= 0) {
                             if (tag.name !== undefined) {
                                 selected.push(tag.name);
                             }
                         }
                     });
                 });
-                return selected.length ? selected.join(', ') : 'No tag';
+                return selected.length ? selected.sort().join(', ') : 'No tag';
             };
 
             tracksCtrl.deleteTrack = function (id) {
                 console.log('Delete Item: ' + id);
                 dataService.delData(path + 'tracks', id);
                 $('#addtrack').prop('disabled', false);
-            };
-
-            tracksCtrl.writeID = function (id) {
-                console.log('Edit Item: ' + id);
             };
         }]);
 })();

@@ -5,12 +5,19 @@
     angular.module('protrack')
         .controller('ProjectsCtrl', ['dataService', 'Auth', function (dataService, Auth) {
             var projectsCtrl = this;
-            var auth = Auth.$getAuth();
-            var path = 'users/' + auth.uid + '/';
 
-            projectsCtrl.projectsArray = dataService.getData(path + 'projects', true);
-            projectsCtrl.tags = dataService.getData(path + 'tags', false);
-            projectsCtrl.tagsArray = dataService.getData(path + 'tags', true);
+            var auth = Auth.$getAuth();
+            var path = 'users/';
+
+            if (auth === null || auth.uid === null) {
+                alert("Authentification failure: login first");
+            } else {
+                path = path + auth.uid + '/';
+
+                projectsCtrl.projectsArray = dataService.getData(path + 'projects', true);
+                projectsCtrl.tags = dataService.getData(path + 'tags', false);
+                projectsCtrl.tagsArray = dataService.getData(path + 'tags', true);
+            }
 
             projectsCtrl.createProject = function () {
                 $('#addproject').prop('disabled', true);
@@ -28,15 +35,12 @@
                     desc: '',
                     project: false
                 };
-                // TODO erhält nicht immer eine $id nach lesen mit dataService.getData(path + 'tags', false);
                 dataService.addData(path + 'tags', projectsCtrl.newTag);
             };
 
             projectsCtrl.updateProject = function (data, key) {
                 console.log('update project: ' + key);
                 angular.forEach(data.tags, function(tagid){
-                    // TODO ev project id hinterlegen, damit auch wieder gelöscht werden kann (wird benötigt,
-                    // damit projektunabhängige Tags angezeigt werden können
                     dataService.updateData(path + 'tags', tagid, {project: true});
                 });
                 dataService.updateData(path + 'projects', key, data);
@@ -62,7 +66,7 @@
                         }
                     });
                 });
-                return selected.length ? selected.join(', ') : 'Not set';
+                return selected.length ? selected.sort().join(', ') : 'No tag';
             };
 
             // TODO nach delete entsprechende Referenzen entfernen
@@ -71,10 +75,5 @@
                 dataService.delData(path + item + 's', id);
                 $('#add' + item).prop('disabled', false);
             };
-
-            projectsCtrl.writeID = function (id) {
-                console.log('Edit Item: ' + id);
-            };
         }]);
 })();
-// TODO  projektspezifische Tags und nicht projektspezifische Tags (in keinem Projekt zugeordnet) in der Liste anzeigen
