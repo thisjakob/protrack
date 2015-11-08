@@ -72,6 +72,7 @@
                         angular.forEach(tracksCtrl.projects[project].tags, function (tagid) {
                             var tag = tracksCtrl.tagsAll[tagid];
                             if (tag !== undefined) {
+                                // TODO show tags mit desc!
                                 tag.$id = tagid;
                                 tags.push(tag);
                             }
