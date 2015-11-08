@@ -3,24 +3,21 @@
     'use strict';
     //TODO icon google api lokal speichern!
     angular.module('protrack')
-        .controller('TracksCtrl', ['dataService', '$filter', 'Auth', function (dataService, $filter, Auth) {
+        .controller('TracksCtrl', ['dataService', '$filter', 'authData', function (dataService, $filter, authData) {
             var tracksCtrl = this;
-
-            var auth = Auth.$getAuth();
             var path = 'users/';
 
-            if (auth === null || auth.uid === null) {
-                alert("Authentification failure: login first");
-            } else {
-                path = path + auth.uid + '/';
+            // the resolve config of this route makes sure that the
+            // authData object is ready to use by the time this controller
+            // is initialized
+            path = path + authData.uid + '/';
 
-                tracksCtrl.tracksArray = dataService.getData(path + 'tracks', true);
-                tracksCtrl.projects = dataService.getData(path + 'projects', false);
-                tracksCtrl.projectsArray = dataService.getData(path + 'projects', true);
-                tracksCtrl.tagsAll = dataService.getData(path + 'tags', false);
-                tracksCtrl.tags = [];
-                tracksCtrl.projectBackup = '';
-            }
+            tracksCtrl.tracksArray = dataService.getData(path + 'tracks', true);
+            tracksCtrl.projects = dataService.getData(path + 'projects', false);
+            tracksCtrl.projectsArray = dataService.getData(path + 'projects', true);
+            tracksCtrl.tagsAll = dataService.getData(path + 'tags', false);
+            tracksCtrl.tags = [];
+            tracksCtrl.projectBackup = '';
 
             // create track and save it to compare to show form
             tracksCtrl.createTrackElement = function () {
