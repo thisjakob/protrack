@@ -7,7 +7,7 @@
         <li><a ui-sref="reports">Reports</a></li>
         <li><a ui-sref="projects">Projects</a></li>
         <li><a ui-sref="settings">Settings</a></li>
-        <li><a ui-sref="login">Logout</a></li>
+        <li><a ui-sref="home" ng-click="homeNavCtrl.logout()">Logout</a></li>
     </ul>
 
     <ul class="nav navbar-nav" ng-hide="homeNavCtrl.authData">

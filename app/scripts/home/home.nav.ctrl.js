@@ -5,8 +5,9 @@
     'use strict';
 
     angular.module('protrack')
-        .controller('HomeNavCtrl', ['authData', function (authData) {
+        .controller('HomeNavCtrl', ['Auth', 'authData', function (Auth, authData) {
             var homeNavCtrl = this;
             homeNavCtrl.authData = authData;
+            homeNavCtrl.logout = Auth.logout;
         }]);
 })();

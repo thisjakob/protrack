@@ -35,13 +35,6 @@
                     });
             };
 
-            authCtrl.logout = function () {
-                authCtrl.auth.$unauth();
-                authCtrl.authData = null;
-                authCtrl.message = null;
-                $state.go('login');
-            };
-
             authCtrl.sendPwdReset = function () {
                 if (authCtrl.email) {
                     Auth.$resetPassword({
