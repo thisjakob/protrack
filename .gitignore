@@ -5,3 +5,5 @@ node_modules
 .tmp/**
 .idea/workspace.xml
 dist/**
+
+todo.mjak.md
