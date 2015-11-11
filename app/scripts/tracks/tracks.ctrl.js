@@ -3,7 +3,7 @@
     'use strict';
     //TODO icon google api lokal speichern!
     angular.module('protrack')
-        .controller('TracksCtrl', ['dataService', '$filter', 'authData', function (dataService, $filter, authData) {
+        .controller('TracksCtrl', ['dataService', 'calcTime', '$filter', 'authData', function (dataService, calcTime, $filter, authData) {
             var tracksCtrl = this;
             var path = 'users/';
 
@@ -23,11 +23,12 @@
             tracksCtrl.createTrackElement = function () {
                 $('#addtrack').prop('disabled', true);
                 tracksCtrl.newTrack = {
-                    starttime: moment().format('DD.MM.YYYY HH:mm:ss'),
+                    starttime: moment().format('DD.MM.YYYY HH:mm'),
                     project: '',
                     desc: '',
                     tags: '',
-                    endtime: '', // with http://vitalets.github.io/combodate/
+                    endtime: moment().format('DD.MM.YYYY HH:mm'), // with http://vitalets.github.io/combodate/
+                    difftime: '00:00',
                     record: false
                 };
                 dataService.addData(path + 'tracks', tracksCtrl.newTrack);
@@ -51,9 +52,12 @@
                 dataService.setData(path + 'tracks/' + key + '/project', project);
             };
 
-            tracksCtrl.setProjectBackup = function (key) {
-                console.log('update project backup in track: ' + key);
-                dataService.setData(path + 'tracks/' + key + '/project', tracksCtrl.projectBackup);
+            tracksCtrl.cancelTrack = function (track) {
+                console.log('update project backup in track: ' + track.$id);
+                // write back updated project
+                dataService.setData(path + 'tracks/' + track.$id + '/project', tracksCtrl.projectBackup);
+                // calc diff time
+                track.difftime = calcTime.diffTime(track.starttime, track.endtime);
             };
 
             tracksCtrl.showProject = function (project) {
@@ -110,6 +114,23 @@
                 dataService.delData(path + 'tracks', id);
                 $('#addtrack').prop('disabled', false);
             };
+
+            tracksCtrl.changeStarttime = function (starttime, track) {
+                console.log('change starttime > change difftime');
+                track.difftime = calcTime.diffTime(starttime, track.endtime);
+            };
+
+            tracksCtrl.changeEndtime = function (endtime, track) {
+                console.log('change endtime > change difftime');
+                track.difftime = calcTime.diffTime(track.starttime, endtime);
+            };
+
+            tracksCtrl.changeDifftime = function (difftime, track) {
+                console.log('change difftime > change endtime');
+                track.endtime = calcTime.addDiffTime(track.starttime, difftime);
+            };
+
+            // TODO button = on ==> change endtime to actual time
         }]);
 })();
 // .$loaded().then (function(){}) when loaded

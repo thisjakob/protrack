@@ -13,7 +13,7 @@
                 ng-repeat="(key,track) in tracksCtrl.tracksArray | orderBy:'date':true">
                 <td>
                     <div class="starttime">
-                    <span editable-datetime="track.starttime" e-name="starttime" e-class="form-control input-sm"
+                    <span editable-datetime="track.starttime" e-name="starttime" e-class="form-control input-sm"  e-ng-change="tracksCtrl.changeStarttime($data, track)"
                           e-form="rowform">{{ track.starttime || 'empty' }}</span>
                     </div>
                     <div class="project">
@@ -37,7 +37,7 @@
 
                         <!-- onshow="tracksCtrl.loadTags(track.project)" -->
                         <span editable-select="track.tags" e-name="tags" e-form="rowform" e-multiple
-                              e-class="form-control input-sm" e-ng-change="tracksCtrl.changeData($data)"
+                              e-class="form-control input-sm"
                               e-ng-options="t.$id as tracksCtrl.loadTagname(t) for t in tracksCtrl.loadTags(track.project) | orderBy:'name'">
                             {{ tracksCtrl.showTags(track.project, track.tags) }}
                         </span>
@@ -47,8 +47,12 @@
                         <span editable-text="track.desc" e-name="desc" e-class="form-control input-sm" e-form="rowform">{{ track.desc || 'empty' }}</span>
                     </div>
                     <div class="endtime">
-                    <span editable-datetime="track.endtime" e-name="endtime" e-class="form-control input-sm"
+                    <span editable-datetime="track.endtime" e-name="endtime" e-class="form-control input-sm" e-ng-change="tracksCtrl.changeEndtime($data, track)"
                           e-form="rowform">{{ track.endtime || 'empty' }}</span>
+                    </div>
+                    <div class="difftime">
+                    <span editable-text="track.difftime" e-step="any" e-min="0" e-name="difftime" e-class="form-control input-sm"  e-ng-change="tracksCtrl.changeDifftime($data, track)"
+                          e-form="rowform">{{ track.difftime || 'empty' }}</span>
                     </div>
                     <div style="white-space: nowrap">
                         <!-- form -->
@@ -57,7 +61,7 @@
                               shown="tracksCtrl.newTrack.starttime == track.starttime">
                             <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-default btn-xs"><i
                                     class="fa fa-save fa-lg"></i></button>
-                            <button type="button" ng-disabled="rowform.$waiting" ng-click="tracksCtrl.setProjectBackup(track.$id); rowform.$cancel()"
+                            <button type="button" ng-disabled="rowform.$waiting" ng-click="tracksCtrl.cancelTrack(track); rowform.$cancel()"
                                     class="btn btn-default btn-xs"><i class="fa fa-times fa-lg"></i></button>
                         </form>
                         <div class="buttons" ng-show="!rowform.$visible">

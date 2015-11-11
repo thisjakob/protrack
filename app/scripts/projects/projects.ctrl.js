@@ -60,7 +60,7 @@
                         }
                     });
                 });
-                return selected.length ? selected.sort().join(', ') : 'No tag';
+                return selected.length ? selected.sort().join(', ') : 'No tags';
             };
 
             // TODO nach delete entsprechende Referenzen entfernen
