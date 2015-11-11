@@ -1,15 +1,15 @@
 (function () {
     'use strict';
 
-    angular.module('protrack').factory('showData', ['dataService', function (dataService) {
+    angular.module('protrack').factory('showData', ['$filter', function ($filter) {
         // show name of project
-        var showProjectname = function (array, project) {
-            var selected = $filter('filter')(array, {$id: project});
-            return (project && selected.length) ? selected[0].name : 'No project';
+        var showDataName = function (array, id) {
+            var selected = $filter('filter')(array, {$id: id});
+            return (id && selected.length) ? selected[0].name : 'No item';
         };
 
         var show = {
-            showProjectname: showProjectname
+            showDataName: showDataName
         };
 
         return show;
