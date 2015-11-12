@@ -25,7 +25,8 @@
     "bootstrap-social-buttons": "~1.0.0",
     "ng-tags-input": "~3.0.0",
     "ui-select": "angular-ui-select#~0.13.2",
-    "material-design-lite": "~1.0.6"
+    "material-design-lite": "~1.0.6",
+    "angular-toastr": "~1.6.0"
   },
   "devDependencies": {},
   "resolutions": {

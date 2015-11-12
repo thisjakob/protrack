@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('protrack')
-        .controller('AuthCtrl', ['Auth', '$state', 'dataService', function (Auth, $state, dataService) {
+        .controller('AuthCtrl', ['Auth', '$state', 'dataService', 'toastr', function (Auth, $state, dataService, toastr) {
             var authCtrl = this;
 
             authCtrl.authData = false;
@@ -31,6 +31,7 @@
                         $state.go('timer');
                     })
                     .catch(function (error) {
+                        toastr.error('It seems that you are offline. Try to login when you are back online. (' + error + ')');
                         authCtrl.error = error;
                     });
             };
