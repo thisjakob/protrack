@@ -10,11 +10,6 @@
             return firebaseUrl;
         };
 
-        var setUrl = function (url) {
-            /*firebaseUrl = url;
-             FirebaseUrl.url = url;*/
-        };
-
         var getFirebaseRoot = function () {
             return firebaseRef;
         };
@@ -39,7 +34,12 @@
                 return $firebaseObject(ref);
             }
         };
-        
+
+        var getValue = function (path, func) {
+            var ref = getNodes(path);
+            ref.on("value", func);
+        };
+
         /**
          * TODO
          * @param path
@@ -47,7 +47,7 @@
          * @returns {*}
          */
         var setData = function (path, data) {
-            console.log('dataService add data: ' + path + ' / ' + data);
+            console.log('dataService set data: ' + path + ' : ' + data);
             var ref = getNodes(path);
             return ref.set(data);
         };
@@ -59,7 +59,7 @@
          * @returns {*}
          */
         var addData = function (path, data) {
-            console.log('dataService add data: ' + path + ' / ' + data);
+            console.log('dataService add data: ' + path + ' : ' + data);
             var ref = getNodes(path);
             return ref.push(data);
         };
@@ -78,7 +78,7 @@
 
         var service = {
             getUrl: getUrl,
-            setUrl: setUrl,
+            getValue: getValue,
             setData: setData,
             addData: addData,
             getData: getData,
@@ -93,4 +93,3 @@
 })();
 
 // remember: '$q' promises : http://www.42id.com/articles/angular-js-and-firebase/
-// data : TODO Datenstruktur bestimmen

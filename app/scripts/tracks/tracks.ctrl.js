@@ -3,7 +3,7 @@
     'use strict';
     //TODO icon google api lokal speichern!
     angular.module('protrack')
-        .controller('TracksCtrl', ['dataService', 'calcTime', '$filter', 'authData', function (dataService, calcTime, $filter, authData) {
+        .controller('TracksCtrl', ['dataService', 'calcTime', '$filter', '$interval', 'authData', function (dataService, calcTime, $filter, $interval, authData) {
             var tracksCtrl = this;
             var path = 'users/';
 
@@ -18,10 +18,23 @@
             tracksCtrl.tagsAll = dataService.getData(path + 'tags', false);
             tracksCtrl.tags = [];
             tracksCtrl.projectBackup = '';
+            tracksCtrl.record = { recording: '', id: '', data: '' };
+
+            tracksCtrl.setActualTime = function () {
+                tracksCtrl.record.data.endtime = moment().format('DD.MM.YYYY HH:mm');
+                dataService.getValue(path + 'tracks/' + tracksCtrl.record.id + '/starttime', function (snapshot) {
+                    tracksCtrl.record.data.starttime = snapshot.val();
+                    tracksCtrl.record.data.difftime = calcTime.diffTime(tracksCtrl.record.data.starttime, tracksCtrl.record.data.endtime);
+                    dataService.setData(path + 'tracks/' + tracksCtrl.record.id + '/endtime', tracksCtrl.record.data.endtime);
+                    dataService.setData(path + 'tracks/' + tracksCtrl.record.id + '/difftime', tracksCtrl.record.data.difftime);
+                });
+            };
 
             // create track and save it to compare to show form
             tracksCtrl.createTrackElement = function () {
                 $('#addtrack').prop('disabled', true);
+                // TODO stop other Timer
+
                 tracksCtrl.newTrack = {
                     starttime: moment().format('DD.MM.YYYY HH:mm'),
                     project: '',
@@ -42,6 +55,7 @@
 
             tracksCtrl.updateTrack = function (data, key) {
                 console.log('update track: ' + key);
+                // TODO if start and endtime is the same, start timing
                 tracksCtrl.projectBackup = data.project;
                 dataService.updateData(path + 'tracks', key, data);
                 $('#addtrack').prop('disabled', false);
@@ -130,7 +144,59 @@
                 track.endtime = calcTime.addDiffTime(track.starttime, difftime);
             };
 
-            // TODO button = on ==> change endtime to actual time
+            /**
+             * record time (set every minute endtime to actual time)
+             * @param track     object of firebase
+             * @param record    boolean true = recording; false = stop recording
+             */
+            tracksCtrl.recordTrack = function (track, record) {
+                var data = jQuery.extend(true, {}, track);
+                delete data.$id;
+                delete data.$priority;
+                delete data.$$hashKey;
+                if (record) {
+                    // TODO stop all timer
+                    tracksCtrl.startRecording(data, track.$id);
+                } else {
+                    tracksCtrl.stopRecording(data, track.$id);
+                }
+
+            };
+
+            tracksCtrl.startRecording = function (data, id) {
+                tracksCtrl.record.id = id;
+                tracksCtrl.record.data = data;
+                // set record to true
+                tracksCtrl.record.data.record = true;
+                tracksCtrl.updateTrack(data, id);
+                // start recording (set endtime to actual time)
+                tracksCtrl.record.recording = $interval(tracksCtrl.setActualTime, 5000);
+                if (tracksCtrl.record.recording === '') {
+                    console.log("Timer started");
+                }
+            };
+
+            // TODO ERROR set endtime to starttime
+            tracksCtrl.stopRecording = function () {
+                // delete record
+                if (tracksCtrl.record.data !== null && tracksCtrl.record.id !== '') {
+                    tracksCtrl.record.data.record = false;
+                    tracksCtrl.updateTrack(tracksCtrl.record.data, tracksCtrl.record.id);
+                    tracksCtrl.record.id = '';
+                    tracksCtrl.record.data = null;
+
+                    // delete recording
+                    if (tracksCtrl.record.recording !== '') {
+                        if ($interval.cancel(tracksCtrl.record.recording)) {
+                            console.log("Timer canceled");
+                        }
+                        tracksCtrl.record.recording = '';
+                    }
+                } else {
+                    console.error("stopRecording not possible!");
+                }
+            };
+
         }]);
 })();
 // .$loaded().then (function(){}) when loaded

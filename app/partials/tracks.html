@@ -4,8 +4,7 @@
     <div class="row">
         <div>
             <button id="addtrack" class="mdl-button mdl-js-button mdl-button--fab"
-                    ng-click="tracksCtrl.createTrackElement()"><i
-                    class="material-icons">add</i></button>
+                    ng-click="tracksCtrl.createTrackElement()"><i class="material-icons">add</i></button>
         </div>
         <table class="tracklist mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
             <tbody>
@@ -59,25 +58,27 @@
                         <form editable-form name="rowform" onaftersave="tracksCtrl.updateTrack($data, track.$id)"
                               ng-show="rowform.$visible" class="form-buttons form-inline"
                               shown="tracksCtrl.newTrack.starttime == track.starttime">
-                            <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-default btn-xs"><i
-                                    class="fa fa-save fa-lg"></i></button>
+                            <button type="submit" ng-disabled="rowform.$waiting" class="mdl-button mdl-js-button mdl-button--fab"><i class="material-icons">done</i></button>
                             <button type="button" ng-disabled="rowform.$waiting" ng-click="tracksCtrl.cancelTrack(track); rowform.$cancel()"
-                                    class="btn btn-default btn-xs"><i class="fa fa-times fa-lg"></i></button>
+                                    class="mdl-button mdl-js-button mdl-button--fab"><i class="material-icons">highlight_off</i></button>
                         </form>
                         <div class="buttons" ng-show="!rowform.$visible">
-                            <button ng-hide="confirm" class="btn btn-default btn-xs" type="button"
-                                    ng-click="tracksCtrl.editTrack(track.project); rowform.$show()"><span class="fa fa-edit" aria-hidden="true"></span>
+                            <button ng-hide="!track.record" class="mdl-button mdl-js-button mdl-button--fab" type="button"
+                                    ng-click="tracksCtrl.recordTrack(track, false)"><i class="material-icons md-icon dp24">timer_off</i></span>
                             </button>
-                            <button ng-hide="confirm" class="btn btn-default btn-xs" type="button"
-                                    ng-click="confirm=true">
-                                <span class="fa fa-trash" aria-hidden="true"></span></button>
+                            <button ng-hide="track.record" class="mdl-button mdl-js-button mdl-button--fab" type="button"
+                                    ng-click="tracksCtrl.recordTrack(track, true)"><i class="material-icons md-icon dp24">timer</i></span>
+                            </button>
+                            <button ng-hide="confirm" class="mdl-button mdl-js-button mdl-button--fab" type="button"
+                                    ng-click="tracksCtrl.editTrack(track.project); rowform.$show()"><i class="material-icons">mode_edit</i></span>
+                            </button>
+                            <button ng-hide="confirm" class="mdl-button mdl-js-button mdl-button--fab" type="button"
+                                    ng-click="confirm=true"><i class="material-icons">delete</i></button>
                             <div ng-show="confirm">
-                                <button class="btn btn-danger btn-xs" title="Track wirklich löschen?"
-                                        ng-click="tracksCtrl.deleteTrack(track.$id)"><span class="fa fa-trash"
-                                                                                           aria-hidden="true"></span>?
+                                <button class="mdl-button mdl-js-button mdl-button--fab" title="Track wirklich löschen?"
+                                        ng-click="tracksCtrl.deleteTrack(track.$id)"><i class="material-icons">delete</i>?
                                 </button>
-                                <button class="btn btn-default btn-xs" title="Abbrechen" ng-click="confirm=false"><span
-                                        class="fa fa-times fa-lg" aria-hidden="true"></span></button>
+                                <button class="mdl-button mdl-js-button mdl-button--fab" title="Abbrechen" ng-click="confirm=false"><i class="material-icons">highlight_off</i></button>
                             </div>
                         </div>
                     </div>
