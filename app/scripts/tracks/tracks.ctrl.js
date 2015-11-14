@@ -21,13 +21,17 @@
             tracksCtrl.record = { recording: '', id: '', data: '' };
 
             tracksCtrl.setActualTime = function () {
-                tracksCtrl.record.data.endtime = moment().format('DD.MM.YYYY HH:mm');
-                dataService.getValue(path + 'tracks/' + tracksCtrl.record.id + '/starttime', function (snapshot) {
-                    tracksCtrl.record.data.starttime = snapshot.val();
-                    tracksCtrl.record.data.difftime = calcTime.diffTime(tracksCtrl.record.data.starttime, tracksCtrl.record.data.endtime);
-                    dataService.setData(path + 'tracks/' + tracksCtrl.record.id + '/endtime', tracksCtrl.record.data.endtime);
-                    dataService.setData(path + 'tracks/' + tracksCtrl.record.id + '/difftime', tracksCtrl.record.data.difftime);
-                });
+                if (tracksCtrl.record.recording !== '' && tracksCtrl.record.id !== '') {
+                    tracksCtrl.record.data.endtime = moment().format('DD.MM.YYYY HH:mm');
+                    dataService.getValue(path + 'tracks/' + tracksCtrl.record.id + '/starttime', function (snapshot) {
+                        tracksCtrl.record.data.starttime = snapshot.val();
+                        tracksCtrl.record.data.difftime = calcTime.diffTime(tracksCtrl.record.data.starttime, tracksCtrl.record.data.endtime);
+                        dataService.setData(path + 'tracks/' + tracksCtrl.record.id + '/endtime', tracksCtrl.record.data.endtime);
+                        dataService.setData(path + 'tracks/' + tracksCtrl.record.id + '/difftime', tracksCtrl.record.data.difftime);
+                    });
+                } else {
+                    console.error('setActualTime fired with recording off!');
+                }
             };
 
             // create track and save it to compare to show form
@@ -55,10 +59,16 @@
 
             tracksCtrl.updateTrack = function (data, key) {
                 console.log('update track: ' + key);
-                // TODO if start and endtime is the same, start timing
                 tracksCtrl.projectBackup = data.project;
+
+                // update data
                 dataService.updateData(path + 'tracks', key, data);
                 $('#addtrack').prop('disabled', false);
+
+                // if start and endtime is the same, start timing
+                if (data.starttime === data.endtime) {
+                    tracksCtrl.startRecording(data, key);
+                }
             };
 
             tracksCtrl.updateProject = function (project, key) {
@@ -150,12 +160,18 @@
              * @param record    boolean true = recording; false = stop recording
              */
             tracksCtrl.recordTrack = function (track, record) {
+                // deepcopy of track
                 var data = jQuery.extend(true, {}, track);
                 delete data.$id;
                 delete data.$priority;
                 delete data.$$hashKey;
                 if (record) {
-                    // TODO stop all timer
+                    // stop last timer
+                    tracksCtrl.stopRecording();
+
+                    // start new timer
+                    data.record = true;
+                    tracksCtrl.updateTrack(data, track.$id);
                     tracksCtrl.startRecording(data, track.$id);
                 } else {
                     tracksCtrl.stopRecording(data, track.$id);
@@ -166,22 +182,20 @@
             tracksCtrl.startRecording = function (data, id) {
                 tracksCtrl.record.id = id;
                 tracksCtrl.record.data = data;
-                // set record to true
-                tracksCtrl.record.data.record = true;
-                tracksCtrl.updateTrack(data, id);
-                // start recording (set endtime to actual time)
+                // start recording cycle (set endtime to actual time)
                 tracksCtrl.record.recording = $interval(tracksCtrl.setActualTime, 5000);
                 if (tracksCtrl.record.recording === '') {
                     console.log("Timer started");
                 }
             };
 
-            // TODO ERROR set endtime to starttime
+            /**
+             * stops recording in timer memorized
+             */
             tracksCtrl.stopRecording = function () {
                 // delete record
                 if (tracksCtrl.record.data !== null && tracksCtrl.record.id !== '') {
-                    tracksCtrl.record.data.record = false;
-                    tracksCtrl.updateTrack(tracksCtrl.record.data, tracksCtrl.record.id);
+                    dataService.setData(path + 'tracks/' + tracksCtrl.record.id + '/record', false);
                     tracksCtrl.record.id = '';
                     tracksCtrl.record.data = null;
 
@@ -193,7 +207,7 @@
                         tracksCtrl.record.recording = '';
                     }
                 } else {
-                    console.error("stopRecording not possible!");
+                    console.log('no recording to stop not');
                 }
             };
 
