@@ -24,10 +24,12 @@
                 if (tracksCtrl.record.recording !== '' && tracksCtrl.record.id !== '') {
                     tracksCtrl.record.data.endtime = moment().format('DD.MM.YYYY HH:mm');
                     dataService.getValue(path + 'tracks/' + tracksCtrl.record.id + '/starttime', function (snapshot) {
-                        tracksCtrl.record.data.starttime = snapshot.val();
-                        tracksCtrl.record.data.difftime = calcTime.diffTime(tracksCtrl.record.data.starttime, tracksCtrl.record.data.endtime);
-                        dataService.setData(path + 'tracks/' + tracksCtrl.record.id + '/endtime', tracksCtrl.record.data.endtime);
-                        dataService.setData(path + 'tracks/' + tracksCtrl.record.id + '/difftime', tracksCtrl.record.data.difftime);
+                        if (tracksCtrl.record.data !== null) {
+                            tracksCtrl.record.data.starttime = snapshot.val();
+                            tracksCtrl.record.data.difftime = calcTime.diffTime(tracksCtrl.record.data.starttime, tracksCtrl.record.data.endtime);
+                            dataService.setData(path + 'tracks/' + tracksCtrl.record.id + '/endtime', tracksCtrl.record.data.endtime);
+                            dataService.setData(path + 'tracks/' + tracksCtrl.record.id + '/difftime', tracksCtrl.record.data.difftime);
+                        }
                     });
                 } else {
                     console.error('setActualTime fired with recording off!');
@@ -37,7 +39,6 @@
             // create track and save it to compare to show form
             tracksCtrl.createTrackElement = function () {
                 $('#addtrack').prop('disabled', true);
-                // TODO stop other Timer
 
                 tracksCtrl.newTrack = {
                     starttime: moment().format('DD.MM.YYYY HH:mm'),
@@ -135,6 +136,9 @@
 
             tracksCtrl.deleteTrack = function (id) {
                 console.log('Delete Item: ' + id);
+                if (tracksCtrl.record.id === id) {
+                    tracksCtrl.stopRecording();
+                }
                 dataService.delData(path + 'tracks', id);
                 $('#addtrack').prop('disabled', false);
             };
@@ -180,10 +184,11 @@
             };
 
             tracksCtrl.startRecording = function (data, id) {
+
                 tracksCtrl.record.id = id;
                 tracksCtrl.record.data = data;
                 // start recording cycle (set endtime to actual time)
-                tracksCtrl.record.recording = $interval(tracksCtrl.setActualTime, 5000);
+                tracksCtrl.record.recording = $interval(tracksCtrl.setActualTime, 10000);
                 if (tracksCtrl.record.recording === '') {
                     console.log("Timer started");
                 }
