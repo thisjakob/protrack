@@ -181,6 +181,7 @@
              */
             tracksCtrl.recordTrack = function (track, record) {
                 // deepcopy of track
+                var id = track.$id;
                 var data = jQuery.extend(true, {}, track);
                 delete data.$id;
                 delete data.$priority;
@@ -195,16 +196,17 @@
                         data.starttime = moment().format('DD.MM.YYYY HH:mm');
                         data.endtime = moment().format('DD.MM.YYYY HH:mm');
                         data.difftime = '00:00';
-                        track = tracksCtrl.createTrackElement();
-                        tracksCtrl.updateTrack(data, track.$id);
+                        //track = tracksCtrl.createTrackElement();
+                        //tracksCtrl.updateTrack(data, track.key());
+                        track = dataService.addData(path + 'tracks', data);
+                        id = track.key();
                     }
-
                     // start new timer
-                    dataService.setData(path + 'tracks/' + track.$id + '/record', true);
-                    tracksCtrl.startRecording(data, track.$id);
+                    dataService.setData(path + 'tracks/' + id + '/record', true);
+                    tracksCtrl.startRecording(data, id);
                 } else {
                     // stop timer
-                    tracksCtrl.stopRecording(data, track.$id);
+                    tracksCtrl.stopRecording(data, id);
                 }
 
             };
@@ -214,7 +216,7 @@
                 tracksCtrl.record.data = data;
 
                 // start recording cycle (set end time to actual time)
-                tracksCtrl.record.recording = $interval(tracksCtrl.setActualTime, 10000);
+                tracksCtrl.record.recording = $interval(tracksCtrl.setActualTime, 5000);
                 tracksCtrl.allRecording.push(tracksCtrl.record.recording);
                 if (tracksCtrl.record.recording !== '') {
                     console.log("Timer started");
