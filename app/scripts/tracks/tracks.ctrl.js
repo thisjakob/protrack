@@ -186,27 +186,21 @@
                 delete data.$id;
                 delete data.$priority;
                 delete data.$$hashKey;
+                // stop last timer
+                tracksCtrl.stopRecording();
                 if (record) {
-                    // stop last timer
-                    tracksCtrl.stopRecording();
-
                     // check if end time is different to actual time, then create a new track with same content and start this
                     if (calcTime.diffTime(track.endtime, moment().format('DD.MM.YYYY HH:mm')) !== '00:00') {
                         console.log("Difftime is greater than 1 Minute");
                         data.starttime = moment().format('DD.MM.YYYY HH:mm');
                         data.endtime = moment().format('DD.MM.YYYY HH:mm');
                         data.difftime = '00:00';
-                        //track = tracksCtrl.createTrackElement();
-                        //tracksCtrl.updateTrack(data, track.key());
                         track = dataService.addData(path + 'tracks', data);
                         id = track.key();
                     }
                     // start new timer
                     dataService.setData(path + 'tracks/' + id + '/record', true);
                     tracksCtrl.startRecording(data, id);
-                } else {
-                    // stop timer
-                    tracksCtrl.stopRecording(data, id);
                 }
 
             };
