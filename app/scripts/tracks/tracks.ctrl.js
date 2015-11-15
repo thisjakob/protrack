@@ -18,21 +18,37 @@
             tracksCtrl.tagsAll = dataService.getData(path + 'tags', false);
             tracksCtrl.tags = [];
             tracksCtrl.projectBackup = '';
-            tracksCtrl.record = { recording: '', id: '', data: '' };
+            tracksCtrl.record = {recording: '', id: '', data: ''};
+            tracksCtrl.allRecording = [];
 
+            // TODO bei Initialisierung prüfen, ob Recording gesetzt
+            /**
+             * read actual time and set end and diff time. if endtime is on another day, recording will be stopping.
+             */
             tracksCtrl.setActualTime = function () {
                 if (tracksCtrl.record.recording !== '' && tracksCtrl.record.id !== '') {
+                    // get actual time
                     tracksCtrl.record.data.endtime = moment().format('DD.MM.YYYY HH:mm');
+
+                    // read start time from track
                     dataService.getValue(path + 'tracks/' + tracksCtrl.record.id + '/starttime', function (snapshot) {
                         if (tracksCtrl.record.data !== null) {
+                            // set new end and diff time
                             tracksCtrl.record.data.starttime = snapshot.val();
                             tracksCtrl.record.data.difftime = calcTime.diffTime(tracksCtrl.record.data.starttime, tracksCtrl.record.data.endtime);
+                            // check if end is another day than start
+                            // TODO if (moment(tracksCtrl.record.data.endtime).isSame(moment(tracksCtrl.record.data.starttime), "day")){
                             dataService.setData(path + 'tracks/' + tracksCtrl.record.id + '/endtime', tracksCtrl.record.data.endtime);
                             dataService.setData(path + 'tracks/' + tracksCtrl.record.id + '/difftime', tracksCtrl.record.data.difftime);
+                            /*} else {
+                             console.log("Stop recording, because another day: " + tracksCtrl.record.data.starttime + " and " + tracksCtrl.record.data.endtime);
+                             tracksCtrl.stopRecording();
+                             }*/
                         }
                     });
                 } else {
                     console.error('setActualTime fired with recording off!');
+                    tracksCtrl.stopRecording();
                 }
             };
 
@@ -49,7 +65,7 @@
                     difftime: '00:00',
                     record: false
                 };
-                dataService.addData(path + 'tracks', tracksCtrl.newTrack);
+                return dataService.addData(path + 'tracks', tracksCtrl.newTrack);
             };
 
             tracksCtrl.editTrack = function (project) {
@@ -58,23 +74,24 @@
                 }
             };
 
-            tracksCtrl.updateTrack = function (data, key) {
-                console.log('update track: ' + key);
+            tracksCtrl.updateTrack = function (data, id) {
+                console.log('update track: ' + id);
                 tracksCtrl.projectBackup = data.project;
 
                 // update data
-                dataService.updateData(path + 'tracks', key, data);
+                dataService.updateData(path + 'tracks', id, data);
                 $('#addtrack').prop('disabled', false);
 
                 // if start and endtime is the same, start timing
                 if (data.starttime === data.endtime) {
-                    tracksCtrl.startRecording(data, key);
+                    dataService.setData(path + 'tracks/' + id + '/record', true);
+                    tracksCtrl.startRecording(data, id);
                 }
             };
 
-            tracksCtrl.updateProject = function (project, key) {
-                console.log('update project in track: ' + key);
-                dataService.setData(path + 'tracks/' + key + '/project', project);
+            tracksCtrl.updateProject = function (project, id) {
+                console.log('update project in track: ' + id);
+                dataService.setData(path + 'tracks/' + id + '/project', project);
             };
 
             tracksCtrl.cancelTrack = function (track) {
@@ -93,7 +110,6 @@
             tracksCtrl.loadTags = function (project) {
                 var tags = [];
                 if (tracksCtrl.tags.length === 0) {
-                    //if (tracksCtrl.projects[project] !== undefined) { console.log('projects: ' + tracksCtrl.projects[project].name); }
                     if (project !== '' && tracksCtrl.projects[project] !== undefined && tracksCtrl.projects[project].tags !== undefined) {
                         // load project tags
                         angular.forEach(tracksCtrl.projects[project].tags, function (tagid) {
@@ -159,7 +175,7 @@
             };
 
             /**
-             * record time (set every minute endtime to actual time)
+             * record time (set every minute end time to actual time)
              * @param track     object of firebase
              * @param record    boolean true = recording; false = stop recording
              */
@@ -173,49 +189,69 @@
                     // stop last timer
                     tracksCtrl.stopRecording();
 
+                    // check if end time is different to actual time, then create a new track with same content and start this
+                    if (calcTime.diffTime(track.endtime, moment().format('DD.MM.YYYY HH:mm')) !== '00:00') {
+                        console.log("Difftime is greater than 1 Minute");
+                        data.starttime = moment().format('DD.MM.YYYY HH:mm');
+                        data.endtime = moment().format('DD.MM.YYYY HH:mm');
+                        data.difftime = '00:00';
+                        track = tracksCtrl.createTrackElement();
+                        tracksCtrl.updateTrack(data, track.$id);
+                    }
+
                     // start new timer
-                    data.record = true;
-                    tracksCtrl.updateTrack(data, track.$id);
+                    dataService.setData(path + 'tracks/' + track.$id + '/record', true);
                     tracksCtrl.startRecording(data, track.$id);
                 } else {
+                    // stop timer
                     tracksCtrl.stopRecording(data, track.$id);
                 }
 
             };
 
             tracksCtrl.startRecording = function (data, id) {
-
                 tracksCtrl.record.id = id;
                 tracksCtrl.record.data = data;
-                // start recording cycle (set endtime to actual time)
+
+                // start recording cycle (set end time to actual time)
                 tracksCtrl.record.recording = $interval(tracksCtrl.setActualTime, 10000);
-                if (tracksCtrl.record.recording === '') {
+                tracksCtrl.allRecording.push(tracksCtrl.record.recording);
+                if (tracksCtrl.record.recording !== '') {
                     console.log("Timer started");
                 }
             };
 
             /**
-             * stops recording in timer memorized
+             * stops recording. stop interval and delete flag in track.
              */
             tracksCtrl.stopRecording = function () {
                 // delete record
                 if (tracksCtrl.record.data !== null && tracksCtrl.record.id !== '') {
                     dataService.setData(path + 'tracks/' + tracksCtrl.record.id + '/record', false);
-                    tracksCtrl.record.id = '';
-                    tracksCtrl.record.data = null;
 
                     // delete recording
                     if (tracksCtrl.record.recording !== '') {
                         if ($interval.cancel(tracksCtrl.record.recording)) {
                             console.log("Timer canceled");
+                            tracksCtrl.allRecording.pop();
                         }
-                        tracksCtrl.record.recording = '';
                     }
                 } else {
-                    console.log('no recording to stop not');
+                    console.log('no recording saved to stop');
+                    // remove record from tracks
+                    angular.forEach(tracksCtrl.tracksArray, function (track) {
+                        dataService.setData(path + 'tracks/' + track.$id + '/record', false);
+                    });
+                    // delete all interval started
+                    if (tracksCtrl.allRecording !== null) {
+                        while (tracksCtrl.allRecording.length) {
+                            $interval.cancel(tracksCtrl.allRecording.pop());
+                            console.log("interval canceled");
+                        }
+                    }
                 }
+                tracksCtrl.record = {recording: '', id: '', data: ''};
             };
-
         }]);
 })();
 // .$loaded().then (function(){}) when loaded
