@@ -1,68 +1,55 @@
-<link rel="stylesheet" href="styles/track.css">
 <div class="container">
 
     <div class="row">
         <div>
-            <button id="addtrack" class="mdl-button mdl-js-button mdl-button--fab"
-                    ng-click="tracksCtrl.createTrackElement()"><i class="material-icons">add</i></button>
+            <mdl-button-raised ng-click="tracksCtrl.createTrackElement()"><i class="material-icons">add</i> Add new Track</mdl-button-raised>
         </div>
-        <table class="tracklist mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
-            <tbody>
-            <tr class="tracklistelement mdl-data-table__cell--non-numeric"
-                ng-repeat="(key,track) in tracksCtrl.tracksArray | orderBy:'date':true">
-                <td>
-                    <div class="starttime">
-                    <span editable-datetime="track.starttime" e-name="starttime" e-class="form-control input-sm"  e-ng-change="tracksCtrl.changeStarttime($data, track)"
-                          e-form="rowform">{{ track.starttime || 'empty' }}</span>
-                    </div>
-                    <div class="project">
-                    <span editable-select="track.project" e-name="project" e-form="rowform"
-                          e-class="form-control input-sm" e-ng-change="tracksCtrl.updateProject($data, track.$id)"
-                          e-ng-options="p.$id as p.name for p in tracksCtrl.projectsArray">
-                        {{ tracksCtrl.showProject(track.project) }}
-                    </span>
-                    </div>
-                    <div class="tags">
-                                <!--span editable-ui-select="track.tags" e-ng-model="track.tags" e-name="tags" name="tags"
-                                      e-form="rowform">
-                                  {{track.tags}}
-                                  <editable-ui-select-match placeholder="Tags ..." style="width:500px">
-                                      {{$select.selected.name}}
-                                  </editable-ui-select-match>
-                                  <editable-ui-select-choices repeat="t.$id as t.name for t in tracksCtrl.loadTags(track.project) | filter:$select.search">
-                                      {{tracksCtrl.showTags(track.project, track.tags) }}
-                                  </editable-ui-select-choices>
-                                </span-->
+        <ul class="tracklist">
+            <li ng-repeat="(key,track) in tracksCtrl.tracksArray | orderBy:'date':true" class="tracklistelement">
+                <form class="track-form" editable-form name="editableForm" onaftersave="tracksCtrl.updateTrack($data, track.$id)" shown="tracksCtrl.newTrack.starttime == track.starttime">
+                    <div class="track-inputs">
+                        <div class="track-desc-project-tag">
+                            <div class="track-desc form-group">
+                                <label for="trackDesc{{key}}" ng-show="editableForm.$visible">Working on...</label>
+                                <span e-id="trackDesc{{key}}" editable-text="track.desc" e-name="desc" e-class="form-control">{{track.desc || 'empty'}}</span>
+                            </div>
+                            <div class="track-project form-group">
+                                <label for="trackProject{{key}}" ng-show="editableForm.$visible">Project</label>
+                                <span class="track-project label label-primary" editable-select="track.project" e-name="project" e-class="form-control editable-input"
+                                      e-id="trackProject{{key}}" e-ng-change="tracksCtrl.updateProject($data, track.$id)"
+                                      e-ng-options="p.$id as p.name for p in tracksCtrl.projectsArray">{{ tracksCtrl.showProject(track.project) }}</span>
+                            </div>
+                            <div class="track-tag form-group">
+                                <label for="trackTag{{key}}" ng-show="editableForm.$visible">Tag</label>
+                                <span class="track-tag label label-default" editable-select="track.tags" e-name="tags" e-class="form-control editable-input" e-multiple
+                                    e-id="trackTag{{key}}" e-ng-options="t.$id as tracksCtrl.loadTagname(t) for t in tracksCtrl.loadTags(track.project) | orderBy:'name'">
+                                    {{ tracksCtrl.showTags(track.project, track.tags) }}</span>
+                            </div>
+                        </div>
 
-                        <!-- onshow="tracksCtrl.loadTags(track.project)" -->
-                        <span editable-select="track.tags" e-name="tags" e-form="rowform" e-multiple
-                              e-class="form-control input-sm"
-                              e-ng-options="t.$id as tracksCtrl.loadTagname(t) for t in tracksCtrl.loadTags(track.project) | orderBy:'name'">
-                            {{ tracksCtrl.showTags(track.project, track.tags) }}
-                        </span>
-
+                        <div class="track-date-time-duration">
+                            <div class="track-starttime formgroup">
+                                <label for="trackStart{{key}}">From</label>
+                                <span editable-text="track.starttime" e-name="starttime" e-class="form-control editable-input"
+                                      e-id="trackStart{{key}}" e-ng-change="tracksCtrl.changeStarttime($data, track)">
+                                    {{ track.starttime || 'empty' }}</span>
+                            </div>
+                            <div class="track-endtime formgroup">
+                                <label for="trackEnd{{key}}">To</label>
+                                <span editable-text="track.endtime" e-name="endtime" e-class="form-control editable-input"
+                                      e-id="trackEnd{{key}}" e-ng-change="tracksCtrl.changeEndtime($data, track)">
+                                    {{ track.endtime || 'empty' }}</span>
+                            </div>
+                            <div class="track-difftime formgroup">
+                                <label for="trackDiff{{key}}">Duration</label>
+                                <span editable-text="track.difftime" e-name="difftime" e-class="form-control editable-input"
+                                      e-id="trackDiff{{key}}" e-ng-change="tracksCtrl.changeDifftime($data, track)">
+                                    {{ track.difftime || 'empty' }}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="desc">
-                        <span editable-text="track.desc" e-name="desc" e-class="form-control input-sm" e-form="rowform">{{ track.desc || 'empty' }}</span>
-                    </div>
-                    <div class="endtime">
-                    <span editable-datetime="track.endtime" e-name="endtime" e-class="form-control input-sm" e-ng-change="tracksCtrl.changeEndtime($data, track)"
-                          e-form="rowform">{{ track.endtime || 'empty' }}</span>
-                    </div>
-                    <div class="difftime">
-                    <span editable-text="track.difftime" e-step="any" e-min="0" e-name="difftime" e-class="form-control input-sm"  e-ng-change="tracksCtrl.changeDifftime($data, track)"
-                          e-form="rowform">{{ track.difftime || 'empty' }}</span>
-                    </div>
-                    <div style="white-space: nowrap">
-                        <!-- form -->
-                        <form editable-form name="rowform" onaftersave="tracksCtrl.updateTrack($data, track.$id)"
-                              ng-show="rowform.$visible" class="form-buttons form-inline"
-                              shown="tracksCtrl.newTrack.starttime == track.starttime">
-                            <button type="submit" ng-disabled="rowform.$waiting" class="mdl-button mdl-js-button mdl-button--fab"><i class="material-icons">done</i></button>
-                            <button type="button" ng-disabled="rowform.$waiting" ng-click="tracksCtrl.cancelTrack(track); rowform.$cancel()"
-                                    class="mdl-button mdl-js-button mdl-button--fab"><i class="material-icons">highlight_off</i></button>
-                        </form>
-                        <div class="buttons" ng-show="!rowform.$visible">
+                    <div class="track-buttons">
+                        <span ng-show="!editableForm.$visible">
                             <button ng-hide="!track.record" class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" type="button"
                                     ng-click="tracksCtrl.recordTrack(track, false)"><i class="material-icons md-icon dp24">timer_off</i></span>
                             </button>
@@ -70,7 +57,7 @@
                                     ng-click="tracksCtrl.recordTrack(track, true)"><i class="material-icons md-icon dp24">timer</i></span>
                             </button>
                             <button ng-hide="confirm" class="mdl-button mdl-js-button mdl-button--fab" type="button"
-                                    ng-click="tracksCtrl.editTrack(track.project); rowform.$show()"><i class="material-icons">mode_edit</i></span>
+                                    ng-click="tracksCtrl.editTrack(track.project); editableForm.$show()"><i class="material-icons">mode_edit</i></span>
                             </button>
                             <button ng-hide="confirm" class="mdl-button mdl-js-button mdl-button--fab" type="button"
                                     ng-click="confirm=true"><i class="material-icons">delete</i></button>
@@ -80,12 +67,17 @@
                                 </button>
                                 <button class="mdl-button mdl-js-button mdl-button--fab" title="Abbrechen" ng-click="confirm=false"><i class="material-icons">highlight_off</i></button>
                             </div>
-                        </div>
+                        </span>
+
+                        <span ng-show="editableForm.$visible">
+                            <button type="submit" ng-disabled="editableForm.$waiting" class="mdl-button mdl-js-button mdl-button--fab"><i class="material-icons">done</i></button>
+                            <button type="button" ng-disabled="editableForm.$waiting" ng-click="tracksCtrl.cancelTrack(track); editableForm.$cancel()"
+                                class="mdl-button mdl-js-button mdl-button--fab"><i class="material-icons">highlight_off</i></button>
+                        </span>
                     </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </form>
+            </li>
+        </ul>
     </div>
     <hr>
 
