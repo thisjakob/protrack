@@ -1,12 +1,60 @@
-ul.tracklist {
-  list-style-type: none; }
-
 .tracklist {
-  width: 90%; }
+  list-style-type: none;
+  padding: 0;
+  margin: 0; }
 
 .tracklistelement {
-  padding: 20px; }
+  padding: 20px;
+  border-bottom: 1px solid #b3b3b3; }
 
-.starttime .project {
-  width: 15%;
-  float: left; }
+.track-form {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: nowrap;
+  flex-wrap: nowrap; }
+
+.track-inputs {
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto; }
+
+.track-buttons {
+  -webkit-flex: 0 1 auto;
+  flex: 0 1 auto; }
+
+@media all and (max-width: 768px) {
+  .track-form {
+    -webkit-flex-direction: column;
+    flex-direction: column; } }
+
+/* $screen-xs */
+.tracklistelement label {
+  display: block;
+  font-size: .75rem;
+  margin-bottom: 0;
+  color: #3c3c3c; }
+
+.track-desc-project-tag,
+.track-date-time-duration {
+  display: -webkit-flex;
+  display: flex; }
+
+.track-desc {
+  font-size: 1.5rem;
+  -webkit-flex-grow: 4;
+  flex-grow: 4; }
+
+.track-project,
+.track-tag {
+  -webkit-flex-grow: 1;
+  flex-grow: 1; }
+
+.track-starttime,
+.track-endtime,
+.track-difftime {
+  margin-right: 2rem; }
+
+.buttons {
+  margin-top: 1.5rem;
+  text-align: end; }

@@ -7,7 +7,7 @@ var $ = require('gulp-load-plugins')({
 });
 
 gulp.task('styles', function () {
-  return gulp.src('app/styles/main.scss')
+  return gulp.src('app/styles/**/*.scss')
     .pipe($.plumber())
     .pipe($.sass({
       errLogToConsole: false,
@@ -17,6 +17,8 @@ gulp.task('styles', function () {
     }))
     .pipe($.autoprefixer('last 1 version'))
     .pipe(gulp.dest('.tmp/styles'))
+    .pipe($.size())
+    .pipe(gulp.dest('app/styles'))
     .pipe($.size());
 });
 
