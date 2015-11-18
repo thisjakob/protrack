@@ -1,7 +1,7 @@
-/* global $, moment */
+/* global moment */
 (function () {
     'use strict';
-    //TODO icon google api lokal speichern!
+    // TODO icon google api lokal speichern!
     angular.module('protrack')
         .controller('TracksCtrl', ['dataService', 'calcTime', '$filter', '$interval', 'authData', function (dataService, calcTime, $filter, $interval, authData) {
             var tracksCtrl = this;
@@ -13,6 +13,14 @@
             path = path + authData.uid + '/';
 
             tracksCtrl.tracksArray = dataService.getData(path + 'tracks', true);
+            dataService.getData(path + 'tracks', true).$loaded(function (data) {
+                angular.forEach(data, function (track) {
+                    if (track.record) {
+                        console.log("Initial track " + track.$id + " record!");
+                        tracksCtrl.recordTrack(track, true);
+                    }
+                });
+            });
             tracksCtrl.projects = dataService.getData(path + 'projects', false);
             tracksCtrl.projectsArray = dataService.getData(path + 'projects', true);
             tracksCtrl.tagsAll = dataService.getData(path + 'tags', false);
@@ -20,6 +28,7 @@
             tracksCtrl.projectBackup = '';
             tracksCtrl.record = {recording: '', id: '', data: ''};
             tracksCtrl.allRecording = [];
+
 
             // TODO bei Initialisierung prüfen, ob Recording gesetzt
             /**
@@ -54,8 +63,6 @@
 
             // create track and save it to compare to show form
             tracksCtrl.createTrackElement = function () {
-                $('#addtrack').prop('disabled', true);
-
                 tracksCtrl.newTrack = {
                     starttime: moment().format('DD.MM.YYYY HH:mm'),
                     project: '',
@@ -80,7 +87,6 @@
 
                 // update data
                 dataService.updateData(path + 'tracks', id, data);
-                $('#addtrack').prop('disabled', false);
 
                 // if start and endtime is the same, start timing
                 if (data.starttime === data.endtime) {
@@ -96,6 +102,7 @@
 
             tracksCtrl.cancelTrack = function (track) {
                 console.log('update project backup in track: ' + track.$id);
+
                 // write back updated project
                 dataService.setData(path + 'tracks/' + track.$id + '/project', tracksCtrl.projectBackup);
                 // calc diff time
@@ -156,7 +163,6 @@
                     tracksCtrl.stopRecording();
                 }
                 dataService.delData(path + 'tracks', id);
-                $('#addtrack').prop('disabled', false);
             };
 
             tracksCtrl.changeStarttime = function (starttime, track) {
