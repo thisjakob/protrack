@@ -23,10 +23,15 @@
   flex-grow: 4;
 }
 
-.report-project,
-.report-tag{
-  flex-basis: 8em;
+.report-project {
+  flex-basis: 12em;
   align-self: flex-end;
+}
+
+.report-tag{
+  flex-basis: 12em;
+  align-self: flex-end;
+  margin-left: 1em;
 }
 
 .report-starttime,
