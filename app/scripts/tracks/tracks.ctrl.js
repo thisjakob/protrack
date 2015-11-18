@@ -167,16 +167,19 @@
 
             tracksCtrl.changeStarttime = function (starttime, track) {
                 console.log('change starttime > change difftime');
+                track.starttime = starttime;
                 track.difftime = calcTime.diffTime(starttime, track.endtime);
             };
 
             tracksCtrl.changeEndtime = function (endtime, track) {
                 console.log('change endtime > change difftime');
+                track.endtime = endtime;
                 track.difftime = calcTime.diffTime(track.starttime, endtime);
             };
 
             tracksCtrl.changeDifftime = function (difftime, track) {
                 console.log('change difftime > change endtime');
+                track.difftime = difftime;
                 track.endtime = calcTime.addDiffTime(track.starttime, difftime);
             };
 
