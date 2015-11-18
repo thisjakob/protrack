@@ -9,17 +9,17 @@
                 <form class="track-form" editable-form name="editableForm" onaftersave="tracksCtrl.updateTrack($data, track.$id)" shown="tracksCtrl.newTrack.starttime == track.starttime">
                     <div class="track-inputs">
                         <div class="track-desc-project-tag">
-                            <div class="track-desc form-group">
+                            <div class="track-desc formgroup">
                                 <label for="trackDesc{{key}}" ng-show="editableForm.$visible">Working on...</label>
                                 <span e-id="trackDesc{{key}}" editable-text="track.desc" e-name="desc" e-class="form-control">{{track.desc || 'empty'}}</span>
                             </div>
-                            <div class="track-project form-group">
+                            <div class="track-project formgroup">
                                 <label for="trackProject{{key}}" ng-show="editableForm.$visible">Project</label>
                                 <span class="track-project label label-primary" editable-select="track.project" e-name="project" e-class="form-control editable-input"
                                       e-id="trackProject{{key}}" e-ng-change="tracksCtrl.updateProject($data, track.$id)"
                                       e-ng-options="p.$id as p.name for p in tracksCtrl.projectsArray">{{ tracksCtrl.showProject(track.project) }}</span>
                             </div>
-                            <div class="track-tag form-group">
+                            <div class="track-tag formgroup">
                                 <label for="trackTag{{key}}" ng-show="editableForm.$visible">Tag</label>
                                 <span class="track-tag label label-default" editable-select="track.tags" e-name="tags" e-class="form-control editable-input" e-multiple
                                     e-id="trackTag{{key}}" e-ng-options="t.$id as tracksCtrl.loadTagname(t) for t in tracksCtrl.loadTags(track.project) | orderBy:'name'">
@@ -50,12 +50,17 @@
                     </div>
                     <div class="track-buttons">
                         <span ng-show="!editableForm.$visible">
+                            <mdl-button-raised ng-hide="track.record" ng-click="tracksCtrl.recordTrack(track, true)"><i class="material-icons">timer</i> Start Timer</mdl-button-raised>
+                            <mdl-button-raised ng-show="track.record" ng-click="tracksCtrl.recordTrack(track, false)"><i class="material-icons">timer_off</i> Start Timer</mdl-button-raised>
+
+                            <!--
                             <button ng-hide="!track.record" class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" type="button"
                                     ng-click="tracksCtrl.recordTrack(track, false)"><i class="material-icons md-icon dp24">timer_off</i></span>
                             </button>
                             <button ng-hide="track.record" class="mdl-button mdl-js-button mdl-button--fab" type="button"
                                     ng-click="tracksCtrl.recordTrack(track, true)"><i class="material-icons md-icon dp24">timer</i></span>
                             </button>
+                            -->
                             <button ng-hide="confirm" class="mdl-button mdl-js-button mdl-button--fab" type="button"
                                     ng-click="tracksCtrl.editTrack(track.project); editableForm.$show()"><i class="material-icons">mode_edit</i></span>
                             </button>
