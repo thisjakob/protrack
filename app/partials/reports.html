@@ -1,37 +1,30 @@
 <div class="container">
-    <!--div><button >Tags</button><button>Search</button><button>Month</button></div-->
-    <table class="table table-bordered table-hover table-condensed">
-        <thead>
-        <tr style="font-weight: bold">
-            <td style="width:15%">Startzeit</td>
-            <td style="width:20%">Projekt</td>
-            <td style="width:10%">Tags</td>
-            <td style="width:25%">Beschreibung</td>
-            <td style="width:15%">Endzeit</td>
-            <td style="width:6%">Dauer</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="(key,track) in reportsCtrl.tracksArray | orderBy:'starttime':true">
-            <td>
-                {{ track.starttime }}
-            </td>
-            <td>
-                {{ reportsCtrl.showProjectName(track.project) }}
-            </td>
-            <td>
-                {{ reportsCtrl.showTagsName(track.tags) }}
-            </td>
-            <td>
-                {{ track.desc }}
-            </td>
-            <td>
-                {{ track.endtime }}
-            </td>
-            <td>
-                {{ track.difftime }}
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <!-- TODO Auswahlleiste -->
+
+    <ul class="reportlist">
+        <li ng-repeat="(key,track) in reportsCtrl.tracksArray | orderBy:'starttime':true" class="reportlistelement">
+            <div class="reportelement">
+                <div class="report-desc">
+                    <span id="reportDesc{{key}}">{{track.desc || 'empty'}}</span>
+                </div>
+                <div class="report-project">
+                    <span class="report-project label label-primary">{{ reportsCtrl.showProjectName(track.project) }}</span>
+                </div>
+                <div class="report-tag">
+                    <span class="report-tag label label-default"> {{ reportsCtrl.showTagsName(track.tags) }}</span>
+                </div>
+
+                <div class="report-starttime">
+                    <span> {{ track.starttime || 'empty' }}</span>
+                </div>
+                <div class="report-endtime">
+                    <span> {{ track.endtime || 'empty' }}</span>
+                </div>
+                <div class="report-difftime">
+                    <span> {{ track.difftime || 'empty' }}</span>
+                </div>
+            </div>
+        </li>
+    </ul>
+
 </div>

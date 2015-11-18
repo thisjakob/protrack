@@ -1,0 +1,48 @@
+@import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss";
+
+.reportlist {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.reportlistelement {
+  padding:20px;
+  border-bottom: 1px solid #b3b3b3;
+}
+
+.reportelement {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  flex: 1 1 auto;
+}
+
+@media all and (max-width: $screen-sm) {
+  .reportelement {
+    flex-wrap: wrap;
+  }
+}
+
+.report-desc {
+  font-size: 1.5rem;
+  flex-grow: 4;
+}
+
+.report-project {
+  align-self: flex-end;
+}
+
+.report-tag{
+  flex-basis: 12em;
+  align-self: flex-end;
+  margin-left: 1em;
+}
+
+.report-starttime,
+.report-endtime,
+.report-difftime {
+  margin-left: 2rem;
+  align-self: flex-end;
+}
+
