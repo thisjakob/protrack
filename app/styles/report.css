@@ -19,7 +19,7 @@
 
 .report-project,
 .report-tag {
-  margin-left: 2rem;
+  flex-basis: 8em;
   align-self: flex-end; }
 
 .report-starttime,
