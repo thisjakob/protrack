@@ -18,13 +18,18 @@
   flex: 1 1 auto;
 }
 
+@media all and (max-width: $screen-sm) {
+  .reportelement {
+    flex-wrap: wrap;
+  }
+}
+
 .report-desc {
   font-size: 1.5rem;
   flex-grow: 4;
 }
 
 .report-project {
-  flex-basis: 12em;
   align-self: flex-end;
 }
 
