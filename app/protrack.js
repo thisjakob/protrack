@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-    angular.module('protrack', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'firebase', 'ui.router', 'xeditable', 'toastr', 'mdl'])
+    angular.module('protrack', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'firebase', 'ui.router', 'xeditable', 'toastr', 'mdl', 'ngMaterial'])
 
         .run(['$rootScope', '$state', function($rootScope, $state) {
             // redirect unauthenticated users to the login page
@@ -144,5 +144,8 @@
                     }
                 });
         })
-        .value('FirebaseUrl', { url : 'https://protrack.firebaseio.com'});
+        .value('FirebaseUrl', { url : 'https://protrack.firebaseio.com'})
+        .config(function($mdDateLocaleProvider) {
+            $mdDateLocaleProvider.firstDayOfWeek = 1;
+        });
 }());

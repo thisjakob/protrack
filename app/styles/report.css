@@ -1,3 +1,12 @@
+.reportnavigation {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  width: 100%; }
+
 .reportlist {
   list-style-type: none;
   padding: 0;
@@ -8,23 +17,33 @@
   border-bottom: 1px solid #b3b3b3; }
 
 .reportelement {
+  display: -webkit-flex;
   display: flex;
+  -webkit-flex-direction: row;
   flex-direction: row;
+  -webkit-flex-wrap: nowrap;
   flex-wrap: nowrap;
+  -webkit-flex: 1 1 auto;
   flex: 1 1 auto; }
 
 @media all and (max-width: 768px) {
   .reportelement {
+    -webkit-flex-wrap: wrap;
     flex-wrap: wrap; } }
+
 .report-desc {
   font-size: 1.2rem;
+  -webkit-flex-grow: 4;
   flex-grow: 4; }
 
 .report-project {
+  -webkit-align-self: flex-end;
   align-self: flex-end; }
 
 .report-tag {
+  -webkit-flex-basis: 12em;
   flex-basis: 12em;
+  -webkit-align-self: flex-end;
   align-self: flex-end;
   margin-left: 1em; }
 
@@ -34,15 +53,19 @@
 .report-date,
 .report-time,
 .report-duration {
+  -webkit-align-self: flex-end;
   align-self: flex-end; }
 
 .report-date {
+  -webkit-flex-basis: 6em;
   flex-basis: 6em; }
 
 .report-time {
+  -webkit-flex-basis: 7em;
   flex-basis: 7em; }
 
 .report-duration {
+  -webkit-flex-basis: 4em;
   flex-basis: 4em;
   font-weight: bold; }
 

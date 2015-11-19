@@ -27,7 +27,8 @@
     "ui-select": "angular-ui-select#~0.13.2",
     "material-design-lite": "~1.0.6",
     "angular-toastr": "~1.6.0",
-    "angular-material-design-lite": "~0.4.2"
+    "angular-material-design-lite": "~0.4.2",
+    "angular-material": "master"
   },
   "devDependencies": {},
   "resolutions": {

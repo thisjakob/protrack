@@ -29,8 +29,6 @@
             tracksCtrl.record = {recording: '', id: '', data: ''};
             tracksCtrl.allRecording = [];
 
-
-            // TODO bei Initialisierung prüfen, ob Recording gesetzt
             /**
              * read actual time and set end and diff time. if endtime is on another day, recording will be stopping.
              */

@@ -1,5 +1,14 @@
 @import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss";
 
+.reportnavigation {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+.datepickerreport {
+}
+
 .reportlist {
   list-style-type: none;
   padding: 0;
@@ -68,3 +77,4 @@
 .headerelement {
   font-weight: bold;
 }
+

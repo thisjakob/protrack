@@ -1,5 +1,17 @@
 <div class="container">
-    <!-- TODO Auswahlleiste -->
+    <div class="reportnavigation">
+        <div></div>
+        <div>
+            <md-content>
+                <md-datepicker ng-model="reportsCtrl.dateFrom" md-placeholder="Enter start date"
+                               ng-change="reportsCtrl.saveDate()"></md-datepicker>
+            </md-content>
+        </div>
+        <div>
+            <md-datepicker ng-model="reportsCtrl.dateTo" md-placeholder="Enter end date"
+                           ng-change="reportsCtrl.saveDate()"></md-datepicker>
+        </div>
+    </div>
 
     <ul class="reportlist">
         <li class="reportlistelement">
@@ -12,7 +24,8 @@
                 <div class="report-duration headerelement">Duration</div>
             </div>
         </li>
-        <li ng-repeat="(key,track) in reportsCtrl.tracksArray | orderBy:'starttime':true" class="reportlistelement">
+        <li ng-repeat="(key,track) in reportsCtrl.tracksArray | daterange:reportsCtrl.dateFrom:reportsCtrl.dateTo  | orderBy:'starttime':true"
+            class="reportlistelement">
             <div class="reportelement">
                 <div class="report-desc">
                     <span id="reportDesc{{key}}">{{track.desc || 'empty'}}</span>
