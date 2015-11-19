@@ -54,16 +54,5 @@
             reportsCtrl.getMaxDate = function () {
                 return reportsCtrl.dateFrom;
             };
-        }])
-
-        .filter('daterange', function () {
-            return function (items, from, to) {
-                return items.filter(function (item) {
-                    return moment(item.starttime, 'DD.MM.YYYY HH:mm').isBetween(from, to);
-                });
-            };
-        })
-        .config(function($mdDateLocaleProvider) {
-            $mdDateLocaleProvider.firstDayOfWeek = 1;
-        });
+        }]);
 })();
