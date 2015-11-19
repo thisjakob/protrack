@@ -25,7 +25,7 @@
 }
 
 .report-desc {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   flex-grow: 4;
 }
 
@@ -39,10 +39,32 @@
   margin-left: 1em;
 }
 
-.report-starttime,
-.report-endtime,
-.report-difftime {
-  margin-left: 2rem;
+.report-tag.headerelement {
+  margin-left: 2em;
+}
+
+.report-date,
+.report-time,
+.report-duration {
   align-self: flex-end;
 }
 
+.report-date {
+  flex-basis: 6em;
+}
+
+.report-time {
+  flex-basis: 7em;
+}
+
+.report-duration {
+  flex-basis: 4em;
+  font-weight: bold;
+}
+
+.report-duration.headerelement {
+  margin-left: 0rem;
+}
+.headerelement {
+  font-weight: bold;
+}

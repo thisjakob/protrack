@@ -8,39 +8,46 @@
   border-bottom: 1px solid #b3b3b3; }
 
 .reportelement {
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-direction: row;
   flex-direction: row;
-  -webkit-flex-wrap: nowrap;
   flex-wrap: nowrap;
-  -webkit-flex: 1 1 auto;
   flex: 1 1 auto; }
 
 @media all and (max-width: 768px) {
   .reportelement {
-    -webkit-flex-wrap: wrap;
     flex-wrap: wrap; } }
-
 .report-desc {
-  font-size: 1.5rem;
-  -webkit-flex-grow: 4;
+  font-size: 1.2rem;
   flex-grow: 4; }
 
 .report-project {
-  -webkit-align-self: flex-end;
   align-self: flex-end; }
 
 .report-tag {
-  -webkit-flex-basis: 12em;
   flex-basis: 12em;
-  -webkit-align-self: flex-end;
   align-self: flex-end;
   margin-left: 1em; }
 
-.report-starttime,
-.report-endtime,
-.report-difftime {
-  margin-left: 2rem;
-  -webkit-align-self: flex-end;
+.report-tag.headerelement {
+  margin-left: 2em; }
+
+.report-date,
+.report-time,
+.report-duration {
   align-self: flex-end; }
+
+.report-date {
+  flex-basis: 6em; }
+
+.report-time {
+  flex-basis: 7em; }
+
+.report-duration {
+  flex-basis: 4em;
+  font-weight: bold; }
+
+.report-duration.headerelement {
+  margin-left: 0rem; }
+
+.headerelement {
+  font-weight: bold; }
