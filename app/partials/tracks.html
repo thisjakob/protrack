@@ -5,7 +5,7 @@
             <mdl-button-raised ng-click="tracksCtrl.createTrackElement()"><i class="material-icons">add</i> Add new Track</mdl-button-raised>
         </div>
         <ul class="tracklist">
-            <li ng-repeat="(key,track) in tracksCtrl.tracksArray | orderBy:'date':true" class="tracklistelement">
+            <li ng-repeat="(key,track) in tracksCtrl.tracksArray | orderBy:'starttime':true" class="tracklistelement">
                 <form class="track-form" editable-form name="editableForm" onaftersave="tracksCtrl.updateTrack($data, track.$id)" shown="tracksCtrl.newTrack.starttime == track.starttime">
                     <div class="track-inputs">
                         <div class="track-desc-project-tag">
