@@ -1,6 +1,9 @@
 (function () {
     'use strict';
-
+// TODO export to csv
+// TODO total of Duration
+    // TODO Filter for Project und Tag
+    // TODO search Description
     angular.module('protrack')
         .controller('ReportsCtrl', ['dataService', 'authData', 'showData', function (dataService, authData, showData) {
             var reportsCtrl = this;
@@ -43,16 +46,10 @@
             reportsCtrl.saveDate = function () {
                 var date = reportsCtrl.dateFrom.toString();
                 dataService.setData(path + 'settings/daterange/from', date);
+                reportsCtrl.dateTo.setHours(reportsCtrl.dateTo.getHours() + 23);
+                reportsCtrl.dateTo.setMinutes(reportsCtrl.dateTo.getMinutes() + 59);
                 date = reportsCtrl.dateTo.toString();
                 dataService.setData(path + 'settings/daterange/to', date);
-            };
-
-            reportsCtrl.getMinDate = function () {
-                return reportsCtrl.dateFrom.getMonth() - 2;
-            };
-
-            reportsCtrl.getMaxDate = function () {
-                return reportsCtrl.dateFrom;
             };
         }]);
 })();
