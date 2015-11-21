@@ -32,19 +32,19 @@
                                 <label for="trackStart{{key}}">From</label>
                                 <span editable-text="track.starttime" e-name="starttime" e-class="form-control editable-input"
                                       e-id="trackStart{{key}}" e-ng-change="tracksCtrl.changeStarttime($data, track)">
-                                    {{ track.starttime || 'empty' }}</span>
+                                    {{ track.starttime | datetimenosecond }}</span>
                             </div>
                             <div class="track-endtime formgroup">
                                 <label for="trackEnd{{key}}">To</label>
                                 <span editable-text="track.endtime" e-name="endtime" e-class="form-control editable-input"
                                       e-id="trackEnd{{key}}" e-ng-change="tracksCtrl.changeEndtime($data, track)">
-                                    {{ track.endtime || 'empty' }}</span>
+                                    {{ track.endtime | datetimenosecond }}</span>
                             </div>
                             <div class="track-difftime formgroup">
                                 <label for="trackDiff{{key}}">Duration</label>
                                 <span editable-text="track.difftime" e-name="difftime" e-class="form-control editable-input"
                                       e-id="trackDiff{{key}}" e-ng-change="tracksCtrl.changeDifftime($data, track)">
-                                    {{ track.difftime || 'empty' }}</span>
+                                    {{ track.difftime || 'no diff time' }}</span>
                             </div>
                         </div>
                     </div>

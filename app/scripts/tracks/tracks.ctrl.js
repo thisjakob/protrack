@@ -35,11 +35,11 @@
             tracksCtrl.setActualTime = function () {
                 if (tracksCtrl.record.recording !== '' && tracksCtrl.record.id !== '') {
                     // get actual time
-                    tracksCtrl.record.data.endtime = moment().format('DD.MM.YYYY HH:mm');
+                    tracksCtrl.record.data.endtime = moment().format('DD.MM.YYYY HH:mm:ss');
 
                     // read start time from track
                     dataService.getValue(path + 'tracks/' + tracksCtrl.record.id + '/starttime', function (snapshot) {
-                        if (tracksCtrl.record.data !== null) {
+                        if (tracksCtrl.record.data !== null && tracksCtrl.record.data !== '') {
                             // set new end and diff time
                             tracksCtrl.record.data.starttime = snapshot.val();
                             tracksCtrl.record.data.difftime = calcTime.diffTime(tracksCtrl.record.data.starttime, tracksCtrl.record.data.endtime);
@@ -62,11 +62,11 @@
             // create track and save it to compare to show form
             tracksCtrl.createTrackElement = function () {
                 tracksCtrl.newTrack = {
-                    starttime: moment().format('DD.MM.YYYY HH:mm'),
+                    starttime: moment().format('DD.MM.YYYY HH:mm:ss'),
                     project: '',
                     desc: '',
                     tags: '',
-                    endtime: moment().format('DD.MM.YYYY HH:mm'), // with http://vitalets.github.io/combodate/
+                    endtime: moment().format('DD.MM.YYYY HH:mm:ss'), // with http://vitalets.github.io/combodate/
                     difftime: '00:00',
                     record: false
                 };
@@ -89,6 +89,7 @@
                 // if start and endtime is the same, start timing
                 if (data.starttime === data.endtime) {
                     dataService.setData(path + 'tracks/' + id + '/record', true);
+                    tracksCtrl.stopRecording();
                     tracksCtrl.startRecording(data, id);
                 }
             };
@@ -197,10 +198,10 @@
                 tracksCtrl.stopRecording();
                 if (record) {
                     // check if end time is different to actual time, then create a new track with same content and start this
-                    if (calcTime.diffTime(track.endtime, moment().format('DD.MM.YYYY HH:mm')) !== '00:00') {
+                    if (calcTime.diffTime(track.endtime, moment().format('DD.MM.YYYY HH:mm:ss')) !== '00:00') {
                         console.log("Difftime is greater than 1 Minute");
-                        data.starttime = moment().format('DD.MM.YYYY HH:mm');
-                        data.endtime = moment().format('DD.MM.YYYY HH:mm');
+                        data.starttime = moment().format('DD.MM.YYYY HH:mm:ss');
+                        data.endtime = moment().format('DD.MM.YYYY HH:mm:ss');
                         data.difftime = '00:00';
                         track = dataService.addData(path + 'tracks', data);
                         id = track.key();
@@ -217,7 +218,7 @@
                 tracksCtrl.record.data = data;
 
                 // start recording cycle (set end time to actual time)
-                tracksCtrl.record.recording = $interval(tracksCtrl.setActualTime, 5000);
+                tracksCtrl.record.recording = $interval(tracksCtrl.setActualTime, 1000);
                 tracksCtrl.allRecording.push(tracksCtrl.record.recording);
                 if (tracksCtrl.record.recording !== '') {
                     console.log("Timer started");
