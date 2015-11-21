@@ -50,33 +50,27 @@
                     </div>
                     <div class="track-buttons">
                         <span ng-show="!editableForm.$visible">
-                            <mdl-button-raised ng-hide="track.record" ng-click="tracksCtrl.recordTrack(track, true)">
-                                <i class="material-icons">timer</i> Start Timer
-                            </mdl-button-raised>
-                            <mdl-button-raised ng-show="track.record" ng-click="tracksCtrl.recordTrack(track, false)">
-                                <i class="material-icons">timer_off</i> Stop Timer
-                                <span>{{ track.difftime | durationsec }}</span>
-                            </mdl-button-raised>
+                            <span ng-hide="confirm">
+                                <mdl-button-raised theme="primary" ng-hide="track.record" ng-click="tracksCtrl.recordTrack(track, true)">
+                                    <i class="material-icons">timer</i> Start Timer
+                                </mdl-button-raised>
+                                <mdl-button-raised theme="accent" ng-show="track.record" ng-click="tracksCtrl.recordTrack(track, false)">
+                                    <i class="material-icons">timer_off</i> Stop Timer
+                                    <span>{{ track.difftime | durationsec }}</span>
+                                </mdl-button-raised>
 
-                            <!--
-                            <button ng-hide="!track.record" class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" type="button"
-                                    ng-click="tracksCtrl.recordTrack(track, false)"><i class="material-icons md-icon dp24">timer_off</i></span>
-                            </button>
-                            <button ng-hide="track.record" class="mdl-button mdl-js-button mdl-button--fab" type="button"
-                                    ng-click="tracksCtrl.recordTrack(track, true)"><i class="material-icons md-icon dp24">timer</i></span>
-                            </button>
-                            -->
-                            <button ng-hide="confirm" class="mdl-button mdl-js-button mdl-button--fab" type="button"
-                                    ng-click="tracksCtrl.editTrack(track.project); editableForm.$show()"><i class="material-icons">mode_edit</i></span>
-                            </button>
-                            <button ng-hide="confirm" class="mdl-button mdl-js-button mdl-button--fab" type="button"
-                                    ng-click="confirm=true"><i class="material-icons">delete</i></button>
-                            <div ng-show="confirm">
-                                <button class="mdl-button mdl-js-button mdl-button--fab" title="Track wirklich löschen?"
+                                <button class="mdl-button mdl-js-button mdl-button--fab" type="button"
+                                        ng-click="tracksCtrl.editTrack(track.project); editableForm.$show()"><i class="material-icons">mode_edit</i></span>
+                                </button>
+                                <button class="mdl-button mdl-js-button mdl-button--fab" type="button"
+                                        ng-click="confirm=true"><i class="material-icons">delete</i></button>
+                            </span>
+                            <span ng-show="confirm">
+                                <button class="mdl-button mdl-js-button mdl-button--fab" title="Are you sure? Yes, delete it!"
                                         ng-click="tracksCtrl.deleteTrack(track.$id)"><i class="material-icons">delete</i>?
                                 </button>
-                                <button class="mdl-button mdl-js-button mdl-button--fab" title="Abbrechen" ng-click="confirm=false"><i class="material-icons">highlight_off</i></button>
-                            </div>
+                                <button class="mdl-button mdl-js-button mdl-button--fab" title="Are you sure? No, don't delete it!" ng-click="confirm=false"><i class="material-icons">highlight_off</i></button>
+                            </span>
                         </span>
 
                         <span ng-show="editableForm.$visible">
