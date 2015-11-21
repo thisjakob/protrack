@@ -44,14 +44,19 @@
                                 <label for="trackDiff{{key}}">Duration</label>
                                 <span editable-text="track.difftime" e-name="difftime" e-class="form-control editable-input"
                                       e-id="trackDiff{{key}}" e-ng-change="tracksCtrl.changeDifftime($data, track)">
-                                    {{ track.difftime || 'no diff time' }}</span>
+                                    {{(track.difftime | durationmin) || 'no diff time' }}</span>
                             </div>
                         </div>
                     </div>
                     <div class="track-buttons">
                         <span ng-show="!editableForm.$visible">
-                            <mdl-button-raised ng-hide="track.record" ng-click="tracksCtrl.recordTrack(track, true)"><i class="material-icons">timer</i> Start Timer</mdl-button-raised>
-                            <mdl-button-raised ng-show="track.record" ng-click="tracksCtrl.recordTrack(track, false)"><i class="material-icons">timer_off</i> Stop Timer</mdl-button-raised>
+                            <mdl-button-raised ng-hide="track.record" ng-click="tracksCtrl.recordTrack(track, true)">
+                                <i class="material-icons">timer</i> Start Timer
+                            </mdl-button-raised>
+                            <mdl-button-raised ng-show="track.record" ng-click="tracksCtrl.recordTrack(track, false)">
+                                <i class="material-icons">timer_off</i> Stop Timer
+                                <span>{{ track.difftime | durationsec }}</span>
+                            </mdl-button-raised>
 
                             <!--
                             <button ng-hide="!track.record" class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" type="button"
