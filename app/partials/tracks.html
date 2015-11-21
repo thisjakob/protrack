@@ -2,7 +2,9 @@
 
     <div class="row">
         <div>
-            <mdl-button-raised ng-click="tracksCtrl.createTrackElement()"><i class="material-icons">add</i> Add new Track</mdl-button-raised>
+            <md-button class="md-raised md-accent" ng-click="tracksCtrl.createTrackElement()">
+                <md-icon class="material-icons">add</md-icon> Add new Track
+            </md-button>
         </div>
         <ul class="tracklist">
             <li ng-repeat="(key,track) in tracksCtrl.tracksArray | orderBy:'starttime':true" class="tracklistelement">
@@ -21,6 +23,13 @@
                             </div>
                             <div class="track-tag formgroup">
                                 <label for="trackTag{{key}}" ng-show="editableForm.$visible">Tag</label>
+
+                                <!--
+                                <md-chips ng-hide="editableForm.$visible">
+                                    <md-chip ng-repeat="(key,val) in tracksCtrl.showTags(track.project, track.tags).split(', ')">{{ val }}</md-chip>
+                                </md-chips>
+                                -->
+
                                 <span class="track-tag label label-default" editable-select="track.tags" e-name="tags" e-class="form-control editable-input" e-multiple
                                     e-id="trackTag{{key}}" e-ng-options="t.$id as tracksCtrl.loadTagname(t) for t in tracksCtrl.loadTags(track.project) | orderBy:'name'">
                                     {{ tracksCtrl.showTags(track.project, track.tags) }}</span>
@@ -51,32 +60,38 @@
                     <div class="track-buttons">
                         <span ng-show="!editableForm.$visible">
                             <span ng-hide="confirm">
-                                <mdl-button-raised theme="primary" ng-hide="track.record" ng-click="tracksCtrl.recordTrack(track, true)">
-                                    <i class="material-icons">timer</i> Start Timer
-                                </mdl-button-raised>
-                                <mdl-button-raised theme="accent" ng-show="track.record" ng-click="tracksCtrl.recordTrack(track, false)">
-                                    <i class="material-icons">timer_off</i> Stop Timer
+                                <md-button class="md-raised md-primary" ng-hide="track.record" ng-click="tracksCtrl.recordTrack(track, true)">
+                                    <md-icon>timer</md-icon> Start Timer
+                                </md-button>
+                                <md-button class="md-raised md-accent" ng-show="track.record" ng-click="tracksCtrl.recordTrack(track, false)">
+                                    <md-icon>timer_off</md-icon> Stop Timer
                                     <span>{{ track.difftime | durationsec }}</span>
-                                </mdl-button-raised>
+                                </md-button>
 
-                                <button class="mdl-button mdl-js-button mdl-button--fab" type="button"
-                                        ng-click="tracksCtrl.editTrack(track.project); editableForm.$show()"><i class="material-icons">mode_edit</i></span>
-                                </button>
-                                <button class="mdl-button mdl-js-button mdl-button--fab" type="button"
-                                        ng-click="confirm=true"><i class="material-icons">delete</i></button>
+                                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.editTrack(track.project); editableForm.$show()">
+                                    <md-icon>mode_edit</md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button" type="button" ng-click="confirm=true">
+                                    <md-icon>delete</md-icon>
+                                </md-button>
                             </span>
                             <span ng-show="confirm">
-                                <button class="mdl-button mdl-js-button mdl-button--fab" title="Are you sure? Yes, delete it!"
-                                        ng-click="tracksCtrl.deleteTrack(track.$id)"><i class="material-icons">delete</i>?
-                                </button>
-                                <button class="mdl-button mdl-js-button mdl-button--fab" title="Are you sure? No, don't delete it!" ng-click="confirm=false"><i class="material-icons">highlight_off</i></button>
+                                <md-button class="md-icon-button md-primary" title="Are you sure? Yes, delete it!" ng-click="tracksCtrl.deleteTrack(track.$id)">
+                                    <md-icon>delete</md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button" title="Are you sure? No, don't delete it!" ng-click="confirm=false">
+                                    <md-icon>highlight_off</md-icon>
+                                </md-button>
                             </span>
                         </span>
 
                         <span ng-show="editableForm.$visible">
-                            <button type="submit" ng-disabled="editableForm.$waiting" class="mdl-button mdl-js-button mdl-button--fab"><i class="material-icons">done</i></button>
-                            <button type="button" ng-disabled="editableForm.$waiting" ng-click="tracksCtrl.cancelTrack(track); editableForm.$cancel()"
-                                class="mdl-button mdl-js-button mdl-button--fab"><i class="material-icons">highlight_off</i></button>
+                            <md-button class="md-icon-button md-primary" type="submit" ng-disabled="editableForm.$waiting">
+                                <md-icon>done</md-icon>
+                            </md-button>
+                            <md-button class="md-icon-button" type="button" ng-disabled="editableForm.$waiting" ng-click="tracksCtrl.cancelTrack(track); editableForm.$cancel()">
+                                <md-icon>highlight_off</md-icon>
+                            </md-button>
                         </span>
                     </div>
                 </form>
