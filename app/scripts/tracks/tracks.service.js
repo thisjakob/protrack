@@ -10,21 +10,26 @@
             var start = moment(startTime, 'DD.MM.YYYY HH:mm');
             var end = moment(endTime, 'DD.MM.YYYY HH:mm');
 
-            if (start.isValid() && end.isValid()) {
+            if ( start.isValid() && end.isValid() ) {
                 diff = moment.utc(end.diff(start)).format("HH:mm");
             } else {
                 console.log('endtime or starttime is not valid!');
             }
+
             return diff;
         };
 
         var addDiffTime = function (time, diffTime) {
-            var endtime = time;
-            if (moment(time, 'DD.MM.YYYY HH:mm').isValid() && moment(diffTime, 'HH:mm').isValid()) {
-                var newtime = moment(time, 'DD.MM.YYYY HH:mm').add(moment(diffTime, 'HH:mm'));
-                endtime = moment(newtime).format('DD.MM.YYYY HH:mm');
+            var start = moment(time, 'DD.MM.YYYY HH:mm');
+            var diff = moment(difftime, 'HH:mm');
+            var end = time;
+
+            if ( start.isValid() && duration.isValid() ) {
+                var newtime = start.add(duration);
+                end = moment(newtime).format('DD.MM.YYYY HH:mm');
             }
-            return endtime;
+
+            return end;
         };
 
 
