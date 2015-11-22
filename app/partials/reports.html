@@ -46,7 +46,7 @@
                     <span> {{ track.starttime | limitTo : 5 : 11 }} - {{ track.endtime | limitTo : 5 : 11 }}</span>
                 </div>
                 <div class="report-duration">
-                    <span> {{ track.difftime || 'empty' }}</span>
+                    <span> {{ track.difftime | durationmin }}</span>
                 </div>
             </div>
         </li>
