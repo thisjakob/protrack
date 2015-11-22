@@ -87,9 +87,11 @@
                 dataService.updateData(path + 'tracks', id, data);
 
                 // if start and endtime is the same, start timing
-                if (data.starttime === data.endtime) {
-                    dataService.setData(path + 'tracks/' + id + '/record', true);
+                if (moment(data.starttime, 'DD.MM.YYYY HH:mm:ss').format('DD.MM.YYYY HH:mm') ===
+                    moment(data.endtime, 'DD.MM.YYYY HH:mm.ss').format('DD.MM.YYYY HH:mm')) {
                     tracksCtrl.stopRecording();
+                    dataService.setData(path + 'tracks/' + id + '/record', true);
+                    data.record = true;
                     tracksCtrl.startRecording(data, id);
                 }
             };
@@ -197,8 +199,10 @@
                 // stop last timer
                 tracksCtrl.stopRecording();
                 if (record) {
-                    // check if end time is different to actual time, then create a new track with same content and start this
-                    if (calcTime.diffTime(track.endtime, moment().format('DD.MM.YYYY HH:mm:ss')) !== '00:00') {
+                    // check if end time is difference to actual time is greater than one minute,
+                    // then create a new track with same content and start this
+                    if (calcTime.diffTime(moment(track.endtime, 'DD.MM.YYYY HH:mm:ss').format('DD.MM.YYYY HH:mm'),
+                            moment().format('DD.MM.YYYY HH:mm')) !== '00:00:00') {
                         console.log("Difftime is greater than 1 Minute");
                         data.starttime = moment().format('DD.MM.YYYY HH:mm:ss');
                         data.endtime = moment().format('DD.MM.YYYY HH:mm:ss');
