@@ -19,10 +19,10 @@
             dataService.getValue(path + 'settings/daterange/', function (snapshot) {
                 var range = snapshot.val();
                 if (range !== null) {
-                    if (range.from !== 'Invalid Date') {
+                    if (range.from !== undefined) {
                         reportsCtrl.dateFrom = new Date(range.from);
                     }
-                    if (range.to !== 'Invalid Date') {
+                    if (range.to !== undefined) {
                         reportsCtrl.dateTo = new Date(range.to);
                     }
                 }
@@ -46,6 +46,9 @@
             reportsCtrl.saveDate = function () {
                 var date = reportsCtrl.dateFrom.toString();
                 dataService.setData(path + 'settings/daterange/from', date);
+/*                if (!isFinite(reportsCtrl.dateTo)) {
+                    reportsCtrl.dateTo = new Date();
+                }*/
                 reportsCtrl.dateTo.setHours(reportsCtrl.dateTo.getHours() + 23);
                 reportsCtrl.dateTo.setMinutes(reportsCtrl.dateTo.getMinutes() + 59);
                 date = reportsCtrl.dateTo.toString();
