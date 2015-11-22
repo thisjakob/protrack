@@ -57,8 +57,8 @@
   align-self: flex-end; }
 
 .report-date {
-  -webkit-flex-basis: 6em;
-  flex-basis: 6em; }
+  -webkit-flex-basis: 8em;
+  flex-basis: 8em; }
 
 .report-time {
   -webkit-flex-basis: 7em;
