@@ -21,7 +21,7 @@
 
         var addDiffTime = function (time, diffTime) {
             var start = moment(time, 'DD.MM.YYYY HH:mm');
-            var diff = moment(difftime, 'HH:mm');
+            var duration = moment(diffTime, 'HH:mm');
             var end = time;
 
             if ( start.isValid() && duration.isValid() ) {
