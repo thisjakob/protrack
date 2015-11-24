@@ -1,17 +1,23 @@
 <div class="container">
     <div class="reportnavigation">
-        <div></div>
-        <div>
+        <div class="reportnavelement">
             <md-content>
                 <md-datepicker ng-model="reportsCtrl.dateFrom" md-placeholder="Enter start date"
                                ng-change="reportsCtrl.saveDate()"></md-datepicker>
             </md-content>
         </div>
-        <div>
+        <div class="reportnavelement">
             <md-content>
                 <md-datepicker ng-model="reportsCtrl.dateTo" md-placeholder="Enter end date"
                                ng-change="reportsCtrl.saveDate()"></md-datepicker>
             </md-content>
+        </div>
+        <!-- TODO Options Project
+        <div class="reportnavelement>Project</div-->
+        <!-- TODO Options Tag
+        <div class="reportnavelement>Tag</div-->
+        <div class="reportnavelement summary">
+            Total Duration: {{ reportsCtrl.sumDur(filteredTracks) }} h
         </div>
     </div>
 
@@ -26,7 +32,7 @@
                 <div class="report-duration headerelement">Duration</div>
             </div>
         </li>
-        <li ng-repeat="(key,track) in reportsCtrl.tracksArray | daterange:reportsCtrl.dateFrom:reportsCtrl.dateTo  | orderBy:'starttime':true"
+        <li ng-repeat="(key,track) in $parent.filteredTracks = (reportsCtrl.tracksArray | daterange:reportsCtrl.dateFrom:reportsCtrl.dateTo  | orderBy:'starttime':true)"
             class="reportlistelement">
             <div class="reportelement">
                 <div class="report-desc">
@@ -51,5 +57,4 @@
             </div>
         </li>
     </ul>
-
 </div>

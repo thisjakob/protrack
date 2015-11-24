@@ -7,6 +7,15 @@
   flex-wrap: nowrap;
   width: 100%; }
 
+.reportnavelement {
+  -webkit-flex: 1;
+  flex: 1;
+  -webkit-align-self: flex-end;
+  align-self: flex-end; }
+
+.summary {
+  height: 2.5em; }
+
 .reportlist {
   list-style-type: none;
   padding: 0;

@@ -1,11 +1,10 @@
 (function () {
     'use strict';
-// TODO export to csv
-// TODO total of Duration
+    // TODO export to csv
     // TODO Filter for Project und Tag
     // TODO search Description
     angular.module('protrack')
-        .controller('ReportsCtrl', ['dataService', 'authData', 'showData', function (dataService, authData, showData) {
+        .controller('ReportsCtrl', ['dataService', 'authData', 'showData', 'reportUtilities', function (dataService, authData, showData, reportUtilities) {
             var reportsCtrl = this;
             var path = 'users/' + authData.uid + '/';
 
@@ -46,13 +45,17 @@
             reportsCtrl.saveDate = function () {
                 var date = reportsCtrl.dateFrom.toString();
                 dataService.setData(path + 'settings/daterange/from', date);
-/*                if (!isFinite(reportsCtrl.dateTo)) {
-                    reportsCtrl.dateTo = new Date();
-                }*/
-                reportsCtrl.dateTo.setHours(reportsCtrl.dateTo.getHours() + 23);
-                reportsCtrl.dateTo.setMinutes(reportsCtrl.dateTo.getMinutes() + 59);
+                if (reportsCtrl.dateTo.getHours() === 0) {
+                    reportsCtrl.dateTo.setHours(reportsCtrl.dateTo.getHours() + 23);
+                    reportsCtrl.dateTo.setMinutes(reportsCtrl.dateTo.getMinutes() + 59);
+                }
                 date = reportsCtrl.dateTo.toString();
                 dataService.setData(path + 'settings/daterange/to', date);
+            };
+
+            reportsCtrl.sumDur = function (tracks) {
+                var sum = reportUtilities.sumDuration(tracks);
+                return sum.substr(0, sum.length - 3);
             };
         }]);
 })();
