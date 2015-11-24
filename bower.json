@@ -28,7 +28,8 @@
     "material-design-lite": "~1.0.6",
     "angular-toastr": "~1.6.0",
     "angular-material-design-lite": "~0.4.2",
-    "angular-material": "master"
+    "angular-material": "master",
+    "ng-csv": "~0.3.6"
   },
   "devDependencies": {},
   "resolutions": {

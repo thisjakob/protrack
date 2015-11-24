@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-    angular.module('protrack', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'firebase', 'ui.router', 'xeditable', 'toastr', 'mdl', 'ngMaterial'])
+    angular.module('protrack', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'firebase', 'ui.router', 'xeditable', 'toastr', 'mdl', 'ngMaterial', 'ngCsv'])
 
         .run(['$rootScope', '$state', function($rootScope, $state) {
             // redirect unauthenticated users to the login page
