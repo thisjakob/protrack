@@ -1,0 +1,113 @@
+<md-content layout-padding layout="column">
+    <md-card>
+        <form>
+            <md-card-content>
+                <div layout="row" layout-sm="column">
+                    <md-input-container flex="grow">
+                        <label for="currentDesc">Working On...</label>
+                        <input name="desc" id="currentDesc" md-model="tracksCtrl.current.desc" ng-bind="tracksCtrl.current.desc" />
+                    </md-input-container>
+                    <md-datepicker flex="grow" ng-model="tracksCtrl.current.start" md-placeholder="Enter date"></md-datepicker>
+                    <div layout="row" flex="grow">
+                        <md-input-container flex="grow" flex-sm="50">
+                            <label>Start Time</label>
+                            <input ng-model="tracksCtrl.current.starttime">
+                        </md-input-container>
+                        <md-input-container flex="grow" flex-sm="50">
+                            <label>End Time</label>
+                            <input ng-model="tracksCtrl.current.endtime">
+                        </md-input-container>
+                    </div>
+                </div>
+                <md-chips ng-model="tracksCtrl.current.projects" readonly="tracksCtrl.readonly" md-autocomplete-snap
+                          md-transform-chip="tracksCtrl.transformChip($chip)"
+                          md-require-match="tracksCtrl.requireMatch">
+                    <md-autocomplete
+                            md-selected-item="tracksCtrl.selectedProject"
+                            md-search-text="tracksCtrl.searchTextProject"
+                            md-items="proj in tracksCtrl.querySearchProject(tracksCtrl.searchTextProject)"
+                            md-item-text="proj"
+                            placeholder="Add a Project">
+                        <span md-highlight-text="tracksCtrl.searchTextProject">{{proj}}</span>
+                    </md-autocomplete>
+                </md-chips>
+                <md-chips ng-model="tracksCtrl.current.tags" readonly="tracksCtrl.readonly" md-autocomplete-snap
+                          md-transform-chip="tracksCtrl.transformChip($chip)"
+                          md-require-match="tracksCtrl.requireMatch">
+                    <md-autocomplete
+                            md-selected-item="tracksCtrl.selectedTag"
+                            md-search-text="tracksCtrl.searchTextTag"
+                            md-items="tag in tracksCtrl.querySearchTag(tracksCtrl.searchTextTag)"
+                            md-item-text="tag"
+                            placeholder="Add a Tag">
+                        <span md-highlight-text="tracksCtrl.searchTextTag">{{tag}}</span>
+                    </md-autocomplete>
+                </md-chips>
+            </md-card-content>
+            <md-card-actions layout="row">
+                <md-button class="md-raised md-primary" style="width:100%;" ng-hide="tracksCtrl.timeIsSet" ng-click="tracksCtrl.recordTrack(track, true)">
+                    <md-icon>timer</md-icon> Start Timer
+                </md-button>
+                <md-button class="md-raised md-primary" style="width:100%;" ng-show="tracksCtrl.timeIsSet" ng-click="">
+                    <md-icon>timer</md-icon> Add Timer
+                </md-button>
+            </md-card-actions>
+        </form>
+
+    </md-card>
+
+    <md-list class="track-list">
+        <md-list-item class="md-clickable" title="Edit this Track" ng-click="tracksCtrl.editTrack(track.project);">
+            <div class="md-list-item-text" layout="column" flex="grow">
+                <h3 class="track-desc">Test Task</h3>
+                <p class="datetime">2015-11-24 08:00 - 10:00</p>
+                <md-chips class="track-projects-tags">
+                    <md-chip class="project-chip">Project 1</md-chip>
+                    <md-chip class="project-chip">Project 2</md-chip>
+                    <md-chip class="tag-chip">Tag 1</md-chip>
+                    <md-chip class="tag-chip">Tag 2</md-chip>
+                    <md-chip class="tag-chip">Tag 2</md-chip>
+                    <md-chip class="tag-chip">Tag 2</md-chip>
+                    <md-chip class="tag-chip">Tag 2</md-chip>
+                </md-chips>
+            </div>
+            <div class="md-secondary">
+                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.editTrack(track.project);">
+                    <md-icon>mode_edit</md-icon>
+                </md-button>
+                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.deleteTrack(track.$id);">
+                    <md-icon>delete</md-icon>
+                </md-button>
+            </div>
+        </md-list-item>
+        <md-list-item class="md-clickable" title="Edit this Track" ng-click="tracksCtrl.editTrack(track.project);">
+            <div class="md-list-item-text" layout="column" flex="grow">
+                <h3 class="desc">Test Task with very long text to see how that works out in the layout...</h3>
+                <p class="datetime">2015-11-24 11:00 - 13:00</p>
+                <md-chips class="track-projects-tags">
+                    <md-chip class="project-chip">Project 1</md-chip>
+                    <md-chip class="project-chip">Project 2</md-chip>
+                    <md-chip class="tag-chip">Tag 1</md-chip>
+                    <md-chip class="tag-chip">Tag 2</md-chip>
+                    <md-chip class="tag-chip">Tag 2</md-chip>
+                    <md-chip class="tag-chip">Tag 2</md-chip>
+                    <md-chip class="tag-chip">Tag 2</md-chip>
+                </md-chips>
+            </div>
+            <div class="md-secondary">
+                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.editTrack(track.project);">
+                    <md-icon>mode_edit</md-icon>
+                </md-button>
+                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.deleteTrack(track.$id);">
+                    <md-icon>delete</md-icon>
+                </md-button>
+            </div>
+        </md-list-item>
+    </md-list>
+
+    <div class="footer">
+        <md-divider></md-divider>
+        <p>copyright protrack from protrack</p>
+
+    </div>
+</md-content>
