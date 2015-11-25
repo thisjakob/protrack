@@ -6,7 +6,17 @@
   flex-wrap: nowrap;
   width: 100%;
 }
+
 .datepickerreport {
+}
+
+.reportnavelement {
+  flex: 1;
+  align-self: flex-end;
+}
+.summary {
+  height: 2.5em;
+
 }
 
 .reportlist {
@@ -59,7 +69,7 @@
 }
 
 .report-date {
-  flex-basis: 6em;
+  flex-basis: 8em;
 }
 
 .report-time {

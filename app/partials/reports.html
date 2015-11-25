@@ -1,17 +1,29 @@
 <div class="container">
     <div class="reportnavigation">
-        <div></div>
-        <div>
+        <div class="reportnavelement">
             <md-content>
                 <md-datepicker ng-model="reportsCtrl.dateFrom" md-placeholder="Enter start date"
                                ng-change="reportsCtrl.saveDate()"></md-datepicker>
             </md-content>
         </div>
-        <div>
+        <div class="reportnavelement">
             <md-content>
                 <md-datepicker ng-model="reportsCtrl.dateTo" md-placeholder="Enter end date"
                                ng-change="reportsCtrl.saveDate()"></md-datepicker>
             </md-content>
+        </div>
+        <!-- TODO Options Project
+        <div class="reportnavelement>Project</div-->
+        <!-- TODO Options Tag
+        <div class="reportnavelement>Tag</div-->
+        <div class="reportnavelement summary">
+            Total Duration: {{ reportsCtrl.sumDur(filteredTracks) }} h
+        </div>
+        <div class="reportnavelement">
+            <md-button class="md-raised md-accent" ng-csv="reportsCtrl.writeCsv(filteredTracks)" filename="{{ reportsCtrl.getFilename() }}" csv-header="['Description', 'Project', 'Tags', 'Starttime', 'Endtime', 'Duration']">
+                <md-icon class="material-icons">save</md-icon>
+                Export csv
+            </md-button>
         </div>
     </div>
 
@@ -26,7 +38,7 @@
                 <div class="report-duration headerelement">Duration</div>
             </div>
         </li>
-        <li ng-repeat="(key,track) in reportsCtrl.tracksArray | daterange:reportsCtrl.dateFrom:reportsCtrl.dateTo  | orderBy:'starttime':true"
+        <li ng-repeat="(key,track) in $parent.filteredTracks = (reportsCtrl.tracksArray | daterange:reportsCtrl.dateFrom:reportsCtrl.dateTo  | orderBy:'starttime':true)"
             class="reportlistelement">
             <div class="reportelement">
                 <div class="report-desc">
@@ -40,16 +52,15 @@
                 </div>
 
                 <div class="report-date">
-                    <span> {{ track.starttime | limitTo : 10 }}</span>
+                    <span> {{ track.starttime | weekday }} {{ track.starttime | limitTo : 10 }}</span>
                 </div>
                 <div class="report-time">
                     <span> {{ track.starttime | limitTo : 5 : 11 }} - {{ track.endtime | limitTo : 5 : 11 }}</span>
                 </div>
-                <div class="report-duration">
+                <div class="report-duration" ng-style="{'color':(track.record?'red':'black')}">
                     <span> {{ track.difftime | durationmin }}</span>
                 </div>
             </div>
         </li>
     </ul>
-
 </div>
