@@ -20,7 +20,7 @@
             Total Duration: {{ reportsCtrl.sumDur(filteredTracks) }} h
         </div>
         <div class="reportnavelement">
-            <md-button class="md-raised md-accent" ng-csv="reportsCtrl.writeCsv(filteredTracks)" filename="export.csv" csv-header="['Description', 'Project', 'Tags', 'Starttime', 'Endtime', 'Duration']">
+            <md-button class="md-raised md-accent" ng-csv="reportsCtrl.writeCsv(filteredTracks)" filename="{{ reportsCtrl.getFilename() }}" csv-header="['Description', 'Project', 'Tags', 'Starttime', 'Endtime', 'Duration']">
                 <md-icon class="material-icons">save</md-icon>
                 Export csv
             </md-button>

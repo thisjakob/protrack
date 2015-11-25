@@ -58,6 +58,11 @@
                 return sum.substr(0, sum.length - 3);
             };
 
+            /**
+             * push each track as array in a array
+             * @param tracks
+             * @returns {Array} array of array of track-data
+             */
             reportsCtrl.writeCsv = function (tracks) {
                 var csv = [];
                 angular.forEach (tracks, function (track) {
@@ -75,6 +80,16 @@
                     csv.push(item);
                 });
                 return csv;
+            };
+
+            /**
+             * build filename with actual datetime
+             * @returns {string}
+             */
+            reportsCtrl.getFilename = function() {
+                var from = reportsCtrl.dateFrom.getFullYear().toString() + '_'+ reportsCtrl.dateFrom.getMonth() + '_'+ reportsCtrl.dateFrom.getDate();
+                var to = reportsCtrl.dateTo.getFullYear().toString() + '_'+ reportsCtrl.dateTo.getMonth() + '_'+ reportsCtrl.dateTo.getDate();
+                return 'protrack-' + from + '-' + to + '.csv';
             };
         }]);
 })();
