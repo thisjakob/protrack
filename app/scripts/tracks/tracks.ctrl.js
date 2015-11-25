@@ -7,6 +7,62 @@
             var tracksCtrl = this;
             var path = 'users/';
 
+            //############
+            // static data for new form layout
+            tracksCtrl.current = {
+                id : '-K2aUpFYuiT5jmRPhQMJ',
+                desc : 'Test Entry',
+                start : moment().toDate(),
+                end : moment().toDate(),
+                starttime : '',
+                endtime : '',
+                startdatetime : '',
+                enddatetime : '',
+                difftime : '',
+                tags : [],
+                projects : []
+            };
+
+            tracksCtrl.timeIsSet = false;
+            tracksCtrl.readonly = false;
+            tracksCtrl.requireMatch = false;
+            tracksCtrl.searchTextProject = null;
+            tracksCtrl.searchTextTag = null;
+            tracksCtrl.selectedProject = null;
+            tracksCtrl.selectedTag = null;
+            tracksCtrl.allProjects = ['Project 1','Project 2','Project 3','Project 4'];
+            tracksCtrl.allTags = ['Tag 1','Tag 2','Tag 3','Tag 4','Tag 5','Tag 6'];
+
+
+            tracksCtrl.transformChip = function (chip) {
+                return chip;
+            };
+
+            /**
+             * Search for projects.
+             */
+            tracksCtrl.querySearchProject = function (query) {
+                var results = query ? tracksCtrl.allProjects.filter(createFilterFor(query)) : [];
+                return results;
+            };
+            /**
+             * Search for Tags.
+             */
+            tracksCtrl.querySearchTag = function (query) {
+                var results = query ? tracksCtrl.allTags.filter(createFilterFor(query)) : [];
+                return results;
+            };
+            /**
+             * Create filter function for a query string
+             */
+            var createFilterFor = function (query) {
+                var lowercaseQuery = angular.lowercase(query);
+                return function filterFn(queryText) {
+                    return (queryText.toLowerCase().indexOf(lowercaseQuery) === 0);
+                };
+            };
+            //############
+
             // the resolve config of this route makes sure that the
             // authData object is ready to use by the time this controller
             // is initialized
