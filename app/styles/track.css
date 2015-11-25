@@ -7,14 +7,6 @@
   padding: 20px;
   border-bottom: 1px solid #b3b3b3; }
 
-.track-form {
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-direction: row;
-  flex-direction: row;
-  -webkit-flex-wrap: nowrap;
-  flex-wrap: nowrap; }
-
 .track-inputs {
   -webkit-flex: 1 1 auto;
   flex: 1 1 auto; }
@@ -29,21 +21,14 @@
     flex-direction: column; } }
 
 /* $screen-xs */
-.tracklistelement label {
-  display: block;
-  font-size: .75rem;
-  margin-bottom: 0;
-  color: #3c3c3c; }
-
 .track-desc-project-tag,
 .track-date-time-duration {
   display: -webkit-flex;
   display: flex; }
 
-.track-desc {
-  font-size: 1.5rem;
-  -webkit-flex-grow: 4;
-  flex-grow: 4; }
+.track-desc,
+.track-projects-tags {
+  margin-right: 15rem; }
 
 .track-project,
 .track-tag {
@@ -55,6 +40,19 @@
 .track-difftime {
   margin-right: 2rem; }
 
-.buttons {
-  margin-top: 1.5rem;
-  text-align: end; }
+.track-button-area {
+  -webkit-align-items: flex-end;
+  align-items: flex-end; }
+
+.current-timer {
+  font-size: 0.75rem;
+  display: block;
+  line-height: 2;
+  margin-top: -0.5rem; }
+
+.project-chip,
+.tag-chip {
+  font-size: 1.25rem; }
+
+.track-list button.md-icon-button {
+  width: auto; }

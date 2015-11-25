@@ -11,12 +11,6 @@
   border-bottom: 1px solid #b3b3b3;
 }
 
-.track-form {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-}
-
 .track-inputs {
   flex: 1 1 auto;
 }
@@ -34,21 +28,14 @@
 
 /* $screen-xs */
 
-.tracklistelement label {
-  display: block;
-  font-size: .75rem;
-  margin-bottom: 0;
-  color: #3c3c3c;
-}
-
 .track-desc-project-tag,
 .track-date-time-duration {
   display: flex;
 }
 
-.track-desc {
-  font-size: 1.5rem;
-  flex-grow: 4;
+.track-desc,
+.track-projects-tags {
+  margin-right: 15rem;
 }
 
 .track-project,
@@ -62,7 +49,21 @@
   margin-right: 2rem;
 }
 
-.buttons {
-  margin-top: 1.5rem;
-  text-align: end;
+.track-button-area {
+  align-items: flex-end;
+}
+.current-timer {
+  font-size: 0.75rem;
+  display: block;
+  line-height: 2;
+  margin-top: -0.5rem;
+}
+
+.project-chip,
+.tag-chip {
+  font-size: 1.25rem;
+}
+
+.track-list button.md-icon-button {
+  width: auto;
 }
