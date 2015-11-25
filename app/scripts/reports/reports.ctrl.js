@@ -67,16 +67,16 @@
                 var csv = [];
                 angular.forEach (tracks, function (track) {
                     var item = [];
-                    item.push(track.desc);
-                    item.push(showData.showDataName(reportsCtrl.projectsArray, track.project));
+                    item.push("'" + track.desc.replace(/'/,"\'") + "'");
+                    item.push("'" + showData.showDataName(reportsCtrl.projectsArray, track.project) + "'");
                     var tags = '';
                     angular.forEach(track.tags, function(tag) {
                         tags = tags + showData.showDataName(reportsCtrl.tagsArray, tag);
                     });
-                    item.push(tags);
-                    item.push(track.starttime);
-                    item.push(track.endtime);
-                    item.push(track.difftime);
+                    item.push("'" + tags.replace(/'/,"\'") + "'");
+                    item.push("'" + track.starttime + "'");
+                    item.push("'" + track.endtime + "'");
+                    item.push("'" + track.difftime + "'");
                     csv.push(item);
                 });
                 return csv;
