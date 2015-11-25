@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-    angular.module('protrack', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'firebase', 'ui.router', 'xeditable', 'toastr', 'ngMaterial'])
+    angular.module('protrack', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'firebase', 'ui.router', 'xeditable', 'toastr', 'ngMaterial', 'ngCsv'])
 
         .run(['$rootScope', '$state', function($rootScope, $state) {
             // redirect unauthenticated users to the login page
@@ -153,7 +153,7 @@
                         },
                         'content' : {
                             templateUrl: 'partials/register.html',
-                            controller: 'RegisterCtrl as regCtrl',
+                            controller: 'RegisterCtrl as regCtrl'
                         }
                     },
                     resolve: {
