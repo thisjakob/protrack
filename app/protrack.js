@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-    angular.module('protrack', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'firebase', 'ui.router', 'xeditable', 'toastr', 'mdl', 'ngMaterial'])
+    angular.module('protrack', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'firebase', 'ui.router', 'xeditable', 'toastr', 'ngMaterial'])
 
         .run(['$rootScope', '$state', function($rootScope, $state) {
             // redirect unauthenticated users to the login page
@@ -43,6 +43,25 @@
                         },
                         'content' : {
                             templateUrl: 'partials/tracks.html',
+                            controller: 'TracksCtrl as tracksCtrl'
+                        }
+                    },
+
+                    resolve: {
+                        'authData': ['Auth', function(Auth) {
+                            return Auth.$requireAuth();
+                        }]
+                    }
+                })
+                .state('timer2', {
+                    url: '/timer2',
+                    views : {
+                        'nav' : {
+                            templateUrl: 'partials/home.nav.html',
+                            controller: 'HomeNavCtrl as homeNavCtrl'
+                        },
+                        'content' : {
+                            templateUrl: 'partials/tracks2.html',
                             controller: 'TracksCtrl as tracksCtrl'
                         }
                     },
