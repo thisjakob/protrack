@@ -108,24 +108,6 @@
                         }]
                     }
                 })
-                .state('settings', {
-                    url: '/settings',
-                    views : {
-                        'nav' : {
-                            templateUrl: 'partials/home.nav.html',
-                            controller: 'HomeNavCtrl as homeNavCtrl'
-                        },
-                        'content' : {
-                            templateUrl: 'partials/settings.html',
-                            controller: 'SettingsCtrl as settingsCtrl'
-                        }
-                    },
-                    resolve: {
-                        'authData': ['Auth', function(Auth) {
-                            return Auth.$requireAuth();
-                        }]
-                    }
-                })
                 .state('login', {
                     url: '/login',
                     views : {
