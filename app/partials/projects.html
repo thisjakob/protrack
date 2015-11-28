@@ -51,7 +51,7 @@
                                             <span ng-show="confirm">
                                                 <md-button class="md-icon-button md-primary"
                                                            title="Are you sure? Yes, delete it!"
-                                                           ng-click="projectsCtrl.deleteProject(project.$id)">
+                                                           ng-click="projectsCtrl.deleteItem('project', project.$id)">
                                                     <md-icon>delete</md-icon>
                                                 </md-button>
                                                 <md-button class="md-icon-button"
@@ -128,7 +128,7 @@
                                             <span ng-show="confirm">
                                                 <md-button class="md-icon-button md-primary"
                                                            title="Are you sure? Yes, delete it!"
-                                                           ng-click="projectsCtrl.deleteTag(tag.$id)">
+                                                           ng-click="projectsCtrl.deleteItem('tag', tag.$id)">
                                                     <md-icon>delete</md-icon>
                                                 </md-button>
                                                 <md-button class="md-icon-button"
