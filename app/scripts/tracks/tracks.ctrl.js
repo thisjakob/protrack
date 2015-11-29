@@ -186,28 +186,36 @@
                 tracksCtrl.current[ fieldName ] = time;
             };
 
-            // compares two times
-            // returns true if time1 is earlier than time2
-            // returns false if its the other way around
+            /**
+             * compares two times
+             * returns true if time1 is earlier than time2
+             * returns false if its the other way around or the same
+             */
             var isEarlier = function( time1, time2 ) {
                 return parseInt( time1.replace(/:/,'.') ) < parseInt( time2.replace(/:/,'.') );
             };
 
-            // create track and save it to compare to show form
+            /**
+             * create track and save it to compare to show form
+             */
             tracksCtrl.createTrackElement = function () {
                 dataService.addData(path + 'tracks', mapTrackData(tracksCtrl.current));
                 $state.go($state.current, {}, {reload: true});
             };
 
+            /**
+             * handle changes on the project select control
+             */
             tracksCtrl.projectSelected = function(){
                 tracksCtrl.selectedTags = null;
                 tracksCtrl.searchTextTag = null;
                 tracksCtrl.current.tags = [];
                 tracksCtrl.current.availTags = loadTags(tracksCtrl.current.project);
-                console.log(tracksCtrl.current.availTags);
             };
 
-            // maps data from current track to the structure used in the DB
+            /**
+             * maps data from current track to the structure used in the DB
+             */
             var mapTrackData = function(track){
                 var project = getProjectByName(track.project.name);
 
@@ -225,8 +233,6 @@
 
                 return newTrack;
             };
-
-            //############
 
             /**
              * read actual time and set end and diff time. if endtime is on another day, recording will be stopping.
@@ -258,22 +264,9 @@
                 }
             };
 
-            /*
-            // create track and save it to compare to show form
-            tracksCtrl.createTrackElement = function () {
-                tracksCtrl.newTrack = {
-                    starttime: moment().format('DD.MM.YYYY HH:mm:ss'),
-                    project: '',
-                    desc: '',
-                    tags: '',
-                    endtime: moment().format('DD.MM.YYYY HH:mm:ss'), // with http://vitalets.github.io/combodate/
-                    difftime: '00:00',
-                    record: false
-                };
-                return dataService.addData(path + 'tracks', tracksCtrl.newTrack);
-            };
-            */
-
+            /**
+             * prepare the selected track to show in the edit form
+             */
             tracksCtrl.editTrack = function (id, $event) {
                 var track = getTrackById(id);
 
@@ -294,17 +287,26 @@
                 $anchorScroll('editForm');
             };
 
+            /**
+             * update track in DB (form submit handler)
+             */
             tracksCtrl.updateTrack = function () {
                 // update data
                 dataService.updateData(path + 'tracks', tracksCtrl.current.id, mapTrackData(tracksCtrl.current));
                 $state.go($state.current, {}, {reload: true});
             };
 
+            /**
+             * ...
+             */
             tracksCtrl.updateProject = function (project, id) {
                 console.log('update project in track: ' + id);
                 dataService.setData(path + 'tracks/' + id + '/project', project);
             };
 
+            /**
+             * ...
+             */
             tracksCtrl.cancelTrack = function (track) {
                 console.log('update project backup in track: ' + track.$id);
 
@@ -314,8 +316,10 @@
                 track.difftime = calcTime.diffTime(track.starttime, track.endtime);
             };
 
-            // load tags for a given project
-            // if no project provided, load all tags that are not assigned to a project
+            /**
+             * load tags for a given project
+             * if no project is provided, load all tags that are not assigned to a project
+             */
             var loadTags = function (project) {
                 var tags = [];
 
@@ -336,22 +340,37 @@
                 return tags;
             };
 
+            /**
+             * returns track object for a given track id
+             */
             var getTrackById = function(id) {
                 return $filter('filter')(tracksCtrl.tracksArray, {$id:id}, true)[0];
             };
 
+            /**
+             * returns project object for a given project id
+             */
             var getProjectById = function(id) {
                 return $filter('filter')(tracksCtrl.allProjects, {$id:id}, true)[0];
             };
 
+            /**
+             * returns project object for a given project id
+             */
             var getProjectByName = function(name) {
                 return $filter('filter')(tracksCtrl.allProjects, {name:name}, true)[0];
             };
 
+            /**
+             * returns tag object for a given tag id
+             */
             var getTagById = function(id) {
                 return $filter('filter')(tracksCtrl.allTags, {$id:id}, true)[0];
             };
 
+            /**
+             * delete track with given id from DB
+             */
             tracksCtrl.deleteTrack = function (id) {
                 if (tracksCtrl.record.id === id) {
                     tracksCtrl.stopRecording();
@@ -360,18 +379,27 @@
                 $state.go($state.current, {}, {reload: true});
             };
 
+            /**
+             * ...
+             */
             tracksCtrl.changeStarttime = function (starttime, track) {
                 console.log('change starttime > change difftime');
                 track.starttime = starttime;
                 track.difftime = calcTime.diffTime(starttime, track.endtime);
             };
 
+            /**
+             * ...
+             */
             tracksCtrl.changeEndtime = function (endtime, track) {
                 console.log('change endtime > change difftime');
                 track.endtime = endtime;
                 track.difftime = calcTime.diffTime(track.starttime, endtime);
             };
 
+            /**
+             * ...
+             */
             tracksCtrl.changeDifftime = function (difftime, track) {
                 console.log('change difftime > change endtime');
                 track.difftime = difftime;
@@ -411,6 +439,9 @@
 
             };
 
+            /**
+             * ...
+             */
             tracksCtrl.startRecording = function (data, id) {
                 tracksCtrl.record.id = id;
                 tracksCtrl.record.data = data;
@@ -458,7 +489,3 @@
             tracksCtrl.init();
         }]);
 })();
-// .$loaded().then (function(){}) when loaded
-
-// isolierter Scope: Icon in einzelnem Element einer Liste ==> LIN
-// git remote für repo auf USB-Stick
