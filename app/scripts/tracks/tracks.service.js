@@ -8,8 +8,8 @@
         var diffTime = function (startTime, endTime) {
             var hours = '00:00';
             var diff = '';
-            var start = moment(startTime, 'HH:mm');
-            var end = moment(endTime, 'HH:mm');
+            var start = moment(startTime, 'HH:mm:ss');
+            var end = moment(endTime, 'HH:mm:ss');
 
             if ( start.isValid() && end.isValid() ) {
                 diff = moment.utc(end.diff(start)).format("DDHH:mm:ss");

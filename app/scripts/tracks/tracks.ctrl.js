@@ -26,7 +26,8 @@
                 tags : [],
                 project : {},
                 durationSet : false,
-                dataMissing : true
+                dataMissing : true,
+                record : false
             };
 
             /**
@@ -127,7 +128,15 @@
              * calculate duration from start and end time given
              */
             var getDuration = function(start, end){
-                return ( isEarlier(start, end) ) ? calcTime.diffTime(start, end) : '00:00';
+                var noDuration = ( start.length > 5 ) ? '00:00:00' : '00:00';
+                return ( isEarlier(start, end) ) ? calcTime.diffTime(start, end) : noDuration;
+            };
+
+            /**
+             * add a specified amount of time to a given duration
+             */
+            var addTime = function(time, add){
+                moment.duration(time, 'HH:mm').add(add);
             };
 
             /**
@@ -190,7 +199,7 @@
              * returns false if its the other way around or the same
              */
             var isEarlier = function( time1, time2 ) {
-                return parseFloat( time1.replace(/:/,'.') ) < parseFloat( time2.replace(/:/,'.') );
+                return parseFloat( time1.replace(/:/,'.').replace(/:/,'') ) < parseFloat( time2.replace(/:/,'.').replace(/:/,'') );
             };
 
             /**
@@ -222,7 +231,7 @@
                     starttime : moment( track.date ).format('DD.MM.YYYY') + track.startTime,
                     endtime : moment( track.date ).format('DD.MM.YYYY') + track.endTime,
                     difftime : track.duration,
-                    record : false,
+                    record : track.record,
                     project : project.$id || '',
                     tags : track.tags.map(function(obj){
                         return obj.$id;
@@ -280,6 +289,7 @@
                 t.dataMissing = false;
                 t.project = track.project;
                 t.tags = track.tags;
+                t.record = track.record;
 
                 tracksCtrl.editMode = true;
                 $anchorScroll('editForm');
@@ -438,50 +448,32 @@
             };
 
             /**
-             * ...
+             * Starts timer for the current track
              */
-            tracksCtrl.startRecording = function (data, id) {
-                tracksCtrl.record.id = id;
-                tracksCtrl.record.data = data;
+            tracksCtrl.startTimer = function () {
+                var track = tracksCtrl.current;
+                track.record = true;
+                track.startTime = moment().format('HH:mm:ss');
+                track.endTime = moment().format('HH:mm:ss');
+                //dataService.setData(path + 'tracks/' + track.id + '/record', true);
 
-                // start recording cycle (set end time to actual time)
-                tracksCtrl.record.recording = $interval(tracksCtrl.setActualTime, 1000);
-                tracksCtrl.allRecording.push(tracksCtrl.record.recording);
-                if (tracksCtrl.record.recording !== '') {
-                    console.log("Timer started");
-                }
+                // update duration every second
+                track.timerInterval = $interval(function(){
+                    track.endTime = moment().format('HH:mm:ss');
+                    track.duration = getDuration(track.startTime, track.endTime);
+                }, 1000);
             };
 
             /**
-             * stops recording. stop interval and delete flag in track.
+             * Stops timer for the current track and saves it to the DB
              */
-            tracksCtrl.stopRecording = function () {
-                // delete record
-                if (tracksCtrl.record.data !== null && tracksCtrl.record.id !== '') {
-                    dataService.setData(path + 'tracks/' + tracksCtrl.record.id + '/record', false);
+            tracksCtrl.stopTimer = function() {
+                var track = tracksCtrl.current;
+                track.record = false;
+                $interval.cancel(track.timerInterval);
 
-                    // delete recording
-                    if (tracksCtrl.record.recording !== '') {
-                        if ($interval.cancel(tracksCtrl.record.recording)) {
-                            console.log("Timer canceled");
-                            tracksCtrl.allRecording.pop();
-                        }
-                    }
-                } else {
-                    console.log('no recording saved to stop');
-                    // remove record from tracks
-                    angular.forEach(tracksCtrl.tracksArray, function (track) {
-                        dataService.setData(path + 'tracks/' + track.$id + '/record', false);
-                    });
-                    // delete all interval started
-                    if (tracksCtrl.allRecording !== null) {
-                        while (tracksCtrl.allRecording.length) {
-                            $interval.cancel(tracksCtrl.allRecording.pop());
-                            console.log("interval canceled");
-                        }
-                    }
-                }
-                tracksCtrl.record = {recording: '', id: '', data: ''};
+                // save to DB
+                tracksCtrl.createTrackElement();
             };
 
             tracksCtrl.init();
