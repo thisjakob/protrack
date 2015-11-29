@@ -1,55 +1,69 @@
 <md-content layout-padding layout="column">
-    <md-card>
+    <md-card id="editForm">
         <form>
             <md-card-content>
-                <div layout="row" layout-sm="column">
+                <div layout="row" layout-sm="column" layout-align="space-around">
                     <md-input-container flex="grow">
                         <label for="currentDesc">Working On...</label>
-                        <input name="desc" id="currentDesc" md-model="tracksCtrl.current.desc" ng-bind="tracksCtrl.current.desc" />
+                        <input name="desc" id="currentDesc" ng-model="tracksCtrl.current.desc" ng-change="tracksCtrl.checkDesc()" />
                     </md-input-container>
-                    <md-datepicker flex="grow" ng-model="tracksCtrl.current.start" md-placeholder="Enter date"></md-datepicker>
+                    <md-datepicker flex="grow" ng-model="tracksCtrl.current.date" md-placeholder="Enter date"></md-datepicker>
                     <div layout="row" flex="grow">
-                        <md-input-container flex="grow" flex-sm="50">
+                        <md-input-container flex="grow" flex-sm="33">
                             <label>Start Time</label>
-                            <input ng-model="tracksCtrl.current.starttime">
+                            <input ng-model="tracksCtrl.current.startTime" ng-change="tracksCtrl.changeTime('start')" ng-blur="tracksCtrl.formatTime('startTime')">
                         </md-input-container>
-                        <md-input-container flex="grow" flex-sm="50">
+                        <md-input-container flex="grow" flex-sm="33">
                             <label>End Time</label>
-                            <input ng-model="tracksCtrl.current.endtime">
+                            <input ng-model="tracksCtrl.current.endTime" ng-change="tracksCtrl.changeTime('end')" ng-blur="tracksCtrl.formatTime('endTime')">
+                        </md-input-container>
+                        <md-input-container flex="grow" flex-sm="33">
+                            <label>Duration</label>
+                            <input ng-model="tracksCtrl.current.duration" ng-change="tracksCtrl.changeTime('duration')" ng-blur="tracksCtrl.formatTime('duration')">
                         </md-input-container>
                     </div>
                 </div>
-                <md-chips ng-model="tracksCtrl.current.projects" readonly="tracksCtrl.readonly" md-autocomplete-snap
-                          md-transform-chip="tracksCtrl.transformChip($chip)"
-                          md-require-match="tracksCtrl.requireMatch">
-                    <md-autocomplete
-                            md-selected-item="tracksCtrl.selectedProject"
-                            md-search-text="tracksCtrl.searchTextProject"
-                            md-items="proj in tracksCtrl.querySearchProject(tracksCtrl.searchTextProject)"
-                            md-item-text="proj"
-                            placeholder="Add a Project">
-                        <span md-highlight-text="tracksCtrl.searchTextProject">{{proj}}</span>
-                    </md-autocomplete>
-                </md-chips>
-                <md-chips ng-model="tracksCtrl.current.tags" readonly="tracksCtrl.readonly" md-autocomplete-snap
-                          md-transform-chip="tracksCtrl.transformChip($chip)"
-                          md-require-match="tracksCtrl.requireMatch">
-                    <md-autocomplete
-                            md-selected-item="tracksCtrl.selectedTag"
-                            md-search-text="tracksCtrl.searchTextTag"
-                            md-items="tag in tracksCtrl.querySearchTag(tracksCtrl.searchTextTag)"
-                            md-item-text="tag"
-                            placeholder="Add a Tag">
-                        <span md-highlight-text="tracksCtrl.searchTextTag">{{tag}}</span>
-                    </md-autocomplete>
-                </md-chips>
-            </md-card-content>
+                <div layout="row" layout-align="space-around">
+                    <md-input-container flex="25">
+                        <label>Project</label>
+                        <md-select ng-model="tracksCtrl.current.project" ng-model-options="{trackBy:'$value.$id'}" ng-change="tracksCtrl.projectSelected()">
+                            <md-option ng-value="project" ng-repeat="project in tracksCtrl.allProjects" value="{{project.name}}">
+                                {{project.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-chips flex="70" ng-model="tracksCtrl.current.tags" readonly="tracksCtrl.readonly" md-autocomplete-snap
+                              md-transform-chip="tracksCtrl.transformChip($chip)"
+                              md-require-match="tracksCtrl.requireMatch">
+                        <md-autocomplete
+                                md-selected-item="tracksCtrl.selectedTag"
+                                md-search-text="tracksCtrl.searchTextTag"
+                                md-items="tag in tracksCtrl.querySearchTag(tracksCtrl.searchTextTag)"
+                                md-item-text="tag"
+                                md-no-cache="true"
+                                placeholder="Add a Tag">
+                            <span md-highlight-text="tracksCtrl.searchTextTag">{{tag.name}} ({{tag.desc}})</span>
+                        </md-autocomplete>
+                        <md-chip-template>
+                            <span><em>{{$chip.name}}</em> ({{$chip.desc}})</span>
+                        </md-chip-template>
+                    </md-chips>
+                </md-card-content>
+            </div>
             <md-card-actions layout="row">
-                <md-button class="md-raised md-primary" style="width:100%;" ng-hide="tracksCtrl.timeIsSet" ng-click="tracksCtrl.recordTrack(track, true)">
+                <md-button class="md-raised md-primary" ng-hide="tracksCtrl.current.durationSet || tracksCtrl.editMode" ng-disabled="tracksCtrl.current.dataMissing" style="width:100%;" ng-click="tracksCtrl.recordTrack(track, true)">
                     <md-icon>timer</md-icon> Start Timer
                 </md-button>
-                <md-button class="md-raised md-primary" style="width:100%;" ng-show="tracksCtrl.timeIsSet" ng-click="">
-                    <md-icon>timer</md-icon> Add Timer
+                <md-button class="md-raised md-accent" ng-hide="tracksCtrl.current.durationSet || tracksCtrl.editMode" ng-disabled="tracksCtrl.current.dataMissing" style="width:100%;" ng-click="tracksCtrl.recordTrack(track, true)">
+                    <md-icon>timer</md-icon> Stop Timer
+                    <span>{{ tracksCtrl.current.duration | durationsec }}</span>
+                </md-button>
+                <md-button class="md-raised md-accent" ng-disabled="tracksCtrl.current.dataMissing" style="width:100%;" ng-show="tracksCtrl.current.durationSet && !tracksCtrl.editMode" ng-click="tracksCtrl.createTrackElement()">
+                    <md-icon>add</md-icon> Add Timer
+                </md-button>
+                <md-button class="md-raised md-accent" ng-disabled="tracksCtrl.current.dataMissing || !tracksCtrl.current.durationSet" style="width:100%;" ng-show="tracksCtrl.editMode" ng-click="tracksCtrl.updateTrack()">
+                    <md-icon>save</md-icon> Update Timer
                 </md-button>
             </md-card-actions>
         </form>
@@ -57,45 +71,16 @@
     </md-card>
 
     <md-list class="track-list">
-        <md-list-item class="md-clickable" title="Edit this Track" ng-click="tracksCtrl.editTrack(track.project);">
+        <md-list-item ng-repeat="(key,track) in tracksCtrl.tracksArray | orderBy:'starttime':true">
             <div class="md-list-item-text" layout="column" flex="grow">
-                <h3 class="track-desc">Test Task</h3>
-                <p class="datetime">2015-11-24 08:00 - 10:00</p>
-                <md-chips class="track-projects-tags">
-                    <md-chip class="project-chip">Project 1</md-chip>
-                    <md-chip class="project-chip">Project 2</md-chip>
-                    <md-chip class="tag-chip">Tag 1</md-chip>
-                    <md-chip class="tag-chip">Tag 2</md-chip>
-                    <md-chip class="tag-chip">Tag 2</md-chip>
-                    <md-chip class="tag-chip">Tag 2</md-chip>
-                    <md-chip class="tag-chip">Tag 2</md-chip>
+                <h3 class="track-desc">{{track.desc}}</h3>
+                <p class="datetime">{{track.starttime | dateonly}} {{track.starttime | timeonly}} - {{track.endtime | timeonly}}</p>
+                <md-chips class="track-projects-tags" ng-model="track.tagNames" readonly="true">
+                    <md-chip class="project-chip" ng-show="track.project" ng-bind="track.project.name"></md-chip>
                 </md-chips>
             </div>
             <div class="md-secondary">
-                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.editTrack(track.project);">
-                    <md-icon>mode_edit</md-icon>
-                </md-button>
-                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.deleteTrack(track.$id);">
-                    <md-icon>delete</md-icon>
-                </md-button>
-            </div>
-        </md-list-item>
-        <md-list-item class="md-clickable" title="Edit this Track" ng-click="tracksCtrl.editTrack(track.project);">
-            <div class="md-list-item-text" layout="column" flex="grow">
-                <h3 class="desc">Test Task with very long text to see how that works out in the layout...</h3>
-                <p class="datetime">2015-11-24 11:00 - 13:00</p>
-                <md-chips class="track-projects-tags">
-                    <md-chip class="project-chip">Project 1</md-chip>
-                    <md-chip class="project-chip">Project 2</md-chip>
-                    <md-chip class="tag-chip">Tag 1</md-chip>
-                    <md-chip class="tag-chip">Tag 2</md-chip>
-                    <md-chip class="tag-chip">Tag 2</md-chip>
-                    <md-chip class="tag-chip">Tag 2</md-chip>
-                    <md-chip class="tag-chip">Tag 2</md-chip>
-                </md-chips>
-            </div>
-            <div class="md-secondary">
-                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.editTrack(track.project);">
+                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.editTrack(track.$id, $event);">
                     <md-icon>mode_edit</md-icon>
                 </md-button>
                 <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.deleteTrack(track.$id);">

@@ -3,87 +3,212 @@
     'use strict';
     // TODO icon google api lokal speichern!
     angular.module('protrack')
-        .controller('TracksCtrl', ['dataService', 'calcTime', '$filter', '$interval', 'authData', function (dataService, calcTime, $filter, $interval, authData) {
+        .controller('TracksCtrl',
+            ['dataService', 'calcTime', '$filter', '$interval', 'authData', '$state','allProjects', 'allTags', '$anchorScroll',
+                function (dataService, calcTime, $filter, $interval, authData, $state, allProjects, allTags, $anchorScroll) {
+
             var tracksCtrl = this;
-            var path = 'users/';
+            tracksCtrl.tracksArray = [];
+
+            // the resolve config of this route makes sure that the
+            // authData object is ready to use by the time this controller
+            // is initialized
+            var path = 'users/' + authData.uid + '/';
+
+            var trackTmpl = {
+                id : '',
+                desc : '',
+                date : moment().toDate(),
+                startTime : moment().format('HH:mm'),
+                endTime : moment().format('HH:mm'),
+                duration : '00:00',
+                availTags : [],
+                tags : [],
+                project : {},
+                durationSet : false,
+                dataMissing : true
+            };
 
             //############
             // static data for new form layout
-            tracksCtrl.current = {
-                id : '-K2aUpFYuiT5jmRPhQMJ',
-                desc : 'Test Entry',
-                start : moment().toDate(),
-                end : moment().toDate(),
-                starttime : '',
-                endtime : '',
-                startdatetime : '',
-                enddatetime : '',
-                difftime : '',
-                tags : [],
-                projects : []
+
+
+            tracksCtrl.init = function(){
+                tracksCtrl.current = trackTmpl;
+                tracksCtrl.readonly = false;
+                tracksCtrl.requireMatch = false;
+                tracksCtrl.searchTextProject = null;
+                tracksCtrl.searchTextTag = null;
+                tracksCtrl.selectedProject = null;
+                tracksCtrl.selectedTag = null;
+                tracksCtrl.allProjects = allProjects;
+                tracksCtrl.allTags = allTags;
+                tracksCtrl.current.availTags = loadTags();
+                tracksCtrl.editMode = false;
+
+                tracksCtrl.tracksArray = dataService.getData(path + 'tracks', true);
+
+                tracksCtrl.tracksArray.$loaded(function(tracks){
+                    var enhancedTracks = [];
+
+                    angular.forEach(tracks, function(track){
+                        // resolve project name for project id
+                        var projectObj = $filter('filter')(tracksCtrl.allProjects, {$id:track.project}, true)[0];
+                        track.project = (projectObj) ? projectObj : false;
+
+                        // resolve tag name for tag id
+                        var tags = [], tagNames = [];
+                        angular.forEach(track.tags, function(tagId){
+                            var tagObj = $filter('filter')(tracksCtrl.allTags, {$id:tagId}, true)[0];
+                            tagNames.push(tagObj.name);
+                            tags.push(tagObj);
+                        });
+                        track.tags = tags;
+                        track.tagNames = tagNames;
+
+                        enhancedTracks.push(track);
+                    });
+
+                    tracksCtrl.tracksArray = enhancedTracks;
+                });
+
+                /*
+                dataService.getData(path + 'tracks', true).$loaded(function (data) {
+                    angular.forEach(data, function (track) {
+                        if (track.record) {
+                            console.log("Initial track " + track.$id + " record!");
+                            tracksCtrl.recordTrack(track, true);
+                        }
+                    });
+                });
+                */
+
+                //tracksCtrl.projects = dataService.getData(path + 'projects', false);
+                //tracksCtrl.projectsArray = dataService.getData(path + 'projects', true);
+                tracksCtrl.projectBackup = '';
+                tracksCtrl.record = {recording: '', id: '', data: ''};
+                tracksCtrl.allRecording = [];
             };
-
-            tracksCtrl.timeIsSet = false;
-            tracksCtrl.readonly = false;
-            tracksCtrl.requireMatch = false;
-            tracksCtrl.searchTextProject = null;
-            tracksCtrl.searchTextTag = null;
-            tracksCtrl.selectedProject = null;
-            tracksCtrl.selectedTag = null;
-            tracksCtrl.allProjects = ['Project 1','Project 2','Project 3','Project 4'];
-            tracksCtrl.allTags = ['Tag 1','Tag 2','Tag 3','Tag 4','Tag 5','Tag 6'];
-
 
             tracksCtrl.transformChip = function (chip) {
                 return chip;
             };
 
             /**
-             * Search for projects.
-             */
-            tracksCtrl.querySearchProject = function (query) {
-                var results = query ? tracksCtrl.allProjects.filter(createFilterFor(query)) : [];
-                return results;
-            };
-            /**
              * Search for Tags.
              */
             tracksCtrl.querySearchTag = function (query) {
-                var results = query ? tracksCtrl.allTags.filter(createFilterFor(query)) : [];
+                var results = query ? tracksCtrl.current.availTags.filter(createFilterFor(query)) : [];
                 return results;
             };
+
             /**
              * Create filter function for a query string
              */
             var createFilterFor = function (query) {
                 var lowercaseQuery = angular.lowercase(query);
                 return function filterFn(queryText) {
-                    return (queryText.toLowerCase().indexOf(lowercaseQuery) === 0);
+                    return (queryText.name.toLowerCase().indexOf(lowercaseQuery) === 0 || queryText.desc.toLowerCase().indexOf(lowercaseQuery) === 0);
                 };
             };
-            //############
 
-            // the resolve config of this route makes sure that the
-            // authData object is ready to use by the time this controller
-            // is initialized
-            path = path + authData.uid + '/';
+            // check if a duration is set
+            var checkDuration = function() {
+                tracksCtrl.current.durationSet = ( parseInt(tracksCtrl.current.duration.replace(/:/,'')) ) ? true : false;
+            };
 
-            tracksCtrl.tracksArray = dataService.getData(path + 'tracks', true);
-            dataService.getData(path + 'tracks', true).$loaded(function (data) {
-                angular.forEach(data, function (track) {
-                    if (track.record) {
-                        console.log("Initial track " + track.$id + " record!");
-                        tracksCtrl.recordTrack(track, true);
+            var getDuration = function(start, end){
+                return ( isEarlier(start, end) ) ? calcTime.diffTime(start, end) : '00:00';
+            };
+
+            // check if a description is set
+            tracksCtrl.checkDesc = function() {
+                tracksCtrl.current.dataMissing = ( tracksCtrl.current.desc ) ? false : true;
+            };
+
+            tracksCtrl.changeTime = function(field) {
+                var start = tracksCtrl.current.startTime;
+                var end = tracksCtrl.current.endTime;
+
+                if ( field === 'start' || field === 'end' ) {
+                    // start time changed => update duration
+                    getDuration(start, end);
+                }
+
+                if ( field === 'duration' ) {
+                    // duration changed => update endTime
+                    tracksCtrl.current.endTime = calcTime.addDiffTime(start, tracksCtrl.current.duration);
+                }
+
+                checkDuration();
+            };
+
+            // make sure the entry in any of the time fields is in a correct format
+            // if the input format cannot be handled, set "00:00"
+            tracksCtrl.formatTime = function ( fieldName ) {
+                var time = tracksCtrl.current[ fieldName ];
+
+                if (time.match(/[0-9:\.,]{1,5}/) ) {
+                    // basic input is okay => continue
+                    time = time.replace(/([0-9]{1,2}):\.,([0-9]{1,2})/, '$1:$2');
+                    time = moment(time, 'HH:mm').format('HH:mm');
+
+                    if ( fieldName === 'endTime' ) {
+                        var startTime = tracksCtrl.current.startTime;
+                        if ( isEarlier( time, startTime ) ) {
+                            time = startTime;
+                        }
                     }
-                });
-            });
-            tracksCtrl.projects = dataService.getData(path + 'projects', false);
-            tracksCtrl.projectsArray = dataService.getData(path + 'projects', true);
-            tracksCtrl.tagsAll = dataService.getData(path + 'tags', false);
-            tracksCtrl.tags = [];
-            tracksCtrl.projectBackup = '';
-            tracksCtrl.record = {recording: '', id: '', data: ''};
-            tracksCtrl.allRecording = [];
+
+                } else {
+                    // not a known time format => set duration to 00:00, start-/endtime to current time
+                    time = ( fieldName === 'duration' ) ? '00:00' : moment().format('HH:mm');
+                }
+
+                tracksCtrl.current[ fieldName ] = time;
+            };
+
+            // compares two times
+            // returns true if time1 is earlier than time2
+            // returns false if its the other way around
+            var isEarlier = function( time1, time2 ) {
+                return parseInt( time1.replace(/:/,'.') ) < parseInt( time2.replace(/:/,'.') );
+            };
+
+            // create track and save it to compare to show form
+            tracksCtrl.createTrackElement = function () {
+                dataService.addData(path + 'tracks', mapTrackData(tracksCtrl.current));
+                $state.go($state.current, {}, {reload: true});
+            };
+
+            tracksCtrl.projectSelected = function(){
+                tracksCtrl.selectedTags = null;
+                tracksCtrl.searchTextTag = null;
+                tracksCtrl.current.tags = [];
+                tracksCtrl.current.availTags = loadTags(tracksCtrl.current.project);
+                console.log(tracksCtrl.current.availTags);
+            };
+
+            // maps data from current track to the structure used in the DB
+            var mapTrackData = function(track){
+                var project = getProjectByName(track.project.name);
+
+                var newTrack = {
+                    desc : track.desc,
+                    starttime : moment( track.date ).format('DD.MM.YYYY') + track.startTime,
+                    endtime : moment( track.date ).format('DD.MM.YYYY') + track.endTime,
+                    difftime : track.duration,
+                    record : false,
+                    project : project.$id || '',
+                    tags : track.tags.map(function(obj){
+                        return obj.$id;
+                    })
+                };
+
+                return newTrack;
+            };
+
+            //############
 
             /**
              * read actual time and set end and diff time. if endtime is on another day, recording will be stopping.
@@ -115,6 +240,7 @@
                 }
             };
 
+            /*
             // create track and save it to compare to show form
             tracksCtrl.createTrackElement = function () {
                 tracksCtrl.newTrack = {
@@ -128,28 +254,32 @@
                 };
                 return dataService.addData(path + 'tracks', tracksCtrl.newTrack);
             };
+            */
 
-            tracksCtrl.editTrack = function (project) {
-                if (project !== undefined) {
-                    tracksCtrl.projectBackup = project;
-                }
+            tracksCtrl.editTrack = function (id, $event) {
+                var track = getTrackById(id);
+
+                var t = tracksCtrl.current;
+
+                t.id = id;
+                t.desc = track.desc;
+                t.date = moment( $filter('dateonly')(track.starttime), 'DD.MM.YYYY').toDate();
+                t.startTime = $filter('timeonly')(track.starttime);
+                t.endTime = $filter('timeonly')(track.endtime);
+                t.duration = track.difftime;
+                t.durationSet = true;
+                t.dataMissing = false;
+                t.project = track.project;
+                t.tags = track.tags;
+
+                tracksCtrl.editMode = true;
+                $anchorScroll('editForm');
             };
 
-            tracksCtrl.updateTrack = function (data, id) {
-                console.log('update track: ' + id);
-                tracksCtrl.projectBackup = data.project;
-
+            tracksCtrl.updateTrack = function () {
                 // update data
-                dataService.updateData(path + 'tracks', id, data);
-
-                // if start and endtime is the same, start timing
-                if (moment(data.starttime, 'DD.MM.YYYY HH:mm:ss').format('DD.MM.YYYY HH:mm') ===
-                    moment(data.endtime, 'DD.MM.YYYY HH:mm.ss').format('DD.MM.YYYY HH:mm')) {
-                    tracksCtrl.stopRecording();
-                    dataService.setData(path + 'tracks/' + id + '/record', true);
-                    data.record = true;
-                    tracksCtrl.startRecording(data, id);
-                }
+                dataService.updateData(path + 'tracks', tracksCtrl.current.id, mapTrackData(tracksCtrl.current));
+                $state.go($state.current, {}, {reload: true});
             };
 
             tracksCtrl.updateProject = function (project, id) {
@@ -166,60 +296,50 @@
                 track.difftime = calcTime.diffTime(track.starttime, track.endtime);
             };
 
-            tracksCtrl.showProject = function (project) {
-                var selected = $filter('filter')(tracksCtrl.projectsArray, {$id: project});
-                return (project && selected.length) ? selected[0].name : 'No project';
-            };
-
-            tracksCtrl.loadTags = function (project) {
+            // load tags for a given project
+            // if no project provided, load all tags that are not assigned to a project
+            var loadTags = function (project) {
                 var tags = [];
-                if (tracksCtrl.tags.length === 0) {
-                    if (project !== '' && tracksCtrl.projects[project] !== undefined && tracksCtrl.projects[project].tags !== undefined) {
-                        // load project tags
-                        angular.forEach(tracksCtrl.projects[project].tags, function (tagid) {
-                            var tag = tracksCtrl.tagsAll[tagid];
-                            if (tag !== undefined) {
-                                // set id in tag to select
-                                tag.$id = tagid;
-                                tags.push(tag);
-                            }
-                        });
-                    } else {
-                        // load tags without projects
-                        angular.forEach(tracksCtrl.tagsAll, function (tag, tagid) {
-                            // set id in tag to select
-                            tag.$id = tagid;
-                            tags.push(tag);
-                        });
-                    }
+
+                if ( arguments.length === 1 ) {
+                    // load project tags
+                    angular.forEach(project.tags, function (tagid) {
+                        tags.push(
+                            getTagById(tagid)
+                        );
+                    });
+                } else {
+                    // load tags without projects
+                    tags = tracksCtrl.allTags.filter(function(tag){
+                        return !tag.project;
+                    });
                 }
+
                 return tags;
             };
 
-            tracksCtrl.loadTagname = function (tag) {
-                return tag.name + ": " + tag.desc;
+            var getTrackById = function(id) {
+                return $filter('filter')(tracksCtrl.tracksArray, {$id:id}, true)[0];
             };
 
-            tracksCtrl.showTags = function (project, tags) {
-                var selected = [];
-                angular.forEach(tracksCtrl.loadTags(project), function (tag) {
-                    angular.forEach(tags, function (tagproject) {
-                        if (tag.$id !== undefined && tag.$id.indexOf(tagproject) >= 0) {
-                            if (tag.name !== undefined) {
-                                selected.push(tag.name);
-                            }
-                        }
-                    });
-                });
-                return selected.length ? selected.sort().join(', ') : 'No tag';
+            var getProjectById = function(id) {
+                return $filter('filter')(tracksCtrl.allProjects, {$id:id}, true)[0];
+            };
+
+            var getProjectByName = function(name) {
+                return $filter('filter')(tracksCtrl.allProjects, {name:name}, true)[0];
+            };
+
+            var getTagById = function(id) {
+                return $filter('filter')(tracksCtrl.allTags, {$id:id}, true)[0];
             };
 
             tracksCtrl.deleteTrack = function (id) {
-                console.log('Delete Item: ' + id);
                 if (tracksCtrl.record.id === id) {
                     tracksCtrl.stopRecording();
                 }
                 dataService.delData(path + 'tracks', id);
+                $state.go($state.current, {}, {reload: true});
             };
 
             tracksCtrl.changeStarttime = function (starttime, track) {
@@ -316,6 +436,8 @@
                 }
                 tracksCtrl.record = {recording: '', id: '', data: ''};
             };
+
+            tracksCtrl.init();
         }]);
 })();
 // .$loaded().then (function(){}) when loaded
