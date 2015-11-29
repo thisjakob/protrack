@@ -52,10 +52,10 @@
                 </md-card-content>
             </div>
             <md-card-actions layout="row">
-                <md-button class="md-raised md-primary" ng-hide="tracksCtrl.current.durationSet || tracksCtrl.editMode" ng-disabled="tracksCtrl.current.dataMissing" style="width:100%;" ng-click="tracksCtrl.recordTrack(track, true)">
+                <md-button class="md-raised md-primary" ng-hide="tracksCtrl.current.record || tracksCtrl.current.durationSet || tracksCtrl.editMode" ng-disabled="tracksCtrl.current.dataMissing" style="width:100%;" ng-click="tracksCtrl.startTimer()">
                     <md-icon>timer</md-icon> Start Timer
                 </md-button>
-                <md-button class="md-raised md-accent" ng-hide="tracksCtrl.current.durationSet || tracksCtrl.editMode" ng-disabled="tracksCtrl.current.dataMissing" style="width:100%;" ng-click="tracksCtrl.recordTrack(track, true)">
+                <md-button class="md-raised md-accent" ng-hide="!tracksCtrl.current.record || tracksCtrl.editMode" ng-disabled="tracksCtrl.current.dataMissing" style="width:100%;" ng-click="tracksCtrl.stopTimer()">
                     <md-icon>timer</md-icon> Stop Timer
                     <span>{{ tracksCtrl.current.duration | durationsec }}</span>
                 </md-button>
@@ -71,15 +71,18 @@
     </md-card>
 
     <md-list class="track-list">
-        <md-list-item ng-repeat="(key,track) in tracksCtrl.tracksArray | orderBy:'starttime':true">
+        <md-list-item class="track-list-item" ng-repeat="(key,track) in tracksCtrl.tracksArray | orderBy:'starttime':true">
             <div class="md-list-item-text" layout="column" flex="grow">
                 <h3 class="track-desc">{{track.desc}}</h3>
                 <p class="datetime">{{track.starttime | dateonly}} {{track.starttime | timeonly}} - {{track.endtime | timeonly}}</p>
-                <md-chips class="track-projects-tags" ng-model="track.tagNames" readonly="true">
+                <md-chips class="track-projects-tags-chips" ng-model="track.tagNames" readonly="true">
                     <md-chip class="project-chip" ng-show="track.project" ng-bind="track.project.name"></md-chip>
                 </md-chips>
             </div>
             <div class="md-secondary">
+                <md-button class="md-icon-button" type="button" ng-click="" title="Start timer with same data">
+                    <md-icon>timer</md-icon>
+                </md-button>
                 <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.editTrack(track.$id, $event);">
                     <md-icon>mode_edit</md-icon>
                 </md-button>
