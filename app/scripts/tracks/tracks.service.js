@@ -6,10 +6,10 @@
     angular.module('protrack').factory('calcTime', [function () {
 
         var diffTime = function (startTime, endTime) {
-            var hours = '00:00:00';
+            var hours = '00:00';
             var diff = '';
-            var start = moment(startTime, 'DD.MM.YYYY HH:mm:ss');
-            var end = moment(endTime, 'DD.MM.YYYY HH:mm:ss');
+            var start = moment(startTime, 'HH:mm');
+            var end = moment(endTime, 'HH:mm');
 
             if ( start.isValid() && end.isValid() ) {
                 diff = moment.utc(end.diff(start)).format("DDHH:mm:ss");
@@ -22,13 +22,13 @@
         };
 
         var addDiffTime = function (time, diffTime) {
-            var start = moment(time, 'DD.MM.YYYY HH:mm');
+            var start = moment(time, 'HH:mm');
             var duration = moment(diffTime, 'HH:mm');
             var end = time;
 
             if ( start.isValid() && duration.isValid() ) {
                 var newtime = start.add(duration);
-                end = moment(newtime).format('DD.MM.YYYY HH:mm');
+                end = moment(newtime).format('HH:mm');
             }
 
             return end;
