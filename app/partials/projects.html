@@ -1,115 +1,161 @@
 <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <h3>Projects</h3>
-            <table class="table table-bordered table-hover table-condensed">
-                <thead>
-                <tr style="font-weight: bold">
-                    <td style="width:30%">Projekt</td>
-                    <td style="width:70%">Tags</td>
-                    <td>
-                        <button id="addproject" class="btn btn-default btn-xs" ng-click="projectsCtrl.createProject()">
-                            <i class="fa fa-plus-square-o fa-lg"></i></button>
-                    </td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="(key,project) in projectsCtrl.projectsArray | orderBy:'name':false">
-                    <td>
-                        <span editable-text="project.name" e-name="name" e-class="form-control input-sm"
-                              e-form="rowform"
-                              e-required>{{ project.name || 'empty' }}</span>
-                    </td>
-                    <td>
-                        <span editable-select="project.tags" e-name="tags" e-multiple e-class="form-control input-sm" e-form="rowform" e-ng-options="t.$id as projectsCtrl.loadTagname(t) for t in projectsCtrl.tagsArray">
-                          {{ projectsCtrl.showTags(project.tags) }}
-                        </span>
-                    </td>
-                    <td style="white-space: nowrap">
-                        <!-- form -->
-                        <form editable-form name="rowform" onaftersave="projectsCtrl.updateProject($data, project.$id)"
-                              ng-show="rowform.$visible" class="form-buttons form-inline"
-                              shown="projectsCtrl.newProject.name == project.name">
-                            <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-default btn-xs"><i
-                                    class="fa fa-save fa-lg"></i></button>
-                            <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()"
-                                    class="btn btn-default btn-xs"><i class="fa fa-times fa-lg"></i></button>
-                        </form>
-                        <div class="buttons" ng-show="!rowform.$visible">
-                            <button ng-hide="confirm" class="btn btn-default btn-xs" type="button"
-                                    ng-click="rowform.$show()"><span
-                                    class="fa fa-edit" aria-hidden="true"></span></button>
-                            <button ng-hide="confirm" class="btn btn-default btn-xs" type="button"
-                                    ng-click="confirm=true"><span
-                                    class="fa fa-trash" aria-hidden="true"></span></button>
-                            <div ng-show="confirm">
-                                <button class="btn btn-danger btn-xs" title="Projekt wirklich löschen?"
-                                        ng-click="projectsCtrl.deleteItem('project', project.$id)"><span
-                                        class="fa fa-trash"
-                                        aria-hidden="true"></span>?
-                                </button>
-                                <button class="btn btn-default btn-xs" title="Abbrechen" ng-click="confirm=false"><span
-                                        class="fa fa-times fa-lg" aria-hidden="true"></span></button>
-                            </div>
+    <md-content>
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Projects">
+                <md-content class="md-padding">
+                    <div class="row">
+                        <div>
+                            <md-button class="md-raised md-accent" ng-click="projectsCtrl.createProject()">
+                                <md-icon class="material-icons">add</md-icon>
+                                Add new Project
+                            </md-button>
                         </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-6">
-            <h3>Tags</h3>
-            <table class="table table-bordered table-hover table-condensed">
-                <thead>
-                <tr style="font-weight: bold">
-                    <td style="width:30%">Tag</td>
-                    <td style="width:70%">Beschreibung</td>
-                    <td>
-                        <button id="addtag" class="btn btn-default btn-xs" ng-click="projectsCtrl.createTag()"><i
-                                class="fa fa-plus-square-o fa-lg"></i></button>
-                    </td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="(key,tag) in projectsCtrl.tagsArray | orderBy:'name':false">
-                    <td>
-                        <span editable-text="tag.name" e-name="name" e-class="form-control input-sm" e-form="rowform"
-                              e-required>{{ tag.name || 'empty' }}</span>
-                    </td>
-                    <td>
-                        <span editable-text="tag.desc" e-name="desc" e-class="form-control input-sm" e-form="rowform"
-                              e-required>{{ tag.desc || 'empty' }}</span>
-                    </td>
-                    <td style="white-space: nowrap">
-                        <!-- form -->
-                        <form editable-form name="rowform" onaftersave="projectsCtrl.updateTag($data, tag.$id)"
-                              ng-show="rowform.$visible" class="form-buttons form-inline"
-                              shown="projectsCtrl.newTag.name == tag.name">
-                            <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-default btn-xs"><i
-                                    class="fa fa-save fa-lg"></i></button>
-                            <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()"
-                                    class="btn btn-default btn-xs"><i class="fa fa-times fa-lg"></i></button>
-                        </form>
-                        <div class="buttons" ng-show="!rowform.$visible">
-                            <button ng-hide="confirm" class="btn btn-default btn-xs" type="button"
-                                    ng-click="rowform.$show()"><span
-                                    class="fa fa-edit" aria-hidden="true"></span></button>
-                            <button ng-hide="confirm" class="btn btn-default btn-xs" type="button"
-                                    ng-click="confirm=true"><span
-                                    class="fa fa-trash" aria-hidden="true"></span></button>
-                            <div ng-show="confirm">
-                                <button class="btn btn-danger btn-xs" title="Tag wirklich löschen?"
-                                        ng-click="projectsCtrl.deleteItem('tag', tag.$id)"><span class="fa fa-trash"
-                                                                                                 aria-hidden="true"></span>?
-                                </button>
-                                <button class="btn btn-default btn-xs" title="Abbrechen" ng-click="confirm=false"><span
-                                        class="fa fa-times fa-lg" aria-hidden="true"></span></button>
-                            </div>
+                        <ul class="projectlist">
+                            <li ng-repeat="(key,project) in projectsCtrl.projectsArray | orderBy:'name':false"
+                                class="projectlistelement">
+                                <form class="project-form" editable-form name="editableForm"
+                                      onaftersave="projectsCtrl.updateProject($data, project.$id)"
+                                      shown="projectsCtrl.newProject.name == project.name">
+                                    <div class="projects-inputs">
+                                        <div class="projects-project-name">
+                                            <div class="project-name formgroup">
+                                                <label for="projectsName{{key}}"
+                                                       ng-show="editableForm.$visible">Project</label>
+                                                <span e-id="projectsName{{key}}" editable-text="project.name"
+                                                      e-name="name"
+                                                      e-class="form-control">{{project.name || 'no name'}}</span>
+                                            </div>
+                                            <div class="project-tag formgroup">
+                                                <label for="projectTag{{key}}"
+                                                       ng-show="editableForm.$visible">Tags</label>
+                                                <span class="project-tag label label-default"
+                                                      editable-select="project.tags"
+                                                      e-name="tags" e-class="form-control editable-input" e-multiple
+                                                      e-id="projectTag{{key}}"
+                                                      e-ng-options="t.$id as projectsCtrl.loadTagname(t) for t in projectsCtrl.tagsArray | orderBy:'name'">
+                                                    {{ projectsCtrl.showTags(project.tags) }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="project-buttons">
+                                        <span ng-show="!editableForm.$visible">
+                                            <span ng-hide="confirm">
+                                                <md-button class="md-icon-button" type="button"
+                                                           ng-click="editableForm.$show()">
+                                                    <md-icon>mode_edit</md-icon>
+                                                </md-button>
+                                                <md-button class="md-icon-button" type="button" ng-click="confirm=true">
+                                                    <md-icon>delete</md-icon>
+                                                </md-button>
+                                            </span>
+                                            <span ng-show="confirm">
+                                                <md-button class="md-icon-button md-primary"
+                                                           title="Are you sure? Yes, delete it!"
+                                                           ng-click="projectsCtrl.deleteItem('project', project.$id)">
+                                                    <md-icon>delete</md-icon>
+                                                </md-button>
+                                                <md-button class="md-icon-button"
+                                                           title="Are you sure? No, don't delete it!"
+                                                           ng-click="confirm=false">
+                                                    <md-icon>highlight_off</md-icon>
+                                                </md-button>
+                                            </span>
+                                        </span>
+                                        <span ng-show="editableForm.$visible">
+                                            <md-button class="md-icon-button md-primary" type="submit"
+                                                       ng-disabled="editableForm.$waiting">
+                                                <md-icon>done</md-icon>
+                                            </md-button>
+                                            <md-button class="md-icon-button" type="button"
+                                                       ng-disabled="editableForm.$waiting"
+                                                       ng-click="projectsCtrl.cancelProject(project); editableForm.$cancel()">
+                                                <md-icon>highlight_off</md-icon>
+                                            </md-button>
+                                        </span>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </md-content>
+            </md-tab>
+            <md-tab label="Tags">
+                <md-content class="md-padding">
+                    <div class="row">
+                        <div>
+                            <md-button class="md-raised md-accent" ng-click="projectsCtrl.createTag()">
+                                <md-icon class="material-icons">add</md-icon>
+                                Add new Tag
+                            </md-button>
                         </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+                        <ul class="projectlist">
+                            <li ng-repeat="(key,tag) in projectsCtrl.tagsArray | orderBy:'name':false"
+                                class="projectlistelement">
+                                <form class="project-form" editable-form name="editableForm"
+                                      onaftersave="projectsCtrl.updateTag($data, tag.$id)"
+                                      shown="projectsCtrl.newTag.name == tag.name">
+                                    <div class="projects-inputs">
+                                        <div class="projects-tag-name">
+                                            <div class="project-name formgroup">
+                                                <label for="tagsName{{key}}"
+                                                       ng-show="editableForm.$visible">Tag</label>
+                                                <span e-id="tagsName{{key}}" editable-text="tag.name"
+                                                      e-name="name"
+                                                      e-class="form-control">{{tag.name || 'no name'}}</span>
+                                            </div>
+                                            <div class="project-tag formgroup">
+                                                <label for="tagsName{{key}}"
+                                                       ng-show="editableForm.$visible">Description</label>
+                                                <span class="project-tag label label-default"
+                                                      editable-text="tag.desc" e-name="desc"
+                                                      e-class="form-control editable-input"
+                                                      e-id="tagDesc{{key}}" e-required>
+                                                    {{ tag.desc || 'no description' }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="project-buttons">
+                                        <span ng-show="!editableForm.$visible">
+                                            <span ng-hide="confirm">
+                                                <md-button class="md-icon-button" type="button"
+                                                           ng-click="editableForm.$show()">
+                                                    <md-icon>mode_edit</md-icon>
+                                                </md-button>
+                                                <md-button class="md-icon-button" type="button" ng-click="confirm=true">
+                                                    <md-icon>delete</md-icon>
+                                                </md-button>
+                                            </span>
+                                            <span ng-show="confirm">
+                                                <md-button class="md-icon-button md-primary"
+                                                           title="Are you sure? Yes, delete it!"
+                                                           ng-click="projectsCtrl.deleteItem('tag', tag.$id)">
+                                                    <md-icon>delete</md-icon>
+                                                </md-button>
+                                                <md-button class="md-icon-button"
+                                                           title="Are you sure? No, don't delete it!"
+                                                           ng-click="confirm=false">
+                                                    <md-icon>highlight_off</md-icon>
+                                                </md-button>
+                                            </span>
+                                        </span>
+                                        <span ng-show="editableForm.$visible">
+                                            <md-button class="md-icon-button md-primary" type="submit"
+                                                       ng-disabled="editableForm.$waiting">
+                                                <md-icon>done</md-icon>
+                                            </md-button>
+                                            <md-button class="md-icon-button" type="button"
+                                                       ng-disabled="editableForm.$waiting"
+                                                       ng-click="projectsCtrl.cancelTag(tag); editableForm.$cancel()">
+                                                <md-icon>highlight_off</md-icon>
+                                            </md-button>
+                                        </span>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
 </div>
