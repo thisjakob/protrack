@@ -36,9 +36,7 @@
                 tracksCtrl.current = trackTmpl;
                 tracksCtrl.readonly = false;
                 tracksCtrl.requireMatch = false;
-                tracksCtrl.searchTextProject = null;
                 tracksCtrl.searchTextTag = null;
-                tracksCtrl.selectedProject = null;
                 tracksCtrl.selectedTag = null;
                 tracksCtrl.allProjects = allProjects;
                 tracksCtrl.allTags = allTags;
