@@ -4,8 +4,8 @@
     // TODO icon google api lokal speichern!
     angular.module('protrack')
         .controller('TracksCtrl',
-            ['dataService', 'calcTime', '$filter', '$interval', 'authData', '$state','allProjects', 'allTags', '$anchorScroll',
-                function (dataService, calcTime, $filter, $interval, authData, $state, allProjects, allTags, $anchorScroll) {
+        ['dataService', 'calcTime', '$filter', '$interval', 'authData', '$state','allProjects', 'allTags', '$anchorScroll',
+        function (dataService, calcTime, $filter, $interval, authData, $state, allProjects, allTags, $anchorScroll) {
 
             var tracksCtrl = this;
             tracksCtrl.tracksArray = [];
@@ -29,10 +29,9 @@
                 dataMissing : true
             };
 
-            //############
-            // static data for new form layout
-
-
+            /**
+             * do some stuff when the view is loaded
+             */
             tracksCtrl.init = function(){
                 tracksCtrl.current = trackTmpl;
                 tracksCtrl.readonly = false;
@@ -46,8 +45,12 @@
                 tracksCtrl.current.availTags = loadTags();
                 tracksCtrl.editMode = false;
 
+                // load all tracks
+                // => this might also be handled via resolve in the state
                 tracksCtrl.tracksArray = dataService.getData(path + 'tracks', true);
 
+                // add additional data to all tracks objects as soon as they are loaded
+                //
                 tracksCtrl.tracksArray.$loaded(function(tracks){
                     var enhancedTracks = [];
 
@@ -90,6 +93,9 @@
                 tracksCtrl.allRecording = [];
             };
 
+            /**
+             * used for the chips control
+             */
             tracksCtrl.transformChip = function (chip) {
                 return chip;
             };
@@ -112,20 +118,30 @@
                 };
             };
 
-            // check if a duration is set
+            /**
+             * check if a duration is set
+             */
             var checkDuration = function() {
                 tracksCtrl.current.durationSet = ( parseInt(tracksCtrl.current.duration.replace(/:/,'')) ) ? true : false;
             };
 
+            /**
+             * calculate duration from start and end time given
+             */
             var getDuration = function(start, end){
                 return ( isEarlier(start, end) ) ? calcTime.diffTime(start, end) : '00:00';
             };
 
-            // check if a description is set
+            /**
+             * check if a description is set
+             */
             tracksCtrl.checkDesc = function() {
                 tracksCtrl.current.dataMissing = ( tracksCtrl.current.desc ) ? false : true;
             };
 
+            /**
+             * handle changed value on any of the time/duration fields
+             */
             tracksCtrl.changeTime = function(field) {
                 var start = tracksCtrl.current.startTime;
                 var end = tracksCtrl.current.endTime;
@@ -143,8 +159,10 @@
                 checkDuration();
             };
 
-            // make sure the entry in any of the time fields is in a correct format
-            // if the input format cannot be handled, set "00:00"
+            /**
+             * make sure the entry in any of the time fields is in a correct format
+             * if the input format cannot be handled, set "00:00"
+             */
             tracksCtrl.formatTime = function ( fieldName ) {
                 var time = tracksCtrl.current[ fieldName ];
 
