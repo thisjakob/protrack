@@ -33,6 +33,28 @@
                     return 'time is not valid';
                 }
             };
+        })
+
+        .filter('dateonly', function () {
+            return function (item) {
+                var date = moment(item, 'DD.MM.YYYY HH:mm:ss');
+                if ( date.isValid() ) {
+                    return date.format('DD.MM.YYYY');
+                } else {
+                    return 'Date is not valid';
+                }
+            };
+        })
+
+        .filter('timeonly', function () {
+            return function (item) {
+                var date = moment(item, 'DD.MM.YYYY HH:mm:ss');
+                if ( date.isValid() ) {
+                    return date.format('HH:mm');
+                } else {
+                    return 'Time is not valid';
+                }
+            };
         });
 
 })();
