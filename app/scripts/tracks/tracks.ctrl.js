@@ -274,7 +274,7 @@
             /**
              * prepare the selected track to show in the edit form
              */
-            tracksCtrl.editTrack = function (id, $event) {
+            tracksCtrl.editTrack = function (id) {
                 var track = getTrackById(id);
 
                 var t = tracksCtrl.current;
