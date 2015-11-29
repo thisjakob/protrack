@@ -59,7 +59,7 @@
                     <md-icon>timer</md-icon> Stop Timer
                     <span>{{ tracksCtrl.current.duration | durationsec }}</span>
                 </md-button>
-                <md-button class="md-raised md-accent" ng-disabled="tracksCtrl.current.dataMissing" style="width:100%;" ng-show="tracksCtrl.current.durationSet && !tracksCtrl.editMode" ng-click="tracksCtrl.createTrackElement()">
+                <md-button class="md-raised md-accent" ng-disabled="tracksCtrl.current.dataMissing" style="width:100%;" ng-show="tracksCtrl.current.durationSet && !tracksCtrl.editMode && !tracksCtrl.current.record" ng-click="tracksCtrl.createTrackElement()">
                     <md-icon>add</md-icon> Add Timer
                 </md-button>
                 <md-button class="md-raised md-accent" ng-disabled="tracksCtrl.current.dataMissing || !tracksCtrl.current.durationSet" style="width:100%;" ng-show="tracksCtrl.editMode" ng-click="tracksCtrl.updateTrack()">
@@ -80,7 +80,7 @@
                 </md-chips>
             </div>
             <div class="md-secondary">
-                <md-button class="md-icon-button" type="button" ng-click="" title="Start timer with same data">
+                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.restartTimer(track.$id);" title="Start timer with same data">
                     <md-icon>timer</md-icon>
                 </md-button>
                 <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.editTrack(track.$id, $event);">

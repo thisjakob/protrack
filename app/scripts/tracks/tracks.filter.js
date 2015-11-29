@@ -50,7 +50,7 @@
             return function (item) {
                 var date = moment(item, 'DD.MM.YYYY HH:mm:ss');
                 if ( date.isValid() ) {
-                    return date.format('HH:mm');
+                    return date.format('HH:mm:ss');
                 } else {
                     return 'Time is not valid';
                 }

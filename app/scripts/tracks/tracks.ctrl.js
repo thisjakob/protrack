@@ -388,63 +388,11 @@
             };
 
             /**
-             * ...
+             * Starts timer for the current track
              */
-            tracksCtrl.changeStarttime = function (starttime, track) {
-                console.log('change starttime > change difftime');
-                track.starttime = starttime;
-                track.difftime = calcTime.diffTime(starttime, track.endtime);
-            };
-
-            /**
-             * ...
-             */
-            tracksCtrl.changeEndtime = function (endtime, track) {
-                console.log('change endtime > change difftime');
-                track.endtime = endtime;
-                track.difftime = calcTime.diffTime(track.starttime, endtime);
-            };
-
-            /**
-             * ...
-             */
-            tracksCtrl.changeDifftime = function (difftime, track) {
-                console.log('change difftime > change endtime');
-                track.difftime = difftime;
-                track.endtime = calcTime.addDiffTime(track.starttime, difftime);
-            };
-
-            /**
-             * record time (set every minute end time to actual time)
-             * @param track     object of firebase
-             * @param record    boolean true = recording; false = stop recording
-             */
-            tracksCtrl.recordTrack = function (track, record) {
-                // deepcopy of track
-                var id = track.$id;
-                var data = jQuery.extend(true, {}, track);
-                delete data.$id;
-                delete data.$priority;
-                delete data.$$hashKey;
-                // stop last timer
-                tracksCtrl.stopRecording();
-                if (record) {
-                    // check if end time is difference to actual time is greater than one minute,
-                    // then create a new track with same content and start this
-                    if (calcTime.diffTime(moment(track.endtime, 'DD.MM.YYYY HH:mm:ss').format('DD.MM.YYYY HH:mm'),
-                            moment().format('DD.MM.YYYY HH:mm')) !== '00:00:00') {
-                        console.log("Difftime is greater than 1 Minute");
-                        data.starttime = moment().format('DD.MM.YYYY HH:mm:ss');
-                        data.endtime = moment().format('DD.MM.YYYY HH:mm:ss');
-                        data.difftime = '00:00';
-                        track = dataService.addData(path + 'tracks', data);
-                        id = track.key();
-                    }
-                    // start new timer
-                    dataService.setData(path + 'tracks/' + id + '/record', true);
-                    tracksCtrl.startRecording(data, id);
-                }
-
+            tracksCtrl.restartTimer = function (id) {
+                tracksCtrl.editTrack(id);
+                tracksCtrl.startTimer();
             };
 
             /**
@@ -453,6 +401,8 @@
             tracksCtrl.startTimer = function () {
                 var track = tracksCtrl.current;
                 track.record = true;
+                tracksCtrl.editMode = false;
+                track.date = moment().toDate();
                 track.startTime = moment().format('HH:mm:ss');
                 track.endTime = moment().format('HH:mm:ss');
                 //dataService.setData(path + 'tracks/' + track.id + '/record', true);
@@ -471,6 +421,7 @@
                 var track = tracksCtrl.current;
                 track.record = false;
                 $interval.cancel(track.timerInterval);
+                //dataService.setData(path + 'tracks/' + track.id + '/record', false);
 
                 // save to DB
                 tracksCtrl.createTrackElement();
