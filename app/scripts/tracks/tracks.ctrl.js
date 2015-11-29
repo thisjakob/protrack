@@ -148,7 +148,7 @@
 
                 if ( field === 'start' || field === 'end' ) {
                     // start time changed => update duration
-                    getDuration(start, end);
+                    tracksCtrl.current.duration = getDuration(start, end);
                 }
 
                 if ( field === 'duration' ) {
@@ -192,7 +192,7 @@
              * returns false if its the other way around or the same
              */
             var isEarlier = function( time1, time2 ) {
-                return parseInt( time1.replace(/:/,'.') ) < parseInt( time2.replace(/:/,'.') );
+                return parseFloat( time1.replace(/:/,'.') ) < parseFloat( time2.replace(/:/,'.') );
             };
 
             /**
