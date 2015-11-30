@@ -1,12 +1,13 @@
 'use strict';
 
 var gulp = require('gulp');
+var Server = require('karma').Server;
 
 var $ = require('gulp-load-plugins')();
 
 var wiredep = require('wiredep');
 
-gulp.task('test', function() {
+gulp.task('test', function(done) {
   var bowerDeps = wiredep({
     directory: 'app/bower_components',
     exclude: ['bootstrap-sass-official'],
@@ -19,13 +20,24 @@ gulp.task('test', function() {
     'test/unit/**/*.js'
   ]);
 
-  return gulp.src(testFiles)
-    .pipe($.karma({
-      configFile: 'test/karma.conf.js',
-      action: 'run'
-    }))
-    .on('error', function(err) {
-      // Make sure failed tests cause gulp to exit non-zero
-      throw err;
-    });
+  new Server({
+    configFile: __dirname + '/../test/karma.conf.js',
+    singleRun: true,
+    autoWatch: false
+  }, function() {
+    done();
+  }).start();
 });
+
+/*var gulp = require('gulp');
+var Server = require('karma').Server;
+*/
+/**
+ * Run test once and exit
+ */
+/*gulp.task('test', function (done) {
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
+});*/

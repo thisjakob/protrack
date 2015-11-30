@@ -1,8 +1,7 @@
 {
   "name": "protrack",
   "version": "0.0.0",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "browser-sync": "^1.3",
     "gulp": "^3.6.0",
@@ -32,6 +31,7 @@
     "gulp-useref": "^0.4.2",
     "http-proxy": "^1.1",
     "jshint-stylish": "^0.4",
+    "karma-chrome-launcher": "^0.2.1",
     "karma-jasmine": "^0.1.5",
     "karma-phantomjs-launcher": "^0.1.4",
     "main-bower-files": "^1.0",
