@@ -4,8 +4,8 @@
     // TODO icon google api lokal speichern!
     angular.module('protrack')
         .controller('TracksCtrl',
-        ['dataService', 'calcTime', '$filter', '$interval', 'authData', '$state','allProjects', 'allTags', '$anchorScroll',
-        function (dataService, calcTime, $filter, $interval, authData, $state, allProjects, allTags, $anchorScroll) {
+        ['dataService', 'calcTime', '$filter', '$interval', 'authData', '$state', 'runningTimer', 'allProjects', 'allTags', '$anchorScroll',
+        function (dataService, calcTime, $filter, $interval, authData, $state, runningTimer ,allProjects, allTags, $anchorScroll) {
 
             var tracksCtrl = this;
             tracksCtrl.tracksArray = [];
@@ -34,7 +34,10 @@
              * do some stuff when the view is loaded
              */
             tracksCtrl.init = function(){
-                tracksCtrl.current = trackTmpl;
+                // check if there is a running timer
+                // if so, resume it
+                checkForRunningTimer();
+
                 tracksCtrl.readonly = false;
                 tracksCtrl.requireMatch = false;
                 tracksCtrl.searchTextTag = null;
@@ -43,6 +46,8 @@
                 tracksCtrl.allTags = allTags;
                 tracksCtrl.current.availTags = loadTags();
                 tracksCtrl.editMode = false;
+
+
 
                 // load all tracks
                 // => this might also be handled via resolve in the state
@@ -90,6 +95,19 @@
                 tracksCtrl.projectBackup = '';
                 tracksCtrl.record = {recording: '', id: '', data: ''};
                 tracksCtrl.allRecording = [];
+            };
+
+            /**
+             * check if there is a running timer
+             * if so, resume it
+             */
+            var checkForRunningTimer = function(){
+                if ( runningTimer.length ) {
+                    tracksCtrl.current = mapDBData(runningTimer[0]);
+                    resumeTimer();
+                } else {
+                    tracksCtrl.current = trackTmpl;
+                }
             };
 
             /**
@@ -242,33 +260,24 @@
             };
 
             /**
-             * read actual time and set end and diff time. if endtime is on another day, recording will be stopping.
+             * maps data from track data in DB to the structure used locally
              */
-            tracksCtrl.setActualTime = function () {
-                if (tracksCtrl.record.recording !== '' && tracksCtrl.record.id !== '') {
-                    // get actual time
-                    tracksCtrl.record.data.endtime = moment().format('DD.MM.YYYY HH:mm:ss');
+            var mapDBData = function(track){
+                var newTrack = {
+                    id : track.$id,
+                    desc : track.desc,
+                    date : moment( $filter('dateonly')(track.starttime), 'DD.MM.YYYY').toDate(),
+                    startTime : $filter('timeonly')(track.starttime),
+                    endTime : $filter('timeonly')(track.endtime),
+                    duration : track.difftime,
+                    durationSet : true,
+                    dataMissing : false,
+                    project : track.project,
+                    tags : track.tags || [],
+                    record : track.record
+                };
 
-                    // read start time from track
-                    dataService.getValue(path + 'tracks/' + tracksCtrl.record.id + '/starttime', function (snapshot) {
-                        if (tracksCtrl.record.data !== null && tracksCtrl.record.data !== '') {
-                            // set new end and diff time
-                            tracksCtrl.record.data.starttime = snapshot.val();
-                            tracksCtrl.record.data.difftime = calcTime.diffTime(tracksCtrl.record.data.starttime, tracksCtrl.record.data.endtime);
-                            // check if end is another day than start
-                            // TODO if (moment(tracksCtrl.record.data.endtime).isSame(moment(tracksCtrl.record.data.starttime), "day")){
-                            dataService.setData(path + 'tracks/' + tracksCtrl.record.id + '/endtime', tracksCtrl.record.data.endtime);
-                            dataService.setData(path + 'tracks/' + tracksCtrl.record.id + '/difftime', tracksCtrl.record.data.difftime);
-                            /*} else {
-                             console.log("Stop recording, because another day: " + tracksCtrl.record.data.starttime + " and " + tracksCtrl.record.data.endtime);
-                             tracksCtrl.stopRecording();
-                             }*/
-                        }
-                    });
-                } else {
-                    console.error('setActualTime fired with recording off!');
-                    tracksCtrl.stopRecording();
-                }
+                return newTrack;
             };
 
             /**
@@ -276,21 +285,7 @@
              */
             tracksCtrl.editTrack = function (id) {
                 var track = getTrackById(id);
-
-                var t = tracksCtrl.current;
-
-                t.id = id;
-                t.desc = track.desc;
-                t.date = moment( $filter('dateonly')(track.starttime), 'DD.MM.YYYY').toDate();
-                t.startTime = $filter('timeonly')(track.starttime);
-                t.endTime = $filter('timeonly')(track.endtime);
-                t.duration = track.difftime;
-                t.durationSet = true;
-                t.dataMissing = false;
-                t.project = track.project;
-                t.tags = track.tags;
-                t.record = track.record;
-
+                tracksCtrl.current = mapDBData(track);
                 tracksCtrl.editMode = true;
                 $anchorScroll('editForm');
             };
@@ -390,14 +385,6 @@
             /**
              * Starts timer for the current track
              */
-            tracksCtrl.restartTimer = function (id) {
-                tracksCtrl.editTrack(id);
-                tracksCtrl.startTimer();
-            };
-
-            /**
-             * Starts timer for the current track
-             */
             tracksCtrl.startTimer = function () {
                 var track = tracksCtrl.current;
                 track.record = true;
@@ -405,7 +392,12 @@
                 track.date = moment().toDate();
                 track.startTime = moment().format('HH:mm:ss');
                 track.endTime = moment().format('HH:mm:ss');
-                //dataService.setData(path + 'tracks/' + track.id + '/record', true);
+                track.duration = getDuration(track.startTime, track.endTime);
+
+                // save the current track to DB
+                // this makes sure that a running timer will show up on other devices
+                // and is not lost on page reload
+                track.id = dataService.addData(path + 'currentTrack', mapTrackData(tracksCtrl.current)).key();
 
                 // update duration every second
                 track.timerInterval = $interval(function(){
@@ -421,10 +413,46 @@
                 var track = tracksCtrl.current;
                 track.record = false;
                 $interval.cancel(track.timerInterval);
-                //dataService.setData(path + 'tracks/' + track.id + '/record', false);
 
-                // save to DB
-                tracksCtrl.createTrackElement();
+                dataService.getData(path + 'currentTrack', true).$loaded(function(data){
+                    if ( data.length ) {
+                        // delete the current track from DB
+                        dataService.delData(path + 'currentTrack', track.id);
+
+                        // save to DB
+                        tracksCtrl.createTrackElement();
+                    } else {
+                        // reset edit form
+                        $state.go($state.current, {}, {reload: true});
+
+                    }
+                });
+
+            };
+
+            /**
+             * Starts timer for the current track
+             */
+            tracksCtrl.restartTimer = function (id) {
+                tracksCtrl.editTrack(id);
+                tracksCtrl.startTimer();
+            };
+
+            /**
+             * Resume timer
+             */
+            var resumeTimer = function (id) {
+                var track = tracksCtrl.current;
+                track.record = true;
+                tracksCtrl.editMode = false;
+                track.endTime = moment().format('HH:mm:ss');
+                track.duration = getDuration(track.startTime, track.endTime);
+
+                // update duration every second
+                track.timerInterval = $interval(function(){
+                    track.endTime = moment().format('HH:mm:ss');
+                    track.duration = getDuration(track.startTime, track.endTime);
+                }, 1000);
             };
 
             tracksCtrl.init();
