@@ -73,7 +73,7 @@
                         track.tags = tags;
                         track.tagNames = tagNames;
 
-                        enhancedTracks.push(track);
+                        enhancedTracks.unshift(track);
                     });
 
                     tracksCtrl.tracksArray = enhancedTracks;
