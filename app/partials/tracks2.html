@@ -77,6 +77,7 @@
                 <p class="datetime">{{track.starttime | dateonly}} {{track.starttime | timeonly}} - {{track.endtime | timeonly}}</p>
 
 
+                <div layout="row">
                     <md-chips class="track-projects-tags-chips" ng-show="track.project">
                         <md-chip>{{track.project.name}}</md-chip>
                     </md-chips>
