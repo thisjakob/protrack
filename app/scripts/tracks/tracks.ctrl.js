@@ -34,20 +34,21 @@
              * do some stuff when the view is loaded
              */
             tracksCtrl.init = function(){
+                tracksCtrl.allProjects = allProjects;
+                tracksCtrl.allTags = allTags;
+
                 // check if there is a running timer
                 // if so, resume it
                 checkForRunningTimer();
 
+                tracksCtrl.current.availTags = loadTags();
+
+                // config vars for the edit form
                 tracksCtrl.readonly = false;
                 tracksCtrl.requireMatch = false;
                 tracksCtrl.searchTextTag = null;
                 tracksCtrl.selectedTag = null;
-                tracksCtrl.allProjects = allProjects;
-                tracksCtrl.allTags = allTags;
-                tracksCtrl.current.availTags = loadTags();
                 tracksCtrl.editMode = false;
-
-
 
                 // load all tracks
                 // => this might also be handled via resolve in the state
@@ -242,15 +243,13 @@
              * maps data from current track to the structure used in the DB
              */
             var mapTrackData = function(track){
-                var project = getProjectByName(track.project.name);
-
                 var newTrack = {
                     desc : track.desc,
                     starttime : moment( track.date ).format('DD.MM.YYYY') + track.startTime,
                     endtime : moment( track.date ).format('DD.MM.YYYY') + track.endTime,
                     difftime : track.duration,
                     record : track.record,
-                    project : project.$id || '',
+                    project : (track.project) ? track.project.$id : '',
                     tags : track.tags.map(function(obj){
                         return obj.$id;
                     })
@@ -272,8 +271,8 @@
                     duration : track.difftime,
                     durationSet : true,
                     dataMissing : false,
-                    project : track.project,
-                    tags : track.tags || [],
+                    project : ( typeof track.project === 'string' ) ? getProjectById( track.project ) : track.project,
+                    tags : ( typeof track.tags === 'object' && typeof track.tags[0] === 'object' ) ? track.tags : getTagsById(track.tags),
                     record : track.record
                 };
 
@@ -369,6 +368,18 @@
              */
             var getTagById = function(id) {
                 return $filter('filter')(tracksCtrl.allTags, {$id:id}, true)[0];
+            };
+
+            /**
+             * takes an array of tagIds and returns an array of corresponding tag objects
+             */
+            var getTagsById = function(ids){
+                var tagObjs = [];
+                angular.forEach(ids, function(id){
+                    tagObjs.push( getTagById(id) );
+                });
+
+                return tagObjs;
             };
 
             /**
