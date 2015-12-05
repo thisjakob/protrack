@@ -79,23 +79,6 @@
 
                     tracksCtrl.tracksArray = enhancedTracks;
                 });
-
-                /*
-                dataService.getData(path + 'tracks', true).$loaded(function (data) {
-                    angular.forEach(data, function (track) {
-                        if (track.record) {
-                            console.log("Initial track " + track.$id + " record!");
-                            tracksCtrl.recordTrack(track, true);
-                        }
-                    });
-                });
-                */
-
-                //tracksCtrl.projects = dataService.getData(path + 'projects', false);
-                //tracksCtrl.projectsArray = dataService.getData(path + 'projects', true);
-                tracksCtrl.projectBackup = '';
-                tracksCtrl.record = {recording: '', id: '', data: ''};
-                tracksCtrl.allRecording = [];
             };
 
             /**
