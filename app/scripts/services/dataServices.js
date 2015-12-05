@@ -2,12 +2,11 @@
 (function () {
     'use strict';
 
-    angular.module('protrack').factory('dataService', ['$firebaseArray', '$firebaseObject', 'FirebaseUrl', function ($firebaseArray, $firebaseObject, FirebaseUrl) {
-        var firebaseUrl = FirebaseUrl.url;
-        var firebaseRef = new Firebase(firebaseUrl);
+    angular.module('protrack').factory('dataService', ['$firebaseArray', '$firebaseObject', 'FBURL', function ($firebaseArray, $firebaseObject, FBURL) {
+        var firebaseRef = new Firebase(FBURL);
 
         var getUrl = function () {
-            return firebaseUrl;
+            return FBURL;
         };
 
         var getFirebaseRoot = function () {
@@ -66,13 +65,13 @@
 
         var delData = function (path, id) {
             console.log('dataService remove data: ' + path + '/' + id);
-            var itemRef = new Firebase(firebaseUrl + '/' + path + '/' + id);
+            var itemRef = new Firebase(FBURL + '/' + path + '/' + id);
             itemRef.remove();
         };
 
         var updateData = function (path, id, data) {
             console.log('dataService update data: ' + path + '/' + id + ' with ' + data);
-            var itemRef = new Firebase(firebaseUrl + '/' + path + '/' + id);
+            var itemRef = new Firebase(FBURL + '/' + path + '/' + id);
             itemRef.update(data);
         };
 

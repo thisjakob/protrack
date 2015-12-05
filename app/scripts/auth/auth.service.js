@@ -5,8 +5,8 @@
 
 
     angular.module('protrack')
-        .factory('Auth', ['$firebaseAuth', 'FirebaseUrl', function ($firebaseAuth, FirebaseUrl) {
-            var ref = new Firebase(FirebaseUrl.url);
+        .factory('Auth', ['$firebaseAuth', 'FBURL', function ($firebaseAuth, FBURL) {
+            var ref = new Firebase(FBURL);
             var auth = $firebaseAuth(ref);
 
             auth.logout = function(){
