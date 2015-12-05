@@ -5,7 +5,7 @@
                 <div layout="row" layout-sm="column" layout-align="space-around">
                     <md-input-container flex="grow">
                         <label for="currentDesc">Working On...</label>
-                        <input name="desc" id="currentDesc" ng-model="tracksCtrl.current.desc" ng-change="tracksCtrl.checkDesc()" />
+                        <input name="desc" id="currentDesc" ng-model="tracksCtrl.current.desc" ng-change="tracksCtrl.checkDesc()" autofocus />
                     </md-input-container>
                     <md-datepicker flex="grow" ng-model="tracksCtrl.current.date" md-placeholder="Enter date"></md-datepicker>
                     <div layout="row" flex="grow">
@@ -54,17 +54,17 @@
             </div>
             <md-card-actions layout="row">
                 <md-button class="md-raised md-primary" ng-hide="tracksCtrl.current.record || tracksCtrl.current.durationSet || tracksCtrl.editMode" ng-disabled="tracksCtrl.current.dataMissing" style="width:100%;" ng-click="tracksCtrl.startTimer()">
-                    <md-icon>timer</md-icon> Start Timer
+                    <md-icon role="presentation" aria-hidden="true">timer</md-icon> Start Timer
                 </md-button>
                 <md-button class="md-raised md-accent" ng-hide="!tracksCtrl.current.record || tracksCtrl.editMode" ng-disabled="tracksCtrl.current.dataMissing" style="width:100%;" ng-click="tracksCtrl.stopTimer()">
-                    <md-icon>timer</md-icon> Stop Timer
+                    <md-icon role="presentation" aria-hidden="true">timer</md-icon> Stop Timer
                     <span>{{ tracksCtrl.current.duration | durationsec }}</span>
                 </md-button>
                 <md-button class="md-raised md-accent" ng-disabled="tracksCtrl.current.dataMissing" style="width:100%;" ng-show="tracksCtrl.current.durationSet && !tracksCtrl.editMode && !tracksCtrl.current.record" ng-click="tracksCtrl.createTrackElement()">
-                    <md-icon>add</md-icon> Add Timer
+                    <md-icon role="presentation" aria-hidden="true">add</md-icon> Add Timer
                 </md-button>
                 <md-button class="md-raised md-accent" ng-disabled="tracksCtrl.current.dataMissing || !tracksCtrl.current.durationSet" style="width:100%;" ng-show="tracksCtrl.editMode" ng-click="tracksCtrl.updateTrack()">
-                    <md-icon>save</md-icon> Update Timer
+                    <md-icon role="presentation" aria-hidden="true">save</md-icon> Update Timer
                 </md-button>
             </md-card-actions>
         </form>
@@ -88,14 +88,17 @@
                 </div>
             </div>
             <div class="md-secondary">
-                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.restartTimer(track.$id);" title="Start timer with same data">
-                    <md-icon>timer</md-icon>
+                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.restartTimer(track.$id);" title="Start new timer with same name, project, tags">
+                    <md-icon role="presentation" aria-hidden="true">timer</md-icon>
+                    <span class="md-visually-hidden">Start new timer with same name, project, tags</span>
                 </md-button>
-                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.editTrack(track.$id, $event);">
-                    <md-icon>mode_edit</md-icon>
+                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.editTrack(track.$id, $event);" title="Edit this track">
+                    <md-icon role="presentation" aria-hidden="true">mode_edit</md-icon>
+                    <span class="md-visually-hidden">Edit this track</span>
                 </md-button>
-                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.deleteTrack(track.$id);">
-                    <md-icon>delete</md-icon>
+                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.deleteTrack(track.$id);" title="Delete this track">
+                    <md-icon role="presentation" aria-hidden="true">delete</md-icon>
+                    <span class="md-visually-hidden">Delete this track</span>
                 </md-button>
             </div>
         </md-list-item>

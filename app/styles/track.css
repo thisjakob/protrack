@@ -62,3 +62,6 @@
 
 .track-list button.md-icon-button {
   width: auto; }
+
+.track-list button.md-icon-button:focus {
+  outline: 1px dotted #b3b3b3; }

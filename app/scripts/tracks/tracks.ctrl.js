@@ -4,8 +4,8 @@
     // TODO icon google api lokal speichern!
     angular.module('protrack')
         .controller('TracksCtrl',
-        ['dataService', 'calcTime', '$filter', '$interval', 'authData', '$state', 'runningTimer', 'allProjects', 'allTags', '$anchorScroll',
-        function (dataService, calcTime, $filter, $interval, authData, $state, runningTimer ,allProjects, allTags, $anchorScroll) {
+        ['dataService', 'calcTime', '$filter', '$interval', 'authData', '$state', 'runningTimer', 'allProjects', 'allTags', '$anchorScroll', '$timeout',
+        function (dataService, calcTime, $filter, $interval, authData, $state, runningTimer ,allProjects, allTags, $anchorScroll, $timeout) {
 
             var tracksCtrl = this;
             tracksCtrl.tracksArray = [];
@@ -282,6 +282,13 @@
                 tracksCtrl.current = mapDBData(track);
                 tracksCtrl.editMode = true;
                 $anchorScroll('editForm');
+
+                // focus first input field in edit form
+                // compile this into a service/directive later
+                $timeout(function(){
+                    $('#currentDesc').select().focus();
+                },100);
+
             };
 
             /**
