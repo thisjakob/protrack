@@ -369,9 +369,6 @@
              * delete track with given id from DB
              */
             tracksCtrl.deleteTrack = function (id) {
-                if (tracksCtrl.record.id === id) {
-                    tracksCtrl.stopRecording();
-                }
                 dataService.delData(path + 'tracks', id);
                 $state.go($state.current, {}, {reload: true});
             };
