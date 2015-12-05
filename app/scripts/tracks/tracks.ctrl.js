@@ -24,7 +24,7 @@
                 duration : '00:00',
                 availTags : [],
                 tags : [],
-                project : {},
+                project : '',
                 durationSet : false,
                 dataMissing : true,
                 record : false
@@ -37,11 +37,12 @@
                 tracksCtrl.allProjects = allProjects;
                 tracksCtrl.allTags = allTags;
 
+                tracksCtrl.current = trackTmpl;
+                tracksCtrl.current.availTags = loadTags();
+
                 // check if there is a running timer
                 // if so, resume it
                 checkForRunningTimer();
-
-                tracksCtrl.current.availTags = loadTags();
 
                 // config vars for the edit form
                 tracksCtrl.readonly = false;
@@ -86,11 +87,10 @@
              * if so, resume it
              */
             var checkForRunningTimer = function(){
-                if ( runningTimer.length ) {
-                    tracksCtrl.current = mapDBData(runningTimer[0]);
+                if ( runningTimer.desc ) {
+                    tracksCtrl.current = mapDBData(runningTimer);
+                    tracksCtrl.current.availTags = loadTags( tracksCtrl.current.project );
                     resumeTimer();
-                } else {
-                    tracksCtrl.current = trackTmpl;
                 }
             };
 
@@ -220,6 +220,18 @@
                 tracksCtrl.searchTextTag = null;
                 tracksCtrl.current.tags = [];
                 tracksCtrl.current.availTags = loadTags(tracksCtrl.current.project);
+
+                if ( tracksCtrl.current.record ) {
+                    // update currentTimer in DB
+                    saveTimer( true );
+                }
+            };
+
+            /**
+             * handle changes on the tag select control
+             */
+            tracksCtrl.tagChanged = function(){
+                saveTimer( true );
             };
 
             /**
@@ -308,7 +320,7 @@
             var loadTags = function (project) {
                 var tags = [];
 
-                if ( arguments.length === 1 ) {
+                if ( arguments.length === 1 && typeof project === 'object' ) {
                     // load project tags
                     angular.forEach(project.tags, function (tagid) {
                         tags.push(
@@ -318,7 +330,7 @@
                 } else {
                     // load tags without projects
                     tags = tracksCtrl.allTags.filter(function(tag){
-                        return !tag.project;
+                        return ( tag.project ) ? false : true ;
                     });
                 }
 
@@ -378,6 +390,8 @@
              */
             tracksCtrl.startTimer = function () {
                 var track = tracksCtrl.current;
+                var update = !track.record;
+
                 track.record = true;
                 tracksCtrl.editMode = false;
                 track.date = moment().toDate();
@@ -388,7 +402,7 @@
                 // save the current track to DB
                 // this makes sure that a running timer will show up on other devices
                 // and is not lost on page reload
-                track.id = dataService.addData(path + 'currentTrack', mapTrackData(tracksCtrl.current)).key();
+                saveTimer( update );
 
                 // update duration every second
                 track.timerInterval = $interval(function(){
@@ -405,10 +419,10 @@
                 track.record = false;
                 $interval.cancel(track.timerInterval);
 
-                dataService.getData(path + 'currentTrack', true).$loaded(function(data){
-                    if ( data.length ) {
+                dataService.getData(path + 'currentTimer', false).$loaded(function(data){
+                    if ( data.desc ) {
                         // delete the current track from DB
-                        dataService.delData(path + 'currentTrack', track.id);
+                        removeTimer();
 
                         // save to DB
                         tracksCtrl.createTrackElement();
@@ -434,6 +448,7 @@
              */
             var resumeTimer = function (id) {
                 var track = tracksCtrl.current;
+
                 track.record = true;
                 tracksCtrl.editMode = false;
                 track.endTime = moment().format('HH:mm:ss');
@@ -444,6 +459,27 @@
                     track.endTime = moment().format('HH:mm:ss');
                     track.duration = getDuration(track.startTime, track.endTime);
                 }, 1000);
+            };
+
+            /**
+             * add or update timer to DB (currentTimer)
+             */
+            var saveTimer = function(update){
+                var track = tracksCtrl.current;
+                if ( update ) {
+                    // update currentTimer in DB
+                    dataService.updateData(path, 'currentTimer', mapTrackData(track))
+                } else {
+                    // save currentTimer to DB
+                    dataService.setData(path + 'currentTimer', mapTrackData(track));
+                }
+            };
+
+            /**
+             * remove timer to DB (currentTimer)
+             */
+            var removeTimer = function(){
+                dataService.delData(path, 'currentTimer');
             };
 
             tracksCtrl.init();

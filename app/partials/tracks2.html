@@ -35,7 +35,8 @@
 
                     <md-chips flex="70" ng-model="tracksCtrl.current.tags" readonly="tracksCtrl.readonly" md-autocomplete-snap
                               md-transform-chip="tracksCtrl.transformChip($chip)"
-                              md-require-match="tracksCtrl.requireMatch">
+                              md-require-match="tracksCtrl.requireMatch"
+                              md-on-add="tracksCtrl.tagChanged()" md-on-remove="tracksCtrl.tagChanged()">
                         <md-autocomplete
                                 md-selected-item="tracksCtrl.selectedTag"
                                 md-search-text="tracksCtrl.searchTextTag"
