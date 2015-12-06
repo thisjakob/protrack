@@ -406,7 +406,7 @@
                 track.endTime = moment().format('HH:mm:ss');
                 track.duration = getDuration(track.startTime, track.endTime);
 
-                // save the current track to DB
+                // save the current timer to DB
                 // this makes sure that a running timer will show up on other devices
                 // and is not lost on page reload
                 saveTimer( update );
@@ -426,7 +426,8 @@
                 track.record = false;
                 $interval.cancel(track.timerInterval);
 
-                dataService.getData(path + 'currentTimer', false).$loaded(function(data){
+                var timerStopped = dataService.getData(path + 'currentTimer', false).$loaded();
+                timerStopped.then(function(data){
                     if ( data.desc ) {
                         // delete the current track from DB
                         removeTimer();
@@ -440,14 +441,25 @@
                     }
                 });
 
+                return timerStopped;
+
             };
 
             /**
              * Starts timer for the current track
              */
             tracksCtrl.restartTimer = function (id) {
-                tracksCtrl.editTrack(id);
-                tracksCtrl.startTimer();
+                // check if a timer is already running
+                // if so, stop and save it and then start the new one
+                if ( tracksCtrl.current.record === true ) {
+                    tracksCtrl.stopTimer().then(function(){
+                        tracksCtrl.editTrack(id);
+                        tracksCtrl.startTimer();
+                    });
+                } else {
+                    tracksCtrl.editTrack(id);
+                    tracksCtrl.startTimer();
+                }
             };
 
             /**
