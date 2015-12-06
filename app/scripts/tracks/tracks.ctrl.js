@@ -475,7 +475,7 @@
                 var track = tracksCtrl.current;
                 if ( update ) {
                     // update currentTimer in DB
-                    dataService.updateData(path, 'currentTimer', mapTrackData(track))
+                    dataService.updateData(path, 'currentTimer', mapTrackData(track));
                 } else {
                     // save currentTimer to DB
                     dataService.setData(path + 'currentTimer', mapTrackData(track));
