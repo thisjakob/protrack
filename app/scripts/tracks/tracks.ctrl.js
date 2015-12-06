@@ -56,30 +56,54 @@
                 tracksCtrl.tracksArray = dataService.getData(path + 'tracks', true);
 
                 // add additional data to all tracks objects as soon as they are loaded
-                //
-                tracksCtrl.tracksArray.$loaded(function(tracks){
-                    var enhancedTracks = [];
-
+                tracksCtrl.tracksArray.$loaded().then(function(tracks){
                     angular.forEach(tracks, function(track){
-                        // resolve project name for project id
-                        var projectObj = $filter('filter')(tracksCtrl.allProjects, {$id:track.project}, true)[0];
-                        track.project = (projectObj) ? projectObj : false;
-
-                        // resolve tag name for tag id
-                        var tags = [], tagNames = [];
-                        angular.forEach(track.tags, function(tagId){
-                            var tagObj = $filter('filter')(tracksCtrl.allTags, {$id:tagId}, true)[0];
-                            tagNames.push(tagObj.name);
-                            tags.push(tagObj);
-                        });
-                        track.tags = tags;
-                        track.tagNames = tagNames;
-
-                        enhancedTracks.unshift(track);
+                        expandTrack(track);
                     });
 
-                    tracksCtrl.tracksArray = enhancedTracks;
+                    // expand new or changed tracks as well
+                    tracksCtrl.tracksArray.$watch(function(obj){
+                        if ( obj.event === 'child_added' ||  obj.event === 'child_added' ) {
+                            expandTrack( getTrackById(obj.key) );
+                        }
+
+                        // sort the tracks array after the change
+                        tracksCtrl.tracksArray.sort(orderTracks);
+                    });
+
+                    // sort the tracks array
+                    tracksCtrl.tracksArray.sort(orderTracks);
                 });
+
+
+            };
+
+            /**
+             * Expand each object in the tracks array by
+             * resolving the project and all tags within.
+             * Also sort the array initially
+             */
+            var expandTrack = function(track){
+                // resolve project name for project id
+                var projectObj = $filter('filter')(tracksCtrl.allProjects, {$id:track.project}, true)[0];
+                track.project = (projectObj) ? projectObj : false;
+
+                // resolve tag name for tag id
+                var tags = [], tagNames = [];
+                angular.forEach(track.tags, function(tagId){
+                    var tagObj = $filter('filter')(tracksCtrl.allTags, {$id:tagId}, true)[0];
+                    tagNames.push(tagObj.name);
+                    tags.push(tagObj);
+                });
+                track.tags = tags;
+                track.tagNames = tagNames;
+            };
+
+            /**
+             * order tracks by date descending
+             */
+            var orderTracks = function(a,b){
+                return moment(b.starttime).isAfter(a.starttime, 'second');
             };
 
             /**
