@@ -39,8 +39,8 @@
             var end = time;
 
             if ( start.isValid() && duration.isValid() ) {
-                end = start.add(duration);
-                //end = moment(newtime).format('HH:mm:ss');
+                var newtime = start.add(duration);
+                end = moment(newtime).format('HH:mm:ss');
             }
 
             return end;
