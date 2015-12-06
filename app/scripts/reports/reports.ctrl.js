@@ -52,6 +52,11 @@
                 dataService.setData(path + 'settings/daterange/to', date);
             };
 
+            /**
+             * get summary of duration of all tracks
+             * @param tracks
+             * @returns {string}
+             */
             reportsCtrl.sumDur = function (tracks) {
                 var sum = reportUtilities.sumDuration(tracks);
                 return sum.substr(0, sum.length - 3);

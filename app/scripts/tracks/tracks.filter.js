@@ -2,6 +2,9 @@
     'use strict';
 
     angular.module('protrack')
+    /**
+     * format datetime without second
+     */
         .filter('datetimenosecond', function () {
             return function (item) {
                 var date = moment(item, 'DD.MM.YYYY HH:mm:ss');
@@ -13,6 +16,9 @@
             };
         })
 
+    /**
+     * format duration with seconds
+     */
         .filter('durationsec', function () {
             return function (item) {
                 var duration = moment(item, 'HH:mm:ss');
@@ -24,6 +30,9 @@
             };
         })
 
+    /**
+     * format duration with seconds
+     */
         .filter('durationmin', function () {
             return function (item) {
                 var duration = moment(item, 'HH:mm:ss');
@@ -35,6 +44,9 @@
             };
         })
 
+    /**
+     * format datetime to date
+     */
         .filter('dateonly', function () {
             return function (item) {
                 var date = moment(item, 'DD.MM.YYYY HH:mm:ss');
@@ -46,6 +58,9 @@
             };
         })
 
+    /**
+     * format datetime to time
+     */
         .filter('timeonly', function () {
             return function (item) {
                 var date = moment(item, 'DD.MM.YYYY HH:mm:ss');

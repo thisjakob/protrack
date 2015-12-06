@@ -55,7 +55,7 @@
                     <span> {{ track.starttime | weekday }} {{ track.starttime | limitTo : 10 }}</span>
                 </div>
                 <div class="report-time">
-                    <span> {{ track.starttime | limitTo : 5 : 11 }} - {{ track.endtime | limitTo : 5 : 11 }}</span>
+                    <span> {{ track.starttime | datetimenosecond | limitTo : 5 : 11 }} - {{ track.endtime | datetimenosecond | limitTo : 5 : 11 }}</span>
                 </div>
                 <div class="report-duration" ng-style="{'color':(track.record?'red':'black')}">
                     <span> {{ track.difftime | durationmin }}</span>

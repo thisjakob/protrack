@@ -11,12 +11,12 @@
          * @returns {string} sum of durations 'HHH:mm:ss'
          */
         var sumDuration = function (tracks) {
-            var starttime = moment('00:00', 'HH:mm');
-            var sum = moment('00:00', 'HH:mm');
+            var starttime = moment('00:00:00', 'HH:mm:ss');
+            var sum = moment('00:00:00', 'HH:mm:ss');
             angular.forEach(tracks, function(track){
-                sum = calcTime.addDiffTime(sum, moment(track.difftime, 'HH:mm'));
+                sum = calcTime.addDiffTime(sum, moment(track.difftime, 'HH:mm:ss'));
             });
-            return calcTime.diffTime(starttime, moment(sum, 'DD.MM.YYYY HH:mm'));
+            return calcTime.diffTime(starttime, moment(sum, 'HH:mm:ss'));
         };
 
         var utilities = {
