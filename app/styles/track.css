@@ -65,3 +65,6 @@
 
 .track-list button.md-icon-button:focus {
   outline: 1px dotted #b3b3b3; }
+
+.layout-column md-card {
+  margin-top: -10px; }
