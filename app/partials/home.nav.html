@@ -1,36 +1,38 @@
-<!--
-<md-toolbar layout="row" layout-align="space-between">
-    <h2 class="md-toolbar-tools">Protrack 2</h2>
-    <md-button aria-label="First Button"> Button1 </md-button>
-    <md-button aria-label="Second Button"> Button2 </md-button>
-    <md-button aria-label="Second Button"> Button3 </md-button>
-</md-toolbar>
--->
-
-<nav class="navbar navbar-static-top navbar-inverse" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" ui-sref="home">Protrack</a>
+<md-sidenav class="md-sidenav-left md-whiteframe-z2" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+    <md-toolbar class="md-theme-indigo" layout="row">
+        <div class="md-toolbar-tools">
+            <h1 class="md-toolbar-tools">Navigation</h1>
+            <!--
+            <md-button class="md-icon-button">
+                <md-icon>keyboard_arrow_left</md-icon>
+            </md-button>
+            -->
         </div>
-
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav" ng-show="homeNavCtrl.authData">
-                <li><a ui-sref="timer">Timer</a></li>
-                <li><a ui-sref="timer2">Timer (MD)</a></li>
-                <li><a ui-sref="reports">Reports</a></li>
-                <li><a ui-sref="projects">Configuration</a></li>
-                <li><a ui-sref="home" ng-click="homeNavCtrl.logout()">Logout</a></li>
-            </ul>
-
-            <ul class="nav navbar-nav" ng-hide="homeNavCtrl.authData">
-                <li><a ui-sref="login">Login</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+    </md-toolbar>
+    <md-content layout-padding>
+        <md-list  ng-show="homeNavCtrl.authData">
+            <md-list-item md-ink-ripple layout="row" ui-sref="timer2">
+                <md-icon>timer</md-icon>
+                <p>Timer</p>
+            </md-list-item>
+            <md-list-item md-ink-ripple layout="row" ui-sref="reports">
+                <md-icon>file_download</md-icon>
+                <p>Reports</p>
+            </md-list-item>
+            <md-list-item md-ink-ripple layout="row" ui-sref="projects">
+                <md-icon>settings</md-icon>
+                <p>Configuration</p>
+            </md-list-item>
+            <md-list-item md-ink-ripple layout="row" ui-sref="home" ng-click="homeNavCtrl.logout()">
+                <md-icon>account_box</md-icon>
+                <p>Logout</p>
+            </md-list-item>
+        </md-list>
+        <md-list  ng-hide="homeNavCtrl.authData">
+            <md-list-item md-ink-ripple layout="row" ui-sref="login">
+                <md-icon>account_box</md-icon>
+                <p>Login</p>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</md-sidenav>

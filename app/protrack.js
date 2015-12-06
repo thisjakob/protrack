@@ -25,12 +25,17 @@
                             templateUrl: 'partials/home.nav.html',
                             controller: 'HomeNavCtrl as homeNavCtrl'
                         },
+                        'toolbar' : {
+                            templateUrl: 'partials/toolbar.html',
+                            controller: 'ToolbarCtrl as toolbarCtrl'
+                        },
                         'content' : {
                             templateUrl : 'partials/home.html',
                             controller : 'HomeCtrl as homeCtrl'
                         }
                     },
                     resolve: {
+                        'pageName' : [function(){return 'Home'}],
                         'authData': ['Auth', function(Auth) {
                             return Auth.$waitForAuth();
                         }]
@@ -43,6 +48,10 @@
                             templateUrl: 'partials/home.nav.html',
                             controller: 'HomeNavCtrl as homeNavCtrl'
                         },
+                        'toolbar' : {
+                            templateUrl: 'partials/toolbar.html',
+                            controller: 'ToolbarCtrl as toolbarCtrl'
+                        },
                         'content' : {
                             templateUrl: 'partials/tracks.html',
                             controller: 'TracksCtrl as tracksCtrl'
@@ -50,6 +59,7 @@
                     },
 
                     resolve: {
+                        'pageName' : [function(){return 'Timer'}],
                         'authData': ['Auth', function(Auth) {
                             return Auth.$requireAuth();
                         }]
@@ -62,6 +72,10 @@
                             templateUrl: 'partials/home.nav.html',
                             controller: 'HomeNavCtrl as homeNavCtrl'
                         },
+                        'toolbar' : {
+                            templateUrl: 'partials/toolbar.html',
+                            controller: 'ToolbarCtrl as toolbarCtrl'
+                        },
                         'content' : {
                             templateUrl: 'partials/tracks2.html',
                             controller: 'TracksCtrl as tracksCtrl'
@@ -69,6 +83,7 @@
                     },
 
                     resolve: {
+                        'pageName' : [function(){return 'Timer'}],
                         'authData': ['Auth', function(Auth) {
                             return Auth.$requireAuth();
                         }],
@@ -93,12 +108,17 @@
                             templateUrl: 'partials/home.nav.html',
                             controller: 'HomeNavCtrl as homeNavCtrl'
                         },
+                        'toolbar' : {
+                            templateUrl: 'partials/toolbar.html',
+                            controller: 'ToolbarCtrl as toolbarCtrl'
+                        },
                         'content' : {
                             templateUrl: 'partials/reports.html',
                             controller: 'ReportsCtrl as reportsCtrl'
                         }
                     },
                     resolve: {
+                        'pageName' : [function(){return 'Reports'}],
                         'authData': ['Auth', function(Auth) {
                             return Auth.$requireAuth();
                         }]
@@ -111,12 +131,17 @@
                             templateUrl: 'partials/home.nav.html',
                             controller: 'HomeNavCtrl as homeNavCtrl'
                         },
+                        'toolbar' : {
+                            templateUrl: 'partials/toolbar.html',
+                            controller: 'ToolbarCtrl as toolbarCtrl'
+                        },
                         'content' : {
                             templateUrl: 'partials/projects.html',
                             controller: 'ProjectsCtrl as projectsCtrl'
                         }
                     },
                     resolve: {
+                        'pageName' : [function(){return 'Configuration'}],
                         'authData': ['Auth', function(Auth) {
                             return Auth.$requireAuth();
                         }]
@@ -129,12 +154,17 @@
                             templateUrl: 'partials/home.nav.html',
                             controller: 'HomeNavCtrl as homeNavCtrl'
                         },
+                        'toolbar' : {
+                            templateUrl: 'partials/toolbar.html',
+                            controller: 'ToolbarCtrl as toolbarCtrl'
+                        },
                         'content' : {
                             templateUrl: 'partials/login.html',
                             controller: 'AuthCtrl as authCtrl'
                         }
                     },
                     resolve: {
+                        'pageName' : [function(){return 'Login'}],
                         'authData': ['Auth', function(Auth) {
                             return Auth.$waitForAuth();
                         }]
@@ -147,12 +177,17 @@
                             templateUrl: 'partials/home.nav.html',
                             controller: 'HomeNavCtrl as homeNavCtrl'
                         },
+                        'toolbar' : {
+                            templateUrl: 'partials/toolbar.html',
+                            controller: 'ToolbarCtrl as toolbarCtrl'
+                        },
                         'content' : {
                             templateUrl: 'partials/register.html',
                             controller: 'RegisterCtrl as regCtrl'
                         }
                     },
                     resolve: {
+                        'pageName' : [function(){return 'Register'}],
                         'authData': ['Auth', function(Auth) {
                             return Auth.$waitForAuth();
                         }]

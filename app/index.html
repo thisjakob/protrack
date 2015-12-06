@@ -29,14 +29,18 @@
         <script src="bower_components/modernizr/modernizr.js"></script>
         <!-- endbuild -->
     </head>
-    <body>
+    <body layout="row">
         <!--[if lt IE 10]>
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
             your browser</a> to improve your experience.</p>
         <![endif]-->
 
         <div ui-view="nav"></div>
-        <main role="main" ui-view="content"></main>
+        <main role="main">
+            <div ui-view="toolbar"></div>
+            <div ui-view="content"></div>
+        </main>
+
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
@@ -90,6 +94,7 @@
         <script src="protrack.js"></script>
         <script src="scripts/home/home.ctrl.js"></script>
         <script src="scripts/home/home.nav.ctrl.js"></script>
+        <script src="scripts/toolbar/toolbar.ctrl.js"></script>
         <script src="scripts/auth/auth.service.js"></script>
         <script src="scripts/auth/auth.ctrl.js"></script>
         <script src="scripts/auth/register.ctrl.js"></script>
