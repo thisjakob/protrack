@@ -240,8 +240,8 @@
             var mapTrackData = function(track){
                 var newTrack = {
                     desc : track.desc,
-                    starttime : moment( track.date ).format('DD.MM.YYYY') + track.startTime,
-                    endtime : moment( track.date ).format('DD.MM.YYYY') + track.endTime,
+                    starttime : moment( track.date ).format('DD.MM.YYYY') + ' ' + track.startTime,
+                    endtime : moment( track.date ).format('DD.MM.YYYY') + ' ' + track.endTime,
                     difftime : track.duration,
                     record : track.record,
                     project : (track.project) ? track.project.$id : '',
