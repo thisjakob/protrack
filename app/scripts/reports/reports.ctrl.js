@@ -1,6 +1,5 @@
 (function () {
     'use strict';
-    // TODO export to csv
     // TODO Filter for Project und Tag
     // TODO search Description
     angular.module('protrack')
