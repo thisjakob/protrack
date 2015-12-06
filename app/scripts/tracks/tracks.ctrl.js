@@ -100,19 +100,28 @@
              * order tracks by date descending
              */
             var orderTracks = function(a,b){
-                return moment(b.starttime).isAfter(a.starttime, 'second');
+                return moment(b.starttime, 'DD.MM.YYYY HH:mm:ss').isAfter(a.starttime);
             };
 
             /**
-             * check if there is a running timer
+             * Check if there is a running timer
              * if so, resume it
+             * Also watch the runningTimer object for changes
+             * => when a timer is stopped by another client, it's also stopped here.
              */
             var checkForRunningTimer = function(){
-                if ( runningTimer.desc ) {
-                    tracksCtrl.current = mapDBData(runningTimer);
-                    tracksCtrl.current.availTags = loadTags( tracksCtrl.current.project );
-                    resumeTimer();
-                }
+                runningTimer.$loaded().then(function(timer){
+                    if ( timer.desc ) {
+                        tracksCtrl.current = mapDBData(timer);
+                        tracksCtrl.current.availTags = loadTags( tracksCtrl.current.project );
+                        resumeTimer();
+                    }
+                });
+
+                runningTimer.$watch(function(obj){
+                    $state.go($state.current, {}, {reload: true});
+                });
+
             };
 
             /**
@@ -466,7 +475,6 @@
                     } else {
                         // reset edit form
                         $state.go($state.current, {}, {reload: true});
-
                     }
                 });
 

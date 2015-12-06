@@ -101,7 +101,7 @@
                         }],
                         'runningTimer' : ['dataService', 'authData', function(dataService, authData) {
                             var path = 'users/' + authData.uid + '/';
-                            return dataService.getData(path + 'currentTimer', false).$loaded();
+                            return dataService.getData(path + 'currentTimer', false);
                         }]
                     }
                 })
