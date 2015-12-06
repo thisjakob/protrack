@@ -4,8 +4,8 @@
     // TODO icon google api lokal speichern!
     angular.module('protrack')
         .controller('TracksCtrl',
-        ['dataService', 'calcTime', '$filter', '$interval', 'authData', '$state', 'runningTimer', 'allProjects', 'allTags', '$anchorScroll', '$timeout',
-        function (dataService, calcTime, $filter, $interval, authData, $state, runningTimer ,allProjects, allTags, $anchorScroll, $timeout) {
+        ['dataService', 'calcTime', '$filter', '$interval', 'authData', '$state', 'runningTimer', 'allProjects', 'allTags', 'allTracks', '$anchorScroll', '$timeout',
+        function (dataService, calcTime, $filter, $interval, authData, $state, runningTimer ,allProjects, allTags, allTracks, $anchorScroll, $timeout) {
 
             var tracksCtrl = this;
             tracksCtrl.tracksArray = [];
@@ -36,6 +36,7 @@
             tracksCtrl.init = function(){
                 tracksCtrl.allProjects = allProjects;
                 tracksCtrl.allTags = allTags;
+                tracksCtrl.tracksArray = allTracks;
 
                 tracksCtrl.current = trackTmpl;
                 tracksCtrl.current.availTags = loadTags();
@@ -50,10 +51,6 @@
                 tracksCtrl.searchTextTag = null;
                 tracksCtrl.selectedTag = null;
                 tracksCtrl.editMode = false;
-
-                // load all tracks
-                // => this might also be handled via resolve in the state
-                tracksCtrl.tracksArray = dataService.getData(path + 'tracks', true);
 
                 // add additional data to all tracks objects as soon as they are loaded
                 tracksCtrl.tracksArray.$loaded().then(function(tracks){
