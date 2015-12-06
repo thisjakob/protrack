@@ -237,7 +237,9 @@
              * handle changes on the tag select control
              */
             tracksCtrl.tagChanged = function(){
-                saveTimer( true );
+                if (tracksCtrl.current.record) {
+                    saveTimer( true );
+                }
             };
 
             /**
