@@ -63,13 +63,7 @@
                         if ( obj.event === 'child_added' ||  obj.event === 'child_added' ) {
                             expandTrack( getTrackById(obj.key) );
                         }
-
-                        // sort the tracks array after the change
-                        tracksCtrl.tracksArray.sort(orderTracks);
                     });
-
-                    // sort the tracks array
-                    tracksCtrl.tracksArray.sort(orderTracks);
                 });
 
 
@@ -94,13 +88,6 @@
                 });
                 track.tags = tags;
                 track.tagNames = tagNames;
-            };
-
-            /**
-             * order tracks by date descending
-             */
-            var orderTracks = function(a,b){
-                return moment(b.starttime, 'DD.MM.YYYY HH:mm:ss').isAfter(a.starttime);
             };
 
             /**
