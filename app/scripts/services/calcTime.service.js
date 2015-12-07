@@ -19,7 +19,7 @@
 
             if ( start.isValid() && end.isValid() ) {
                 diff = moment.utc(end.diff(start)).format("DD HH:mm:ss");
-                hours = ((Number(diff.substr(0, 2)) - 1) * 24 + Number(diff.substr(2, 2))).toString() + diff.substr(4);
+                hours = ((Number(diff.substr(0, 2)) - 1) * 24 + Number(diff.substr(3, 2))).toString() + diff.substr(5);
             } else {
                 console.log('endtime or starttime is not valid!');
             }
@@ -39,8 +39,7 @@
             var end = time;
 
             if ( start.isValid() && duration.isValid() ) {
-                var newtime = start.add(duration);
-                end = moment(newtime).format('HH:mm:ss');
+                end = start.add(duration);
             }
 
             return end;
