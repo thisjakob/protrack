@@ -72,7 +72,7 @@
     </md-card>
 
     <md-list class="track-list">
-        <md-list-item class="track-list-item" ng-repeat="(key,track) in tracksCtrl.tracksArray | orderBy: 'starttime':true">
+        <md-list-item class="track-list-item" ng-repeat="(key,track) in tracksCtrl.tracksArray | orderBy:starttime:true">
             <div class="md-list-item-text" layout="column" flex="grow">
                 <h3 class="track-desc">{{track.desc}}</h3>
                 <p class="datetime">{{track.starttime | dateonly}} {{track.starttime | timeonly}} - {{track.endtime | timeonly}}</p>
