@@ -224,7 +224,7 @@
              * returns false if its the other way around or the same
              */
             var isEarlier = function( time1, time2 ) {
-                return parseFloat( time1.replace(/:/,'.').replace(/:/,'') ) < parseFloat( time2.replace(/:/,'.').replace(/:/,'') );
+                return parseFloat( time1.replace(/:/,'.').replace(/:/,'') ) <= parseFloat( time2.replace(/:/,'.').replace(/:/,'') );
             };
 
             /**

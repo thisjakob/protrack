@@ -3,28 +3,28 @@
         <form>
             <md-card-content>
                 <div layout="row" layout-sm="column" layout-align="space-around">
-                    <md-input-container flex="grow">
+                    <md-input-container flex layout-sm="column">
                         <label for="currentDesc">Working On...</label>
                         <input name="desc" id="currentDesc" ng-model="tracksCtrl.current.desc" ng-change="tracksCtrl.checkDesc()" autofocus />
                     </md-input-container>
-                    <md-datepicker flex="grow" ng-model="tracksCtrl.current.date" md-placeholder="Enter date"></md-datepicker>
-                    <div layout="row" flex="grow">
-                        <md-input-container flex="grow" flex-sm="33">
+                    <md-datepicker flex class="track-date" ng-model="tracksCtrl.current.date" md-placeholder="Enter date"></md-datepicker>
+                    <div layout="row" flex>
+                        <md-input-container class="track-time" flex>
                             <label>Start Time</label>
                             <input ng-model="tracksCtrl.current.startTime" ng-change="tracksCtrl.changeTime('start')" ng-blur="tracksCtrl.formatTime('startTime')">
                         </md-input-container>
-                        <md-input-container flex="grow" flex-sm="33">
+                        <md-input-container class="track-time" flex>
                             <label>End Time</label>
                             <input ng-model="tracksCtrl.current.endTime" ng-change="tracksCtrl.changeTime('end')" ng-blur="tracksCtrl.formatTime('endTime')">
                         </md-input-container>
-                        <md-input-container flex="grow" flex-sm="33">
+                        <md-input-container class="track-time" flex>
                             <label>Duration</label>
                             <input ng-model="tracksCtrl.current.duration" ng-change="tracksCtrl.changeTime('duration')" ng-blur="tracksCtrl.formatTime('duration')">
                         </md-input-container>
                     </div>
                 </div>
-                <div layout="row" layout-align="space-around">
-                    <md-input-container flex="25">
+                <div layout="row" layout-sm="column" layout-align="space-around">
+                    <md-input-container flex flex-gt-sm="25">
                         <label>Project</label>
                         <md-select ng-model="tracksCtrl.current.project" ng-model-options="{trackBy:'$value.$id'}" ng-change="tracksCtrl.projectSelected()">
                             <md-option ng-value="project" ng-repeat="project in tracksCtrl.allProjects" value="{{project.name}}">
@@ -33,7 +33,7 @@
                         </md-select>
                     </md-input-container>
 
-                    <md-chips flex="70" ng-model="tracksCtrl.current.tags" readonly="tracksCtrl.readonly" md-autocomplete-snap
+                    <md-chips flex-gt-sm="70" ng-model="tracksCtrl.current.tags" readonly="tracksCtrl.readonly" md-autocomplete-snap
                               md-transform-chip="tracksCtrl.transformChip($chip)"
                               md-require-match="tracksCtrl.requireMatch"
                               md-on-add="tracksCtrl.tagChanged()" md-on-remove="tracksCtrl.tagChanged()">
@@ -52,7 +52,7 @@
                     </md-chips>
                 </md-card-content>
             </div>
-            <md-card-actions layout="row">
+            <md-card-actions>
                 <md-button class="md-raised md-primary" ng-hide="tracksCtrl.current.record || tracksCtrl.current.durationSet || tracksCtrl.editMode" ng-disabled="tracksCtrl.current.dataMissing" style="width:100%;" ng-click="tracksCtrl.startTimer()">
                     <md-icon role="presentation" aria-hidden="true">timer</md-icon> Start Timer
                 </md-button>
@@ -72,7 +72,7 @@
     </md-card>
 
     <md-list class="track-list">
-        <md-list-item class="track-list-item" ng-repeat="(key,track) in tracksCtrl.tracksArray | orderBy:starttime:true">
+        <md-list-item class="track-list-item" ng-repeat="(key,track) in tracksCtrl.tracksArray | orderBy:'starttime':true">
             <div class="md-list-item-text" layout="column" flex="grow">
                 <h3 class="track-desc">{{track.desc}}</h3>
                 <p class="datetime">{{track.starttime | dateonly}} {{track.starttime | timeonly}} - {{track.endtime | timeonly}}</p>
