@@ -1,6 +1,7 @@
 'use strict';
 
 describe('main tests', function () {
+    //var EC = protractor.ExpectedConditions;
 
     beforeEach(function () {
         browser.get('http://localhost:3000');
@@ -15,8 +16,6 @@ describe('main tests', function () {
         browser.setLocation('timer2');
         browser.sleep(3000);
         element(by.css('#currentDesc')).sendKeys('first timer');
-        //element(by.css('#editForm')).submit();
-        browser.sleep(5000);
     });
 
 });
