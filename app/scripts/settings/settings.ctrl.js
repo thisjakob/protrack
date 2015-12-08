@@ -10,7 +10,7 @@
             };
 
             settingsCtrl.getLoginName = function() {
-                return localStorage.getItem("name");;
+                return localStorage.getItem("name");
             };
         }]);
 })();
