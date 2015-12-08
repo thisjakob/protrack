@@ -68,3 +68,10 @@
 
 .layout-column md-card {
   margin-top: -10px; }
+
+.track-time label {
+  white-space: nowrap; }
+
+.track-date {
+  min-width: 250px;
+  margin: 9px 0px; }
