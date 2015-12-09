@@ -189,7 +189,7 @@
 
                 if ( field === 'duration' ) {
                     // duration changed => update endTime
-                    end = calcTime.addDiffTime(start, tracksCtrl.current.duration);
+                    end = calcTime.addDiffTime(start, tracksCtrl.current.duration).format('HH:mm:ss');
                     if ( isEarlier(start,end) ) {
                         tracksCtrl.current.endTime = end;
                     } else {
