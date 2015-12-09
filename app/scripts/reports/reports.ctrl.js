@@ -30,6 +30,7 @@
             reportsCtrl.tagsArray.$loaded().then(function(){
                 reportsCtrl.tracksArray.$loaded().then(function(tracks){
                     angular.forEach(tracks, function(track){
+                        track.starttimestamp = moment(track.starttime, 'DD.MM.YYYY HH:mm:ss').format('X');
                         expandTrack(track);
                     });
                 });

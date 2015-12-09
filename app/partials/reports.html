@@ -36,7 +36,7 @@
                 <span>Time and Duration</span>
             </div>
         </li>
-        <li layout="row" ng-repeat="(key,track) in $parent.filteredTracks = (reportsCtrl.tracksArray | daterange:reportsCtrl.dateFrom:reportsCtrl.dateTo  | orderBy:starttime:true)"
+        <li layout="row" ng-repeat="(key,track) in $parent.filteredTracks = (reportsCtrl.tracksArray | daterange:reportsCtrl.dateFrom:reportsCtrl.dateTo  | orderBy:'starttimestamp':false)"
             class="reportlistelement">
             <div class="report-desc" flex="grow">
                 <span id="reportDesc{{key}}">{{track.desc || 'empty'}}</span>

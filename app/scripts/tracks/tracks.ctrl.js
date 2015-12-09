@@ -55,18 +55,28 @@
                 // add additional data to all tracks objects as soon as they are loaded
                 tracksCtrl.tracksArray.$loaded().then(function(tracks){
                     angular.forEach(tracks, function(track){
+                        track.starttimestamp = moment(track.starttime, 'DD.MM.YYYY HH:mm:ss').format('X');
                         expandTrack(track);
                     });
 
                     // expand new or changed tracks as well
                     tracksCtrl.tracksArray.$watch(function(obj){
                         if ( obj.event === 'child_added' ||  obj.event === 'child_added' ) {
-                            expandTrack( getTrackById(obj.key) );
+                            var track = getTrackById(obj.key);
+                            track.starttimestamp = moment(track.starttime, 'DD.MM.YYYY HH:mm:ss').format('X');
+                            expandTrack(track);
                         }
                     });
                 });
 
 
+            };
+
+            /**
+             * order tracks by date descending
+             */
+            var orderTracks = function(a,b){
+                return b.starttimestamp - a.starttimestamp;
             };
 
             /**
