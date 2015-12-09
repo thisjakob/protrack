@@ -11,15 +11,15 @@
                     <div layout="row" flex>
                         <md-input-container class="track-time" flex>
                             <label>Start Time</label>
-                            <input ng-model="tracksCtrl.current.startTime" ng-change="tracksCtrl.changeTime('start')" ng-blur="tracksCtrl.formatTime('startTime')">
+                            <input type="tel" ng-model="tracksCtrl.current.startTime" ng-change="tracksCtrl.changeTime('start')" ng-blur="tracksCtrl.formatTime('startTime')">
                         </md-input-container>
                         <md-input-container class="track-time" flex>
                             <label>End Time</label>
-                            <input ng-model="tracksCtrl.current.endTime" ng-change="tracksCtrl.changeTime('end')" ng-blur="tracksCtrl.formatTime('endTime')">
+                            <input type="tel" ng-model="tracksCtrl.current.endTime" ng-change="tracksCtrl.changeTime('end')" ng-blur="tracksCtrl.formatTime('endTime')">
                         </md-input-container>
                         <md-input-container class="track-time" flex>
                             <label>Duration</label>
-                            <input ng-model="tracksCtrl.current.duration" ng-change="tracksCtrl.changeTime('duration')" ng-blur="tracksCtrl.formatTime('duration')">
+                            <input type="tel" ng-model="tracksCtrl.current.duration" ng-change="tracksCtrl.changeTime('duration')" ng-blur="tracksCtrl.formatTime('duration')">
                         </md-input-container>
                     </div>
                 </div>
