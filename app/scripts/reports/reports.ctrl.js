@@ -75,8 +75,7 @@
              * @returns {string}
              */
             reportsCtrl.sumDur = function (tracks) {
-                var sum = reportUtilities.sumDuration(tracks);
-                return sum.substr(0, sum.length - 3);
+                return reportUtilities.sumDuration(tracks);
             };
 
             /**
