@@ -16,7 +16,7 @@
             angular.forEach(tracks, function(track){
                 sum = calcTime.addDiffTime(sum, moment(track.difftime, 'HH:mm:ss'));
             });
-            return calcTime.diffTime(starttime, moment(sum, 'HH:mm:ss'));
+            return calcTime.diffTimeHours(starttime, moment(sum, 'HH:mm:ss'));
         };
 
         var utilities = {
