@@ -1,11 +1,16 @@
 .reportnavigation {
+  display: -webkit-flex;
   display: flex;
+  -webkit-flex-direction: row;
   flex-direction: row;
+  -webkit-flex-wrap: nowrap;
   flex-wrap: nowrap;
   width: 100%; }
 
 .reportnavelement {
+  -webkit-flex: 1;
   flex: 1;
+  -webkit-align-self: flex-end;
   align-self: flex-end; }
 
 .summary {
@@ -28,10 +33,12 @@
   font-size: 1.2rem; }
 
 .header .report-desc {
+  -webkit-align-self: flex-end;
   align-self: flex-end;
   font-size: 1rem; }
 
 .report-project-tags {
+  -webkit-align-self: flex-end;
   align-self: flex-end; }
 
 .report-projects-tags-chips .md-chips {
@@ -47,6 +54,7 @@
 
 .report-date,
 .report-time-duration {
+  -webkit-align-self: flex-end;
   align-self: flex-end; }
 
 .report-date span {
@@ -54,12 +62,14 @@
 
 .report-time {
   white-space: nowrap;
+  -webkit-align-self: flex-end;
   align-self: flex-end; }
 
 .report-duration {
   padding-left: .8rem;
   font-weight: bold;
   white-space: nowrap;
+  -webkit-align-self: flex-end;
   align-self: flex-end; }
 
 .header {
