@@ -18,10 +18,12 @@
             var end = moment(endTime, 'HH:mm:ss');
 
             if ( start.isValid() && end.isValid() ) {
-                h = end.diff(start, 'hours', true);
-                m = moment.duration(h%1, 'hours').as('minutes');
-                s = moment.duration(m%1, 'minutes').as('seconds');
-                duration = parseInt(h) + ':' + parseInt(m) + ':' + parseInt(s);
+                s = end.diff(start, 'seconds', true);
+                h = parseInt(s/3600);
+                m = parseInt( (s-h*3600)/60 );
+                s = Math.round( (s-h*3600-m*60) % 60 );
+
+                duration = h + ':' + m + ':' + s;
             }
 
             return duration;
