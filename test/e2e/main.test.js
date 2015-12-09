@@ -7,6 +7,10 @@ describe('main tests', function () {
         browser.get('http://localhost:3000');
     });
 
+    afterEach(function() {
+        element(by.id("logout")).click();
+    });
+
     it('login and write first timer', function () {
         browser.setLocation('login');
         element(by.css('#email')).sendKeys('gip@swissonline.ch');

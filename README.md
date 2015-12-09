@@ -16,14 +16,16 @@ gulp
 
 # start
 gulp serve
+
 gulp serve:dist to launch a server on your optimized application
 
-#
 gulp wiredep to fill bower dependencies in your .html file(s)
 
 # test
 gulp test to launch your unit tests with Karma
+
 gulp protractor to launch your e2e tests with Protractor
+
 gulp protractor:dist to launch your e2e tests with Protractor on the dist files
 
 # dev tools
