@@ -144,7 +144,9 @@
             var createFilterFor = function (query) {
                 var lowercaseQuery = angular.lowercase(query);
                 return function filterFn(queryText) {
-                    return (queryText.name.toLowerCase().indexOf(lowercaseQuery) === 0 || queryText.desc.toLowerCase().indexOf(lowercaseQuery) === 0);
+                    if ( queryText ) {
+                        return (queryText.name.toLowerCase().indexOf(lowercaseQuery) === 0 || queryText.desc.toLowerCase().indexOf(lowercaseQuery) === 0);
+                    }
                 };
             };
 
