@@ -1,106 +1,112 @@
-<div class="container">
-
-    <div class="row">
-        <div>
-            <md-button class="md-raised md-accent" ng-click="tracksCtrl.createTrackElement()">
-                <md-icon class="material-icons">add</md-icon> Add new Track
-            </md-button>
-        </div>
-        <ul class="tracklist">
-            <li ng-repeat="(key,track) in tracksCtrl.tracksArray | orderBy:'starttime':true" class="tracklistelement">
-                <form class="track-form" editable-form name="editableForm" onaftersave="tracksCtrl.updateTrack($data, track.$id)" shown="tracksCtrl.newTrack.starttime == track.starttime">
-                    <div class="track-inputs">
-                        <div class="track-desc-project-tag">
-                            <div class="track-desc formgroup">
-                                <label for="trackDesc{{key}}" ng-show="editableForm.$visible">Working on...</label>
-                                <span e-id="trackDesc{{key}}" editable-text="track.desc" e-name="desc" e-class="form-control">{{track.desc || 'empty'}}</span>
-                            </div>
-                            <div class="track-project formgroup">
-                                <label for="trackProject{{key}}" ng-show="editableForm.$visible">Project</label>
-                                <span class="track-project label label-primary" editable-select="track.project" e-name="project" e-class="form-control editable-input"
-                                      e-id="trackProject{{key}}" e-ng-change="tracksCtrl.updateProject($data, track.$id)"
-                                      e-ng-options="p.$id as p.name for p in tracksCtrl.projectsArray">{{ tracksCtrl.showProject(track.project) }}</span>
-                            </div>
-                            <div class="track-tag formgroup">
-                                <label for="trackTag{{key}}" ng-show="editableForm.$visible">Tag</label>
-
-                                <!--
-                                <md-chips ng-hide="editableForm.$visible">
-                                    <md-chip ng-repeat="(key,val) in tracksCtrl.showTags(track.project, track.tags).split(', ')">{{ val }}</md-chip>
-                                </md-chips>
-                                -->
-
-                                <span class="track-tag label label-default" editable-select="track.tags" e-name="tags" e-class="form-control editable-input" e-multiple
-                                    e-id="trackTag{{key}}" e-ng-options="t.$id as tracksCtrl.loadTagname(t) for t in tracksCtrl.loadTags(track.project) | orderBy:'name'">
-                                    {{ tracksCtrl.showTags(track.project, track.tags) }}</span>
-                            </div>
-                        </div>
-
-                        <div class="track-date-time-duration">
-                            <div class="track-starttime formgroup">
-                                <label for="trackStart{{key}}">From</label>
-                                <span editable-text="track.starttime" e-name="starttime" e-class="form-control editable-input"
-                                      e-id="trackStart{{key}}" e-ng-change="tracksCtrl.changeStarttime($data, track)">
-                                    {{ track.starttime | datetimenosecond }}</span>
-                            </div>
-                            <div class="track-endtime formgroup">
-                                <label for="trackEnd{{key}}">To</label>
-                                <span editable-text="track.endtime" e-name="endtime" e-class="form-control editable-input"
-                                      e-id="trackEnd{{key}}" e-ng-change="tracksCtrl.changeEndtime($data, track)">
-                                    {{ track.endtime | datetimenosecond }}</span>
-                            </div>
-                            <div class="track-difftime formgroup">
-                                <label for="trackDiff{{key}}">Duration</label>
-                                <span editable-text="track.difftime" e-name="difftime" e-class="form-control editable-input"
-                                      e-id="trackDiff{{key}}" e-ng-change="tracksCtrl.changeDifftime($data, track)">
-                                    {{(track.difftime | durationmin) || 'no diff time' }}</span>
-                            </div>
-                        </div>
+<md-content layout-padding layout="column">
+    <md-card id="editForm">
+        <form>
+            <md-card-content>
+                <div layout="row" layout-sm="column" layout-align="space-around">
+                    <md-input-container flex layout-sm="column">
+                        <label for="currentDesc">Working On...</label>
+                        <input name="desc" id="currentDesc" ng-model="tracksCtrl.current.desc" ng-change="tracksCtrl.checkDesc()" autofocus />
+                    </md-input-container>
+                    <md-datepicker flex class="track-date" ng-model="tracksCtrl.current.date" md-placeholder="Enter date"></md-datepicker>
+                    <div layout="row" flex>
+                        <md-input-container class="track-time" flex>
+                            <label>Start Time</label>
+                            <input type="tel" ng-model="tracksCtrl.current.startTime" ng-change="tracksCtrl.changeTime('start')" ng-blur="tracksCtrl.formatTime('startTime')">
+                        </md-input-container>
+                        <md-input-container class="track-time" flex>
+                            <label>End Time</label>
+                            <input type="tel" ng-model="tracksCtrl.current.endTime" ng-change="tracksCtrl.changeTime('end')" ng-blur="tracksCtrl.formatTime('endTime')">
+                        </md-input-container>
+                        <md-input-container class="track-time" flex>
+                            <label>Duration</label>
+                            <input type="tel" ng-model="tracksCtrl.current.duration" ng-change="tracksCtrl.changeTime('duration')" ng-blur="tracksCtrl.formatTime('duration')">
+                        </md-input-container>
                     </div>
-                    <div class="track-buttons">
-                        <span ng-show="!editableForm.$visible">
-                            <span ng-hide="confirm">
-                                <md-button class="md-raised md-primary" ng-hide="track.record" ng-click="tracksCtrl.recordTrack(track, true)">
-                                    <md-icon>timer</md-icon> Start Timer
-                                </md-button>
-                                <md-button class="md-raised md-accent" ng-show="track.record" ng-click="tracksCtrl.recordTrack(track, false)">
-                                    <md-icon>timer_off</md-icon> Stop Timer
-                                    <span>{{ track.difftime | durationsec }}</span>
-                                </md-button>
+                </div>
+                <div layout="row" layout-sm="column" layout-align="space-around">
+                    <md-input-container flex flex-gt-sm="25">
+                        <label>Project</label>
+                        <md-select ng-model="tracksCtrl.current.project" ng-model-options="{trackBy:'$value.$id'}" ng-change="tracksCtrl.projectSelected()">
+                            <md-option ng-value="project" ng-repeat="project in tracksCtrl.allProjects" value="{{project.name}}">
+                                {{project.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
 
-                                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.editTrack(track.project); editableForm.$show()">
-                                    <md-icon>mode_edit</md-icon>
-                                </md-button>
-                                <md-button class="md-icon-button" type="button" ng-click="confirm=true">
-                                    <md-icon>delete</md-icon>
-                                </md-button>
-                            </span>
-                            <span ng-show="confirm">
-                                <md-button class="md-icon-button md-primary" title="Are you sure? Yes, delete it!" ng-click="tracksCtrl.deleteTrack(track.$id)">
-                                    <md-icon>delete</md-icon>
-                                </md-button>
-                                <md-button class="md-icon-button" title="Are you sure? No, don't delete it!" ng-click="confirm=false">
-                                    <md-icon>highlight_off</md-icon>
-                                </md-button>
-                            </span>
-                        </span>
+                    <md-chips flex-gt-sm="70" ng-model="tracksCtrl.current.tags" readonly="tracksCtrl.readonly" md-autocomplete-snap
+                              md-transform-chip="tracksCtrl.transformChip($chip)"
+                              md-require-match="tracksCtrl.requireMatch"
+                              md-on-add="tracksCtrl.tagChanged()" md-on-remove="tracksCtrl.tagChanged()">
+                        <md-autocomplete
+                                md-selected-item="tracksCtrl.selectedTag"
+                                md-search-text="tracksCtrl.searchTextTag"
+                                md-items="tag in tracksCtrl.querySearchTag(tracksCtrl.searchTextTag)"
+                                md-item-text="tag"
+                                md-no-cache="true"
+                                placeholder="Add a Tag">
+                            <span md-highlight-text="tracksCtrl.searchTextTag">{{tag.name}} ({{tag.desc}})</span>
+                        </md-autocomplete>
+                        <md-chip-template>
+                            <span><em>{{$chip.name}}</em> ({{$chip.desc}})</span>
+                        </md-chip-template>
+                    </md-chips>
+                </md-card-content>
+            </div>
+            <md-card-actions>
+                <md-button class="md-raised md-primary" ng-hide="tracksCtrl.current.record || tracksCtrl.current.durationSet || tracksCtrl.editMode" ng-disabled="tracksCtrl.current.dataMissing" style="width:100%;" ng-click="tracksCtrl.startTimer()">
+                    <md-icon role="presentation" aria-hidden="true">timer</md-icon> Start Timer
+                </md-button>
+                <md-button class="md-raised md-accent" ng-hide="!tracksCtrl.current.record || tracksCtrl.editMode" ng-disabled="tracksCtrl.current.dataMissing" style="width:100%;" ng-click="tracksCtrl.stopTimer()">
+                    <md-icon role="presentation" aria-hidden="true">timer</md-icon> Stop Timer
+                    <span>{{ tracksCtrl.current.duration | durationsec }}</span>
+                </md-button>
+                <md-button class="md-raised md-accent" ng-disabled="tracksCtrl.current.dataMissing" style="width:100%;" ng-show="tracksCtrl.current.durationSet && !tracksCtrl.editMode && !tracksCtrl.current.record" ng-click="tracksCtrl.createTrackElement()">
+                    <md-icon role="presentation" aria-hidden="true">add</md-icon> Add Timer
+                </md-button>
+                <md-button class="md-raised md-accent" ng-disabled="tracksCtrl.current.dataMissing || !tracksCtrl.current.durationSet" style="width:100%;" ng-show="tracksCtrl.editMode" ng-click="tracksCtrl.updateTrack()">
+                    <md-icon role="presentation" aria-hidden="true">save</md-icon> Update Timer
+                </md-button>
+            </md-card-actions>
+        </form>
 
-                        <span ng-show="editableForm.$visible">
-                            <md-button class="md-icon-button md-primary" type="submit" ng-disabled="editableForm.$waiting">
-                                <md-icon>done</md-icon>
-                            </md-button>
-                            <md-button class="md-icon-button" type="button" ng-disabled="editableForm.$waiting" ng-click="tracksCtrl.cancelTrack(track); editableForm.$cancel()">
-                                <md-icon>highlight_off</md-icon>
-                            </md-button>
-                        </span>
-                    </div>
-                </form>
-            </li>
-        </ul>
-    </div>
-    <hr>
+    </md-card>
+
+    <md-list class="track-list">
+        <md-list-item class="track-list-item" ng-repeat="(key,track) in tracksCtrl.tracksArray | orderBy:'starttimestamp':true">
+            <div class="md-list-item-text" layout="column" flex="grow">
+                <h3 class="track-desc">{{track.desc}}</h3>
+                <p class="datetime">{{track.starttime | dateonly}} {{track.starttime | timeonly}} - {{track.endtime | timeonly}}</p>
+
+
+                <div layout="row">
+                    <md-chips class="track-projects-tags-chips" ng-show="track.project">
+                        <md-chip>{{track.project.name}}</md-chip>
+                    </md-chips>
+                    <md-chips flex class="track-projects-tags-chips" ng-model="track.tags" readonly="true">
+                        <md-chip-template>{{$chip.name}}</md-chip-template>
+                    </md-chips>
+                </div>
+            </div>
+            <div class="md-secondary">
+                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.restartTimer(track.$id);" title="Start new timer with same name, project, tags">
+                    <md-icon role="presentation" aria-hidden="true">timer</md-icon>
+                    <span class="md-visually-hidden">Start new timer with same name, project, tags</span>
+                </md-button>
+                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.editTrack(track.$id, $event);" title="Edit this track">
+                    <md-icon role="presentation" aria-hidden="true">mode_edit</md-icon>
+                    <span class="md-visually-hidden">Edit this track</span>
+                </md-button>
+                <md-button class="md-icon-button" type="button" ng-click="tracksCtrl.deleteTrack(track.$id);" title="Delete this track">
+                    <md-icon role="presentation" aria-hidden="true">delete</md-icon>
+                    <span class="md-visually-hidden">Delete this track</span>
+                </md-button>
+            </div>
+        </md-list-item>
+    </md-list>
 
     <div class="footer">
+        <md-divider></md-divider>
         <p>copyright protrack from protrack</p>
+
     </div>
-</div>
+</md-content>

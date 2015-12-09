@@ -62,30 +62,6 @@
                         'pageName' : [function(){return 'Timer'}],
                         'authData': ['Auth', function(Auth) {
                             return Auth.$requireAuth();
-                        }]
-                    }
-                })
-                .state('timer2', {
-                    url: '/timer2',
-                    views : {
-                        'nav' : {
-                            templateUrl: 'partials/home.nav.html',
-                            controller: 'HomeNavCtrl as homeNavCtrl'
-                        },
-                        'toolbar' : {
-                            templateUrl: 'partials/toolbar.html',
-                            controller: 'ToolbarCtrl as toolbarCtrl'
-                        },
-                        'content' : {
-                            templateUrl: 'partials/tracks2.html',
-                            controller: 'TracksCtrl as tracksCtrl'
-                        }
-                    },
-
-                    resolve: {
-                        'pageName' : [function(){return 'Timer'}],
-                        'authData': ['Auth', function(Auth) {
-                            return Auth.$requireAuth();
                         }],
                         'allTracks' : ['dataService', 'authData', function(dataService, authData) {
                             var path = 'users/' + authData.uid + '/';
