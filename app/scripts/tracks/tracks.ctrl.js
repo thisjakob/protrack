@@ -93,7 +93,7 @@
                 var tags = [], tagNames = [];
                 angular.forEach(track.tags, function(tagId){
                     var tagObj = $filter('filter')(tracksCtrl.allTags, {$id:tagId}, true)[0];
-                    if ( typeof tagObj !== undefined ) {
+                    if ( tagObj !== undefined ) {
                         tagNames.push(tagObj.name);
                         tags.push(tagObj);
                     }
