@@ -37,7 +37,12 @@
   display: flex;
 }
 
-.track-desc,
+.track-desc{
+  font-size: 1.75rem;
+  margin-right: 15rem;
+  margin-top: 0;
+}
+
 .track-projects-tags {
   margin-right: 15rem;
 }
@@ -91,4 +96,9 @@
 .track-date {
   min-width: 250px;
   margin: 9px 0px;
+}
+
+md-list md-list-item .md-secondary {
+  top: auto;
+  padding-top: 30px;
 }
