@@ -3,7 +3,7 @@
     // TODO Filter for Project und Tag
     // TODO search Description
     angular.module('protrack')
-        .controller('ReportsCtrl', ['dataService', 'authData', 'showData', 'reportUtilities', function (dataService, authData, showData, reportUtilities) {
+        .controller('ReportsCtrl', ['dataService', 'authData', '$filter', 'showData', 'reportUtilities', function (dataService, authData, $filter, showData, reportUtilities) {
             var reportsCtrl = this;
             var path = 'users/' + authData.uid + '/';
 
@@ -26,19 +26,35 @@
                 }
             });
 
-            reportsCtrl.showProjectName = function (project) {
-                return showData.showDataName(reportsCtrl.projectsArray, project);
+            // add additional data to all tracks objects as soon as they are loaded
+            reportsCtrl.tagsArray.$loaded().then(function(){
+                reportsCtrl.tracksArray.$loaded().then(function(tracks){
+                    angular.forEach(tracks, function(track){
+                        expandTrack(track);
+                    });
+                });
+            });
+
+
+            /**
+             * Expand each object in the tracks array by
+             * resolving the project and all tags within.
+             * Also sort the array initially
+             */
+            var expandTrack = function(track){
+                // resolve tag name for tag id
+                var tags = [], tagNames = [];
+                angular.forEach(track.tags, function(tagId){
+                    var tagObj = $filter('filter')(reportsCtrl.tagsArray, {$id:tagId}, true)[0];
+                    tagNames.push(tagObj.name);
+                    tags.push(tagObj);
+                });
+                track.tags = tags;
+                track.tagNames = tagNames;
             };
 
-            reportsCtrl.showTagsName = function (tags) {
-                var selected = [];
-                angular.forEach(tags, function (tag) {
-                    var name = showData.showDataName(reportsCtrl.tagsArray, tag);
-                    if (name !== undefined) {
-                        selected.push(name);
-                    }
-                });
-                return selected.length ? selected.sort().join(', ') : 'No tag';
+            reportsCtrl.showProjectName = function (project) {
+                return showData.showDataName(reportsCtrl.projectsArray, project);
             };
 
             reportsCtrl.saveDate = function () {

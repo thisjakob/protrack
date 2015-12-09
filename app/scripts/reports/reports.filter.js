@@ -19,5 +19,16 @@
                     return '';
                 }
             };
+        })
+
+        .filter('dateonly', function () {
+            return function (item) {
+                var date = moment(item, 'DD.MM.YYYY HH:mm:ss');
+                if ( date.isValid() ) {
+                    return date.format('DD.MM.YYYY');
+                } else {
+                    return 'Date is not valid';
+                }
+            };
         });
 })();

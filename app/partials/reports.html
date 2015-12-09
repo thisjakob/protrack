@@ -28,37 +28,36 @@
     </div>
 
     <ul class="reportlist">
-        <li class="reportlistelement">
-            <div class="reportelement">
-                <div class="report-desc headerelement">Description</div>
-                <div class="report-project headerelement">Project</div>
-                <div class="report-tag headerelement">Tag</div>
-                <div class="report-date headerelement">Date</div>
-                <div class="report-time headerelement">Time</div>
-                <div class="report-duration headerelement">Duration</div>
+        <li layout="row" class="header">
+            <div class="report-desc" flex="grow">Description</div>
+            <div class="report-project-tags" flex="80">Project & Tags</div>
+            <div class="report-date-time-duration" flex="40">
+                <span>Date</span>
+                <span>Time and Duration</span>
             </div>
         </li>
-        <li ng-repeat="(key,track) in $parent.filteredTracks = (reportsCtrl.tracksArray | daterange:reportsCtrl.dateFrom:reportsCtrl.dateTo  | orderBy:starttime:true)"
+        <li layout="row" ng-repeat="(key,track) in $parent.filteredTracks = (reportsCtrl.tracksArray | daterange:reportsCtrl.dateFrom:reportsCtrl.dateTo  | orderBy:starttime:true)"
             class="reportlistelement">
-            <div class="reportelement">
-                <div class="report-desc">
-                    <span id="reportDesc{{key}}">{{track.desc || 'empty'}}</span>
-                </div>
-                <div class="report-project">
-                    <span class="report-project label label-primary">{{ reportsCtrl.showProjectName(track.project) }}</span>
-                </div>
-                <div class="report-tag">
-                    <span class="report-tag label label-default"> {{ reportsCtrl.showTagsName(track.tags) }}</span>
-                </div>
-
+            <div class="report-desc" flex="grow">
+                <span id="reportDesc{{key}}">{{track.desc || 'empty'}}</span>
+            </div>
+            <div layout="row" class="report-project-tags" flex="80">
+                <md-chips class="report-projects-tags-chips" ng-model="track.tagNames" readonly="true">
+                    <md-chip>{{ reportsCtrl.showProjectName(track.project) }}</md-chip>
+                </md-chips>
+            </div>
+            <div layout="column" flex="40">
                 <div class="report-date">
-                    <span> {{ track.starttime | weekday }} {{ track.starttime | limitTo : 10 }}</span>
+                    <span class="date-weekday" hide-sm>{{ track.starttime | weekday }}</span>
+                    <span class="date-only">{{ track.starttime | dateonly }}</span>
                 </div>
-                <div class="report-time">
-                    <span> {{ track.starttime | datetimenosecond | limitTo : 5 : 11 }} - {{ track.endtime | datetimenosecond | limitTo : 5 : 11 }}</span>
-                </div>
-                <div class="report-duration" ng-style="{'color':(track.record?'red':'black')}">
-                    <span> {{ track.difftime | durationmin }}</span>
+                <div layout="row" layout-sm="column" class="report-time-duration">
+                    <div class="report-time">
+                        {{ track.starttime | datetimenosecond | limitTo : 5 : 11 }} - {{ track.endtime | datetimenosecond | limitTo : 5 : 11 }}
+                    </div>
+                    <div class="report-duration" ng-style="{'color':(track.record?'red':'black')}">
+                        {{ track.difftime | durationmin }}
+                    </div>
                 </div>
             </div>
         </li>
