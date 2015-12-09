@@ -8,26 +8,19 @@
   border-bottom: 1px solid #b3b3b3; }
 
 .project-form {
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-direction: row;
   flex-direction: row;
-  -webkit-flex-wrap: nowrap;
   flex-wrap: nowrap; }
 
 .project-inputs {
-  -webkit-flex: 1 1 auto;
   flex: 1 1 auto; }
 
 .project-buttons {
-  -webkit-flex: 0 1 auto;
   flex: 0 1 auto; }
 
 @media all and (max-width: 768px) {
   .project-form {
-    -webkit-flex-direction: column;
     flex-direction: column; } }
-
 /* $screen-xs */
 .projectlistelement label {
   display: block;
@@ -37,7 +30,6 @@
 
 .project-name,
 .project-tag {
-  -webkit-flex-grow: 1;
   flex-grow: 1; }
 
 .buttons {

@@ -11,22 +11,17 @@
   background-color: #FFFDE7; }
 
 .track-inputs {
-  -webkit-flex: 1 1 auto;
   flex: 1 1 auto; }
 
 .track-buttons {
-  -webkit-flex: 0 1 auto;
   flex: 0 1 auto; }
 
 @media all and (max-width: 768px) {
   .track-form {
-    -webkit-flex-direction: column;
     flex-direction: column; } }
-
 /* $screen-xs */
 .track-desc-project-tag,
 .track-date-time-duration {
-  display: -webkit-flex;
   display: flex; }
 
 .track-desc {
@@ -39,7 +34,6 @@
 
 .track-project,
 .track-tag {
-  -webkit-flex-grow: 1;
   flex-grow: 1; }
 
 .track-starttime,
@@ -48,7 +42,6 @@
   margin-right: 2rem; }
 
 .track-button-area {
-  -webkit-align-items: flex-end;
   align-items: flex-end; }
 
 .current-timer {
