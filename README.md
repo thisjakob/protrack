@@ -1,6 +1,5 @@
 # protrack
-record working time
-Try it out online: https://protrack.firebaseapp.com
+Record working time. Try it out online: https://protrack.firebaseapp.com
 
 # install protrack
 - npm install
