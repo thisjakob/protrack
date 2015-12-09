@@ -4,36 +4,53 @@
   margin: 0; }
 
 .track-list-item {
-  padding: 20px;
+  padding: 10px;
   border-bottom: 1px solid #b3b3b3; }
 
 .track-list-item:hover {
   background-color: #FFFDE7; }
 
 .track-inputs {
+  -webkit-flex: 1 1 auto;
   flex: 1 1 auto; }
 
 .track-buttons {
+  -webkit-flex: 0 1 auto;
   flex: 0 1 auto; }
 
 @media all and (max-width: 768px) {
   .track-form {
+    -webkit-flex-direction: column;
     flex-direction: column; } }
+
 /* $screen-xs */
 .track-desc-project-tag,
 .track-date-time-duration {
+  display: -webkit-flex;
   display: flex; }
 
 .track-desc {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   margin-right: 8rem;
-  margin-top: 0; }
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 1.2;
+  overflow-x: hidden; }
+
+.track-desc span {
+  padding-right: 5px; }
+
+.track-desc .datetime {
+  color: inherit;
+  font-size: 1rem;
+  white-space: nowrap; }
 
 .track-projects-tags {
   margin-right: 8rem; }
 
 .track-project,
 .track-tag {
+  -webkit-flex-grow: 1;
   flex-grow: 1; }
 
 .track-starttime,
@@ -42,6 +59,7 @@
   margin-right: 2rem; }
 
 .track-button-area {
+  -webkit-align-items: flex-end;
   align-items: flex-end; }
 
 .current-timer {
@@ -75,4 +93,4 @@
 
 md-list md-list-item .md-secondary {
   top: auto;
-  padding-top: 30px; }
+  margin-top: 10px; }

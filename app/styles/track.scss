@@ -7,7 +7,7 @@
 }
 
 .track-list-item {
-  padding:20px;
+  padding:10px;
   border-bottom: 1px solid #b3b3b3;
 }
 
@@ -38,9 +38,22 @@
 }
 
 .track-desc{
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   margin-right: 8rem;
   margin-top: 0;
+  margin-bottom: 0;
+  line-height: 1.2;
+  overflow-x: hidden;
+}
+
+.track-desc span {
+  padding-right: 5px;
+}
+
+.track-desc .datetime {
+  color: inherit;
+  font-size: 1rem;
+  white-space: nowrap;
 }
 
 .track-projects-tags {
@@ -100,5 +113,5 @@
 
 md-list md-list-item .md-secondary {
   top: auto;
-  padding-top: 30px;
+  margin-top: 10px
 }
