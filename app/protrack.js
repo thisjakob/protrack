@@ -15,7 +15,7 @@
             });
         }])
 
-        .config(function ($stateProvider, $urlRouterProvider) {
+        .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             $urlRouterProvider.otherwise('/');
             $stateProvider
                 .state('home', {
@@ -173,7 +173,11 @@
                         }]
                     }
                 });
+
+            // use the HTML5 History API
+            $locationProvider.html5Mode(true);
         })
+
         .config(function($mdDateLocaleProvider) {
             $mdDateLocaleProvider.firstDayOfWeek = 1;
         });
