@@ -1,6 +1,10 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
 
 @import '../bower_components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
+/* set the ideal viewport width for IE */
+@-ms-viewport {
+  width: device-width;
+}
 
 .browsehappy {
   margin: 0.2em 0;
