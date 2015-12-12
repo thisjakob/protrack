@@ -1,0 +1,12 @@
+/* some functions for pixel to rem conversion */
+@function toPx($val) {
+  @return ($val + 0px);
+}
+
+@function toRem($val) {
+  @return ($val + 0rem);
+}
+
+@function pxToRem($px, $ref: 16) {
+  @return toRem( toPx($px) / toPx($ref) );
+}

@@ -1,4 +1,4 @@
-@import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss";
+@import 'functions.scss';
 
 .reportnavigation {
   display: flex;
@@ -26,12 +26,12 @@
 }
 
 .reportlistelement {
-  padding:20px;
+  padding:pxToRem(20);
   border-bottom: 1px solid #b3b3b3;
 }
 
 .header {
-  padding: 10px 20px;
+  padding: pxToRem(10) pxToRem(20);
   border-bottom: 1px solid #b3b3b3;
 }
 

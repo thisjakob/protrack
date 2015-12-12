@@ -1,5 +1,7 @@
 @import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss";
 
+@import 'functions.scss';
+
 .projectlist {
   list-style-type: none;
   padding: 0;
@@ -7,7 +9,7 @@
 }
 
 .projectlistelement {
-  padding:20px;
+  padding:pxToRem(20);
   border-bottom: 1px solid #b3b3b3;
 }
 
