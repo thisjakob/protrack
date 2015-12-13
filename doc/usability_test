@@ -1,0 +1,89 @@
+# Schritt 1.0: Usability Probleme
+
+1. Keine Bestätigung beim Löschen eines Tracks und auch kein Undo
+2. Restart eines Timers nicht unbedingt selbstsprechend
+
+# Schritt 1.1: Cognitive Walkthrough für beide Issues
+
+
+## Löschen eines Eintrags
+ 
+### Aufgaben Ziel
+Löschen eines vorhandenen Eintrags
+
+### Ablauf
+1. Registrieren und einloggen
+2. Wechseln zur Timer-Seite
+3. Mehrere Tracks erstellen
+4. Den zweiten der erstellten Tracks wieder löschen
+5. Gelöschten Eintrag wieder herstellen
+
+### Begründung
+Fehlende Undo-Funktion
+
+### Effekt auf den Nutzer
+Er wird erschtaunt sein. Einzige Lösung ist den Eintrag manuell wieder einzutragen.
+
+
+
+## Restart eines bestehenden Tracks
+
+### Aufgaben Ziel
+Der User soll einen Timer mit denselben Eigenschaften eines bestehenden Tracks neu starten.
+
+### Ablauf
+1. Registrieren und einloggen
+2. Wechseln zur Timer-Seite
+3. Mehrere Tracks erstellen
+4. Einen bereits bestehen Track erneut starten, damit der Tracknamen nicht erneut eingetragen werden muss
+5. Den gestarteten Timer stoppen
+
+### Begründung
+Icon ist vielleicht nicht selbstsprechend
+
+### Effekt auf den Nutzer
+Falls er/sie die Funktion nicht versteht, gibt er/sie die Daten einfach erneut ein.
+
+
+# Schritt 1.2 Aufgabenstellung für Restart Timer
+1. Du startes auf der Timer-Seite
+2. Gestern hast Du für Project 1 von 08:00 - 10:00 eine Präsentation erstellt. Den restlichen Tag bis 17:00 hast Du an der Scope Definition von Project 2 gearbeitet.
+4. Trage die Arbeitszeit von gestern ein.
+3. Heute arbeitest Du an der Präsentation für Prokect 1 weiter und möchtest diese Zeit recorden statt nachträglich eintragen.
+4. Looos.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
