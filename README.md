@@ -4,8 +4,9 @@ Record working time. Try it out online: https://protrack.firebaseapp.com
 ## tutorial
 - first register and login
 - define tags and projects
-- add timer, write description in "Working on...", choose project and tags, start timer or write start and end time
-- restart timer with timer icon
+- add timer, write description in "Working on...", choose project and tags
+- start timer or add timer with writing start and end time or duration 
+- restart corresponding timer with timer icon
 
 # developer part
 
