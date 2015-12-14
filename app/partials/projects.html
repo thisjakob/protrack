@@ -98,15 +98,14 @@
                                         <div class="project-name formgroup">
                                             <label for="tagsName{{key}}"
                                                    ng-show="editableForm.$visible">Tag</label>
-                                            <span e-id="tagsName{{key}}" editable-text="tag.name"
+                                            <span class="project-tag label label-default" e-id="tagsName{{key}}" editable-text="tag.name"
                                                   e-name="name"
                                                   e-class="form-control">{{tag.name || 'no name'}}</span>
                                         </div>
                                         <div class="project-tag formgroup">
                                             <label for="tagsName{{key}}"
                                                    ng-show="editableForm.$visible">Description</label>
-                                            <span class="project-tag label label-default"
-                                                  editable-text="tag.desc" e-name="desc"
+                                            <span editable-text="tag.desc" e-name="desc"
                                                   e-class="form-control editable-input"
                                                   e-id="tagDesc{{key}}" e-required>
                                                 {{ tag.desc || 'no description' }}</span>
