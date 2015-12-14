@@ -3,13 +3,13 @@
         <div class="reportnavelement">
             <md-content>
                 <md-datepicker ng-model="reportsCtrl.dateFrom" md-placeholder="Enter start date"
-                               ng-change="reportsCtrl.saveDate()"></md-datepicker>
+                               ng-change="reportsCtrl.saveDate()" md-max-date="reportsCtrl.dateTo"></md-datepicker>
             </md-content>
         </div>
         <div class="reportnavelement">
             <md-content>
                 <md-datepicker ng-model="reportsCtrl.dateTo" md-placeholder="Enter end date"
-                               ng-change="reportsCtrl.saveDate()"></md-datepicker>
+                               ng-change="reportsCtrl.saveDate()" md-min-date="reportsCtrl.dateFrom"></md-datepicker>
             </md-content>
         </div>
         <!-- TODO Options Project

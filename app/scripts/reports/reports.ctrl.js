@@ -3,38 +3,44 @@
     // TODO Filter for Project und Tag
     // TODO search Description
     angular.module('protrack')
-        .controller('ReportsCtrl', ['dataService', 'authData', '$filter', 'showData', 'reportUtilities', function (dataService, authData, $filter, showData, reportUtilities) {
+        .controller('ReportsCtrl', ['dataService', 'authData', '$filter', 'showData', 'reportUtilities', 'toastr', function (dataService, authData, $filter, showData, reportUtilities, toastr) {
             var reportsCtrl = this;
             var path = 'users/' + authData.uid + '/';
 
-            reportsCtrl.tagsArray = dataService.getData(path + 'tags', true);
-            reportsCtrl.tracksArray = dataService.getData(path + 'tracks', true);
-            reportsCtrl.projectsArray = dataService.getData(path + 'projects', true);
+            /**
+             * do some stuff when the view is loaded
+             */
+            reportsCtrl.init = function() {
+                reportsCtrl.tagsArray = dataService.getData(path + 'tags', true);
+                reportsCtrl.tracksArray = dataService.getData(path + 'tracks', true);
+                reportsCtrl.projectsArray = dataService.getData(path + 'projects', true);
 
-            // read data range
-            reportsCtrl.dateFrom = new Date();
-            reportsCtrl.dateTo = new Date();
-            dataService.getValue(path + 'settings/daterange/', function (snapshot) {
-                var range = snapshot.val();
-                if (range !== null) {
-                    if (range.from !== undefined) {
-                        reportsCtrl.dateFrom = new Date(range.from);
+                // read data range
+                reportsCtrl.dateFrom = new Date();
+                reportsCtrl.dateTo = new Date();
+                dataService.getValue(path + 'settings/daterange/', function (snapshot) {
+                    var range = snapshot.val();
+                    if (range !== null) {
+                        if (range.from !== undefined) {
+                            reportsCtrl.dateFrom = new Date(range.from);
+                        }
+                        if (range.to !== undefined) {
+                            reportsCtrl.dateTo = new Date(range.to);
+                        }
                     }
-                    if (range.to !== undefined) {
-                        reportsCtrl.dateTo = new Date(range.to);
-                    }
-                }
-            });
+                });
 
-            // add additional data to all tracks objects as soon as they are loaded
-            reportsCtrl.tagsArray.$loaded().then(function(){
-                reportsCtrl.tracksArray.$loaded().then(function(tracks){
-                    angular.forEach(tracks, function(track){
-                        track.starttimestamp = moment(track.starttime, 'DD.MM.YYYY HH:mm:ss').format('X');
-                        expandTrack(track);
+                // add additional data to all tracks objects as soon as they are loaded
+                reportsCtrl.tagsArray.$loaded().then(function(){
+                    reportsCtrl.tracksArray.$loaded().then(function(tracks){
+                        angular.forEach(tracks, function(track){
+                            track.starttimestamp = moment(track.starttime, 'DD.MM.YYYY HH:mm:ss').format('X');
+                            expandTrack(track);
+                        });
                     });
                 });
-            });
+            };
+
 
 
             /**
@@ -47,8 +53,12 @@
                 var tags = [], tagNames = [];
                 angular.forEach(track.tags, function(tagId){
                     var tagObj = $filter('filter')(reportsCtrl.tagsArray, {$id:tagId}, true)[0];
-                    tagNames.push(tagObj.name);
-                    tags.push(tagObj);
+                    if (tagObj !== undefined) {
+                        tagNames.push(tagObj.name);
+                        tags.push(tagObj);
+                    } else {
+                        console.log("Tag id " + tagId + " not defined!");
+                    }
                 });
                 track.tags = tags;
                 track.tagNames = tagNames;
@@ -67,6 +77,9 @@
                 }
                 date = reportsCtrl.dateTo.toString();
                 dataService.setData(path + 'settings/daterange/to', date);
+                if (reportsCtrl.dateFrom > reportsCtrl.dateTo) {
+                    toastr.warning("End date (" + onlyDate(reportsCtrl.dateTo) + ") is before start date (" + onlyDate(reportsCtrl.dateFrom) + ")!");
+                }
             };
 
             /**
@@ -111,5 +124,16 @@
                 var to = reportsCtrl.dateTo.getFullYear().toString() + '_'+ reportsCtrl.dateTo.getMonth() + '_'+ reportsCtrl.dateTo.getDate();
                 return 'protrack-' + from + '-' + to + '.csv';
             };
+
+            /**
+             * show only date string of a Date object
+             * @param date      Date object
+             * @returns {string}
+             */
+            var onlyDate = function (date) {
+                return date.getDate() + "." + date.getMonth() + "." + date.getFullYear();
+            };
+
+            reportsCtrl.init();
         }]);
 })();
