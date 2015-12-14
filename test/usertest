@@ -1,0 +1,26 @@
+# Usertest
+
+## Befunde:
+1. Register: es fehlt die Successmeldung.
+2. Login: funktioniert gut sogar über Return Taste
+3. Timer: Text eingegeben, Timer gestartet, unklar was mit Projekt gemacht wird (Keine Projekte definiert, deshalb Auswahl leer).
+4. Timer: Timer gestoppt und einen neuen Timer definiert (Start- und Endzeit). Gut.
+5. Timer: Über Timericon ersten Timer erneut gestartet.
+6. Reports: Zeigt Timer des aktuellen Tages an. Es fehlt eine komprimierte Aufstellung der Projekte.
+7. Timer: Timer editieren, User wundert sich über rote Farbe des Actionsbuttons "Update, Start und Stop Timer" und besonders über blaue Farbe, wenn ein neuer Task erzeugt wird. Interpretation: grün bzw. zum starten, rot um zu stoppen. Icon farbe stimmt nicht überein, müsste blau sein!
+8. Timer Eintrag: Statt Icon Timer wäre besser Start-/Stopicon analog Musikplayer.
+9. Timer Eintrag: Nach delete Funktion fehlt Undo-Funktion.
+10. Timer Eintrag: Während Timer läuft darf nicht editiert werden (Icon nicht auswählbar machen), Zeiten sollten nicht geändert werden können.
+11. Timer: Ungültige Dauer wird nicht abgefangen: 0:01:67 -> invalid date
+12. Configuration: Nicht klar, dass Tag zuerst definiert werden muss!
+13. Logout: ok
+14. Allgemein: cooles Tool, Gutes Design, Farben überarbeiten, Auswahl für Timer pro Projekt/Task fehlt (Shortcut)
+
+## Massnahmen:
+- Successmeldung nach Register
+- Anleitung schreiben
+- Report mit komprimierter Aufstellung
+- Farben des Actionsbutton und der Icon überarbeiten
+- Undo-Funktion ergänzen
+- Bedienung zustandsabhängig sperren (während Timer läuft kein editieren)
+- Eingabeprüfung
