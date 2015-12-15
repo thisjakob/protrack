@@ -19,9 +19,12 @@
 
             if ( start.isValid() && end.isValid() ) {
                 s = end.diff(start, 'seconds', true);
-                h = parseInt(s/3600);
-                m = parseInt( (s-h*3600)/60 );
-                s = Math.round( (s-h*3600-m*60) % 60 );
+                h = parseInt(s/3600).toString();
+                h = (h.length == 1) ? '0' + h : h;
+                m = parseInt( (s-h*3600)/60).toString();
+                m = (m.length == 1) ? '0' + m : m;
+                s = Math.round( (s-h*3600-m*60) % 60).toString();
+                s = (s.length == 1) ? '0' + s : s;
 
                 duration = h + ':' + m + ':' + s;
             }

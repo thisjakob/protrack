@@ -20,7 +20,7 @@
 - Successmeldung nach Register
 - Anleitung schreiben
 - Report mit komprimierter Aufstellung
-- Farben des Actionsbutton und der Icon überarbeiten
+- Farben des Actionbutton und der Icon überarbeiten
 - Undo-Funktion ergänzen
 - Bedienung zustandsabhängig sperren (während Timer läuft kein editieren)
 - Eingabeprüfung
