@@ -46,6 +46,9 @@
   box-shadow: none;
   font-size: 0.8rem; }
 
+.report-projects-tags-chips .md-chip {
+  white-space: nowrap; }
+
 .header .report-date-time-duration {
   text-align: right; }
 

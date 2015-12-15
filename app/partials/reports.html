@@ -41,10 +41,11 @@
             <div class="report-desc" flex="grow">
                 <span id="reportDesc{{key}}">{{track.desc || 'empty'}}</span>
             </div>
-            <div layout="row" class="report-project-tags" flex="80">
-                <md-chips class="report-projects-tags-chips" ng-model="track.tagNames" readonly="true">
+            <div layout="row" layout-sm="column" class="report-project-tags" flex="80" ng-show="reportsCtrl.showProjectName(track.project) != 'No item'">
+                <md-chips class="report-projects-tags-chips">
                     <md-chip>{{ reportsCtrl.showProjectName(track.project) }}</md-chip>
                 </md-chips>
+                <md-chips class="report-projects-tags-chips" ng-model="track.tagNames" readonly="true"></md-chips>
             </div>
             <div layout="column" flex="40">
                 <div class="report-date">
