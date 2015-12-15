@@ -50,6 +50,7 @@
                             <span><em>{{$chip.name}}</em> ({{$chip.desc}})</span>
                         </md-chip-template>
                     </md-chips>
+                    </div>
                 </md-card-content>
             </div>
             <md-card-actions>
@@ -86,7 +87,7 @@
                 </div>
             </div>
             <div class="md-secondary">
-                <md-button class="md-icon-button md-accent" type="button" ng-click="tracksCtrl.restartTimer(track.$id);" title="Start new timer with same name, project, tags">
+                <md-button class="md-icon-button md-primary" type="button" ng-click="tracksCtrl.restartTimer(track.$id);" title="Start new timer with same name, project, tags">
                     <md-icon role="presentation" aria-hidden="true">timer</md-icon>
                     <span class="md-visually-hidden">Start new timer with same name, project, tags</span>
                 </md-button>
