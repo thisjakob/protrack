@@ -1,13 +1,11 @@
 <md-content layout-padding layout="column">
-    <div class="reportnavigation">
-        <div class="reportnavelement">
-            <md-content>
+    <div class="reportnavigation" layout="row">
+        <div layout="row" layout-sm="column">
+            <md-content class="datepicker startdate">
                 <md-datepicker ng-model="reportsCtrl.dateFrom" md-placeholder="Enter start date"
                                ng-change="reportsCtrl.saveDate()" md-max-date="reportsCtrl.dateTo"></md-datepicker>
             </md-content>
-        </div>
-        <div class="reportnavelement">
-            <md-content>
+            <md-content class="datepicker enddate">
                 <md-datepicker ng-model="reportsCtrl.dateTo" md-placeholder="Enter end date"
                                ng-change="reportsCtrl.saveDate()" md-min-date="reportsCtrl.dateFrom"></md-datepicker>
             </md-content>
@@ -16,10 +14,10 @@
         <div class="reportnavelement>Project</div-->
         <!-- TODO Options Tag
         <div class="reportnavelement>Tag</div-->
-        <div class="reportnavelement summary">
+        <div class="reportnavelement summary" flex>
             Total Duration: {{ reportsCtrl.sumDur(filteredTracks) }} h
         </div>
-        <div class="reportnavelement">
+        <div class="reportnavelement" flex>
             <md-button class="md-raised md-accent" ng-csv="reportsCtrl.writeCsv(filteredTracks)" filename="{{ reportsCtrl.getFilename() }}" csv-header="['Description', 'Project', 'Tags', 'Starttime', 'Endtime', 'Duration']">
                 <md-icon class="material-icons">save</md-icon>
                 Export csv

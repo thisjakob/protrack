@@ -8,14 +8,12 @@
   flex-wrap: nowrap;
   width: 100%; }
 
-.reportnavelement {
-  -webkit-flex: 1;
-  flex: 1;
-  -webkit-align-self: flex-end;
-  align-self: flex-end; }
+.datepicker {
+  min-width: 9.375rem; }
 
 .summary {
-  height: 2.5em; }
+  padding-top: 0.875rem;
+  padding-left: 1.25rem; }
 
 .reportlist {
   list-style-type: none;

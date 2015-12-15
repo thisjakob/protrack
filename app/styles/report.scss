@@ -7,16 +7,13 @@
   width: 100%;
 }
 
-.datepickerreport {
-}
-
-.reportnavelement {
-  flex: 1;
-  align-self: flex-end;
+.datepicker {
+  min-width: pxToRem(150);
 }
 
 .summary {
-  height: 2.5em;
+  padding-top: pxToRem(14);
+  padding-left: pxToRem(20);
 }
 
 .reportlist {
