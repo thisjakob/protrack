@@ -1,8 +1,8 @@
-# Usertest
+# Usertest: Martin Linggi, 14.12.2015
 
 ## Befunde:
 1. Register: es fehlt die Successmeldung.
-2. Login: funktioniert gut sogar über Return Taste
+2. Login: funktioniert gut, sogar über Return Taste
 3. Timer: Text eingegeben, Timer gestartet, unklar was mit Projekt gemacht wird (Keine Projekte definiert, deshalb Auswahl leer).
 4. Timer: Timer gestoppt und einen neuen Timer definiert (Start- und Endzeit). Gut.
 5. Timer: Über Timericon ersten Timer erneut gestartet.
