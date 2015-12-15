@@ -10,17 +10,16 @@
 7. Timer: Timer editieren, User wundert sich über rote Farbe des Actionsbuttons "Update, Start und Stop Timer" und besonders über blaue Farbe, wenn ein neuer Task erzeugt wird. Interpretation: grün bzw. zum starten, rot um zu stoppen. Icon farbe stimmt nicht überein, müsste blau sein!
 8. Timer Eintrag: Statt Icon Timer wäre besser Start-/Stopicon analog Musikplayer.
 9. Timer Eintrag: Nach delete Funktion fehlt Undo-Funktion.
-10. Timer Eintrag: Während Timer läuft darf nicht editiert werden (Icon nicht auswählbar machen), Zeiten sollten nicht geändert werden können.
+10. Timer Eintrag: Während Timer läuft, kann beliebiger Timer editiert werden, Zeiten sollten im laufenden Timer nicht geändert werden können.
 11. Timer: Ungültige Dauer wird nicht abgefangen: 0:01:67 -> invalid date
 12. Configuration: Nicht klar, dass Tag zuerst definiert werden muss!
 13. Logout: ok
 14. Allgemein: cooles Tool, Gutes Design, Farben überarbeiten, Auswahl für Timer pro Projekt/Task fehlt (Shortcut)
 
 ## Massnahmen:
-- Successmeldung nach Register
-- Anleitung schreiben
-- Report mit komprimierter Aufstellung
-- Farben des Actionbutton und der Icon überarbeiten
-- Undo-Funktion ergänzen
-- Bedienung zustandsabhängig sperren (während Timer läuft kein editieren)
-- Eingabeprüfung
+1. -> Successmeldung nach Register
+3. -> Anleitung schreiben
+6. -> Report mit komprimierter Aufstellung
+7. -> Farben des Actionbutton und der Icon überarbeiten
+9. -> Undo-Funktion ergänzen
+11. -> Eingabeprüfung
