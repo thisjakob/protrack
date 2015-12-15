@@ -11,7 +11,11 @@ describe('service calc time', function () {
     it('difference of times', inject(function () {
         var from = "10:15:00";
         var to = "11:00:00";
-        expect(sampleCalcTime.diffTimeHours(from, to)).toEqual('0:45');
+        expect(sampleCalcTime.diffTimeHours(from, to)).toEqual('00:45');
+
+        var from = "10:58:00";
+        var to = "11:00:00";
+        expect(sampleCalcTime.diffTimeHours(from, to)).toEqual('00:02');
 
         from = "01:01:00";
         to = "23:00:00";
