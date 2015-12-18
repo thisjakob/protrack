@@ -30,6 +30,7 @@
 
 .track-desc{
   font-size: 1.5rem;
+  font-weight: 400;
   margin-right: 8rem;
   margin-top: 0;
   margin-bottom: 0;
@@ -42,8 +43,9 @@
 }
 
 .track-desc .datetime {
+  font-size: 0.8rem;
+  font-weight: 200;
   color: inherit;
-  font-size: 1rem;
   white-space: nowrap;
 }
 
@@ -99,7 +101,7 @@
 
 .track-date {
   min-width: pxToRem(250);
-  margin: pxToRem(9) 0;
+  margin: pxToRem(11) 0;
 }
 
 md-list md-list-item .md-secondary {
