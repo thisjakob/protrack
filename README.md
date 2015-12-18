@@ -38,3 +38,6 @@ Record working time. Try it out online: https://protrack.firebaseapp.com
 ## dev tools
 vulcan: firebase inspector and editor for chrome devtools
 
+## Known Issues
+- The editing experience in the configuration area is not the same as it is in the tracks area. => this needs to be aligned.
+
