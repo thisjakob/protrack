@@ -9,6 +9,11 @@
             authCtrl.message = null;
             authCtrl.auth = Auth;
 
+            // redirect to tracks if already logged in
+            if ( authCtrl.auth.$getAuth() ) {
+                $state.go('timer');
+            }
+
             // any time auth status updates, add the user data to scope
             authCtrl.auth.$onAuth(function (authData) {
                 if (authData) {
