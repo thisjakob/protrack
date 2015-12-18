@@ -5,27 +5,40 @@
     angular.module('protrack').factory('dataService', ['$firebaseArray', '$firebaseObject', 'FBURL', function ($firebaseArray, $firebaseObject, FBURL) {
         var firebaseRef = new Firebase(FBURL);
 
+        /**
+         * get Url of firebase DB
+         * @returns {FBURL|String}
+         */
         var getUrl = function () {
             return FBURL;
         };
 
+        /**
+         * get firebase DB
+         * @returns {Firebase}
+         */
         var getFirebaseRoot = function () {
             return firebaseRef;
         };
 
+        /**
+         * get nodes of firebase DB
+         * @param path
+         * @returns {*}
+         */
         var getNodes = function (path) {
             return getFirebaseRoot().child(path);
         };
 
         /**
-         * TODO
+         * get data of path in firebase DB
          * @param path
-         * @param array boolean true = array
-         * @returns {*}
+         * @param isArray boolean [true = array; false = object]
+         * @returns firebase array or object
          */
-        var getData = function (path, array) {
+        var getData = function (path, isArray) {
             var ref = getNodes(path);
-            if (array) {
+            if (isArray) {
                 console.log('dataService get data as array from ' + path);
                 return $firebaseArray(ref);
             } else {
@@ -34,13 +47,18 @@
             }
         };
 
+        /**
+         * get value at path in firebase DB
+         * @param path
+         * @param callback func
+         */
         var getValue = function (path, func) {
             var ref = getNodes(path);
             ref.on("value", func);
         };
 
         /**
-         * TODO
+         * set data at path in firebase DB, overwrite data with new
          * @param path
          * @param data
          * @returns {*}
@@ -52,7 +70,7 @@
         };
 
         /**
-         * TODO
+         * add new data in firebase DB
          * @param path
          * @param data
          * @returns {*}
@@ -63,16 +81,27 @@
             return ref.push(data);
         };
 
-        var delData = function (path, id) {
-            console.log('dataService remove data: ' + path + '/' + id);
-            var itemRef = new Firebase(FBURL + '/' + path + '/' + id);
-            itemRef.remove();
-        };
-
+        /**
+         * update only new data at path in firebase DB
+         * @param path
+         * @param id
+         * @param data
+         */
         var updateData = function (path, id, data) {
             console.log('dataService update data: ' + path + '/' + id + ' with ' + data);
             var itemRef = new Firebase(FBURL + '/' + path + '/' + id);
             itemRef.update(data);
+        };
+
+        /**
+         * delete data at path in firebase DB
+         * @param path
+         * @param id
+         */
+        var delData = function (path, id) {
+            console.log('dataService remove data: ' + path + '/' + id);
+            var itemRef = new Firebase(FBURL + '/' + path + '/' + id);
+            itemRef.remove();
         };
 
         var service = {
@@ -87,8 +116,5 @@
         };
 
         return service;
-
     }]);
 })();
-
-// remember: '$q' promises : http://www.42id.com/articles/angular-js-and-firebase/

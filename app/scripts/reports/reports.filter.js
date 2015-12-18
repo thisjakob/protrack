@@ -2,6 +2,9 @@
     'use strict';
 
     angular.module('protrack')
+        /**
+         * filter between 'from' and 'to'
+         */
         .filter('daterange', function () {
             return function (items, from, to) {
                 return items.filter(function (item) {
@@ -9,7 +12,10 @@
                 });
             };
         })
-        
+
+        /**
+         * filter as weekday
+         */
         .filter('weekday', function () {
             return function (item) {
                 var date = moment(item, 'DD.MM.YYYY HH:mm:ss');
@@ -21,6 +27,9 @@
             };
         })
 
+        /**
+         * filter as date only
+         */
         .filter('dateonly', function () {
             return function (item) {
                 var date = moment(item, 'DD.MM.YYYY HH:mm:ss');
