@@ -1,0 +1,9 @@
+@mixin project-chip-color () {
+  background-color: #E8EAF6;
+  font-weight: 500;
+}
+
+@mixin tag-chip-color () {
+  background-color: #FCE4EC;
+  font-weight: 500;
+}

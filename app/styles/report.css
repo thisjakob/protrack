@@ -40,11 +40,18 @@
   -webkit-align-self: flex-end;
   align-self: flex-end; }
 
-.report-projects-tags-chips .md-chips {
+.report-project-tags .md-chips {
   box-shadow: none;
   font-size: 0.8rem; }
 
-.report-projects-tags-chips .md-chip {
+.report-project-chips .md-chip {
+  background-color: #E8EAF6;
+  font-weight: 500;
+  white-space: nowrap; }
+
+.report-tag-chips .md-chip {
+  background-color: #FCE4EC;
+  font-weight: 500;
   white-space: nowrap; }
 
 .header .report-date-time-duration {

@@ -78,10 +78,10 @@
                 <h3 class="track-desc"><span>{{track.desc}}</span> <small class="datetime">{{track.starttime | dateonly}} {{track.starttime | timeonlymin}} - {{track.endtime | timeonlymin}}</small></h3>
 
                 <div layout="row">
-                    <md-chips class="track-projects-tags-chips" ng-show="track.project">
+                    <md-chips class="track-project-chips" ng-show="track.project">
                         <md-chip>{{track.project.name}}</md-chip>
                     </md-chips>
-                    <md-chips flex class="track-projects-tags-chips" ng-model="track.tags" readonly="true">
+                    <md-chips flex class="track-tag-chips" ng-model="track.tags" readonly="true">
                         <md-chip-template>{{$chip.name}}</md-chip-template>
                     </md-chips>
                 </div>
