@@ -1,6 +1,8 @@
-@import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss";
-
 @import 'functions.scss';
+
+body .add-button {
+  margin-top: 1rem;
+}
 
 .projectlist {
   list-style-type: none;
@@ -13,28 +15,6 @@
   border-bottom: 1px solid #b3b3b3;
 }
 
-.project-form {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-}
-
-.project-inputs {
-  flex: 1 1 auto;
-}
-
-.project-buttons {
-  flex: 0 1 auto;
-}
-
-@media all and (max-width: $screen-sm) {
-  .project-form {
-    flex-direction: column;
-  }
-}
-
-/* $screen-xs */
-
 .projectlistelement label {
   display: block;
   font-size: .75rem;
@@ -42,12 +22,19 @@
   color: #3c3c3c;
 }
 
-.project-name,
-.project-tag{
-  flex-grow: 1;
+.project-tag {
+  margin-top: 1rem;
 }
 
 .buttons {
   margin-top: 1.5rem;
   text-align: end;
+}
+
+.projectlist button.md-icon-button {
+  width: auto;
+}
+
+.projectlist button.md-icon-button:focus {
+  outline: 1px dotted #b3b3b3;
 }
