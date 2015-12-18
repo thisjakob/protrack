@@ -1,6 +1,6 @@
 /* global Firebase */
 
-(function () {
+;(function () {
     'use strict';
 
 

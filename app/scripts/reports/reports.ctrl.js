@@ -1,4 +1,4 @@
-(function () {
+;(function () {
     'use strict';
     angular.module('protrack')
         .controller('ReportsCtrl', ['dataService', 'authData', '$filter', 'showData', 'reportUtilities', 'toastr', function (dataService, authData, $filter, showData, reportUtilities, toastr) {

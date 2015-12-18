@@ -1,7 +1,7 @@
 /**
  * Created by this on 08.11.15.
  */
-(function () {
+;(function () {
     'use strict';
 
     angular.module('protrack')

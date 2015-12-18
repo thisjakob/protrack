@@ -1,6 +1,6 @@
 /* global moment */
 
-(function () {
+;(function () {
     'use strict';
 
     angular.module('protrack').factory('reportUtilities', ['calcTime', function (calcTime) {

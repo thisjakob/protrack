@@ -1,5 +1,5 @@
 /* global Firebase */
-(function () {
+;(function () {
     'use strict';
 
     angular.module('protrack').factory('dataService', ['$firebaseArray', '$firebaseObject', 'FBURL', function ($firebaseArray, $firebaseObject, FBURL) {

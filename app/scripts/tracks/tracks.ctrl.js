@@ -1,5 +1,5 @@
 /* global moment */
-(function () {
+;(function () {
     'use strict';
     // TODO icon google api lokal speichern!
     angular.module('protrack')
