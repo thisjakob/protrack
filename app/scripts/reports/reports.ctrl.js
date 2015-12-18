@@ -1,7 +1,5 @@
 (function () {
     'use strict';
-    // TODO Filter for Project und Tag
-    // TODO search Description
     angular.module('protrack')
         .controller('ReportsCtrl', ['dataService', 'authData', '$filter', 'showData', 'reportUtilities', 'toastr', function (dataService, authData, $filter, showData, reportUtilities, toastr) {
             var reportsCtrl = this;
@@ -41,8 +39,6 @@
                 });
             };
 
-
-
             /**
              * Expand each object in the tracks array by
              * resolving the project and all tags within.
@@ -64,10 +60,18 @@
                 track.tagNames = tagNames;
             };
 
+            /**
+             * Resolve the project name from id
+             * @param project id
+             * @returns String
+             */
             reportsCtrl.showProjectName = function (project) {
                 return showData.showDataName(reportsCtrl.projectsArray, project);
             };
 
+            /**
+             * Save start and end date to DB
+             */
             reportsCtrl.saveDate = function () {
                 var date = reportsCtrl.dateFrom.toString();
                 dataService.setData(path + 'settings/daterange/from', date);
