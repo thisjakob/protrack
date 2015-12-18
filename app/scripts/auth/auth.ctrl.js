@@ -26,8 +26,7 @@
                 })
                     .then(function (authData) {
                         authCtrl.email = '';
-                        authCtrl.password = '';
-                        authCtrl.message = 'You are logged in as ' + authData.uid;
+                        authCtrl.password = ''; 
                         $state.go('timer');
                     })
                     .catch(function (error) {

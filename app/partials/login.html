@@ -1,29 +1,21 @@
-<md-content layout-padding layout="column">
+<md-content layout-padding>
     <div ng-show="authCtrl.message">{{authCtrl.message}}</div>
 
-    <form ng-hide="authCtrl.authData" ng-submit="authCtrl.login()" name="form">
-        <div class="input-group">
-            <span class="input-group-addon" id="sizing-addon1">@</span>
-            <label for="email" class="sr-only">E-Mail</label>
-            <input name="email" id="email" ng-model="authCtrl.email" type="text" class="form-control" placeholder="E-Mail" aria-describedby="sizing-addon1">
-        </div>
-        <div class="input-group">
-            <span class="input-group-addon" id="sizing-addon1">&#128274;</span>
-            <label for="password" class="sr-only">Password</label>
-            <input name="password" id="password" ng-model="authCtrl.password" type="password" class="form-control" placeholder="Password" aria-describedby="sizing-addon1">
-        </div>
-        <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Login</button>
-            <button type="button" ng-click="authCtrl.sendPwdReset()" class="btn btn-info">Reset Password</button>
-            <a ng-href="#/register">Register</a>
+
+    <form ng-hide="authCtrl.authData" ng-submit="authCtrl.login()" name="form" layout="column">
+        <md-input-container>
+            <label for="email">E-Mail</label>
+            <input name="email" id="email" ng-model="authCtrl.email" type="text">
+        </md-input-container>
+        <md-input-container>
+            <label for="password">Password</label>
+            <input name="password" id="password" ng-model="authCtrl.password" type="password">
+        </md-input-container>
+        <div class="form-actions" layout="row">
+            <md-button type="submit" class="md-raised md-accent">Login</md-button>
+            <md-button type="submit" class="md-raised md-primary">Register</md-button>
+            <a ng-href="#" ng-click="authCtrl.sendPwdReset()" class="login-reset-link">Reset Password</a>
         </div>
 
     </form>
-
-    <!--
-    <div ng-show="authCtrl.authData">
-        <p>Hello {{ authCtrl.firstname }}</p>
-        <button ng-click="authCtrl.logout()" class="btn">Logout</button>
-    </div>
-    -->
 </md-content>

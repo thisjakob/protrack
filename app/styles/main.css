@@ -34,3 +34,8 @@ md-sidenav md-content {
 
 main {
   width: 100%; }
+
+/* Login page */
+.login-reset-link {
+  padding-top: 0.9375rem;
+  padding-left: 0.625rem; }
