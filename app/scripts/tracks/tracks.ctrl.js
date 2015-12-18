@@ -132,10 +132,16 @@
 
             /**
              * Search for Tags.
+             * Special behavior: when user enters first character all tags are shown.
+             * This is necessary because the component does not allow to show all available tags
+             * when it get's focus.
              */
             tracksCtrl.querySearchTag = function (query) {
-                var results = query ? tracksCtrl.current.availTags.filter(createFilterFor(query)) : [];
-                return results;
+                if ( query.length === 1) {
+                    return tracksCtrl.current.availTags;
+                }
+
+                return query ? tracksCtrl.current.availTags.filter(createFilterFor(query)) : [];
             };
 
             /**
