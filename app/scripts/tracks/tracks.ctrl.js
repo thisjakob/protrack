@@ -448,7 +448,7 @@
                 tracksCtrl.deletedTrack = mapDBData( track );
 
                 tracksCtrl.tracksArray.$remove( track )
-                    .then(function(removedItem){
+                    .then(function(){
                         toastr.info(
                             'Click this message to undo.',
                             'Item Deleted! Undo?',
@@ -461,8 +461,10 @@
                                 extendedTimeOut: 2000
                             }
                         );
-                    }).catch(function(error){
-                        console.log(error);
+                    })
+                    .catch(function(error){
+                        toastr.error('Something went wrong during deletion. Please try again later.', 'Track not deleted!');
+                        console.log('Protrack deletion error: ' + error);
                     });
             };
 
