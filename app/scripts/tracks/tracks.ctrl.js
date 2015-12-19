@@ -68,8 +68,6 @@
                         }
                     });
                 });
-
-
             };
 
             /**
@@ -251,7 +249,11 @@
              * create track and save it to compare to show form
              */
             tracksCtrl.createTrackElement = function () {
-                dataService.addData(path + 'tracks', mapTrackData(tracksCtrl.current));
+                tracksCtrl.tracksArray.$add(mapTrackData(tracksCtrl.current))
+                    .then(function() {
+                        toastr.success('New track was added');
+                    }
+                );
                 $state.go($state.current, {}, {reload: true});
             };
 
