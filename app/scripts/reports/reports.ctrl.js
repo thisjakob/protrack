@@ -9,6 +9,7 @@
              * do some stuff when the view is loaded
              */
             reportsCtrl.init = function() {
+                toastr.info("loading data ...");
                 reportsCtrl.tagsArray = dataService.getData(path + 'tags', true);
                 reportsCtrl.tracksArray = dataService.getData(path + 'tracks', true);
                 reportsCtrl.projectsArray = dataService.getData(path + 'projects', true);
@@ -35,6 +36,7 @@
                             track.starttimestamp = moment(track.starttime, 'DD.MM.YYYY HH:mm:ss').format('X');
                             expandTrack(track);
                         });
+                        toastr.clear();
                     });
                 });
             };
