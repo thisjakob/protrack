@@ -84,7 +84,7 @@
              */
             var expandTrack = function(track){
                 // resolve project name for project id
-                var projectObj = $filter('filter')(tracksCtrl.allProjects, {$id:track.project}, true)[0];
+                var projectObj = track.project ? $filter('filter')(tracksCtrl.allProjects, {$id:track.project}, true)[0] : undefined;
                 track.project = (projectObj) ? projectObj : false;
 
                 // resolve tag name for tag id
