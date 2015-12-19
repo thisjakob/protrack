@@ -12,7 +12,7 @@ Record working time. Try it out online: https://protrack.firebaseapp.com
 
 ## install protrack
 - `npm install`
-- bower install`
+- `bower install`
 
 ## create firebase db
 - create firebase account -> http://www.firebase.com
