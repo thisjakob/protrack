@@ -18,7 +18,7 @@ describe('configuration tests', function () {
     });
 
     it('create a project', function () {
-        browser.setLocation('projects');
+        browser.setLocation('config');
         browser.sleep(2000);
         element(by.partialButtonText('Add new Project')).click();
         element(by.css("#projectsName0")).sendKeys('first project');
@@ -27,7 +27,7 @@ describe('configuration tests', function () {
     });
 
     it('delete project', function () {
-        browser.setLocation('projects');
+        browser.setLocation('config');
         browser.sleep(2000);
         element(by.partialButtonText('delete')).click();
         browser.sleep(2000);

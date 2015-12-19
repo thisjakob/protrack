@@ -69,7 +69,7 @@
                         }],
                         'allProjects' : ['dataService', 'authData', function(dataService, authData) {
                             var path = 'users/' + authData.uid + '/';
-                            return dataService.getData(path + 'projects', true).$loaded();
+                            return dataService.getData(path + 'config', true).$loaded();
                         }],
                         'allTags' : ['dataService', 'authData', function(dataService, authData) {
                             var path = 'users/' + authData.uid + '/';
@@ -104,8 +104,8 @@
                         }]
                     }
                 })
-                .state('projects', {
-                    url: '/projects',
+                .state('config', {
+                    url: '/config',
                     views : {
                         'nav' : {
                             templateUrl: 'partials/home.nav.html',
@@ -116,8 +116,8 @@
                             controller: 'ToolbarCtrl as toolbarCtrl'
                         },
                         'content' : {
-                            templateUrl: 'partials/projects.html',
-                            controller: 'ProjectsCtrl as projectsCtrl'
+                            templateUrl: 'partials/config.html',
+                            controller: 'ConfigCtrl as configCtrl'
                         }
                     },
                     resolve: {

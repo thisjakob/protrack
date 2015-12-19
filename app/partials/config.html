@@ -1,16 +1,16 @@
 <md-content layout-padding layout="column">
     <md-tabs md-dynamic-height md-border-bottom>
         <md-tab label="Projects">
-            <md-button class="md-raised md-accent add-button" ng-click="projectsCtrl.createProject()">
+            <md-button class="md-raised md-accent add-button" ng-click="configCtrl.createProject()">
                 <md-icon class="material-icons">add</md-icon>
                 Add new Project
             </md-button>
             <md-list class="projectlist">
-                <md-list-item ng-repeat="(key,project) in projectsCtrl.projectsArray | orderBy:'name':false"
+                <md-list-item ng-repeat="(key,project) in configCtrl.projectsArray | orderBy:'name':false"
                     class="projectlistelement">
                     <form layout="row" class="project-form" editable-form name="editableForm"
-                          onaftersave="projectsCtrl.updateProject($data, project.$id)"
-                          shown="projectsCtrl.newProject.name == project.name">
+                          onaftersave="configCtrl.updateProject($data, project.$id)"
+                          shown="configCtrl.newProject.name == project.name">
                         <div class="md-list-item-text projects-inputs">
                             <div class="project-name formgroup">
                                 <label for="projectsName{{key}}">Project</label>
@@ -24,8 +24,8 @@
                                       editable-select="project.tags"
                                       e-name="tags" e-class="form-control editable-input" e-multiple
                                       e-id="projectTag{{key}}"
-                                      e-ng-options="t.$id as projectsCtrl.loadTagname(t) for t in projectsCtrl.tagsArray | orderBy:'name'">
-                                    {{ projectsCtrl.showTags(project.tags) }}</span>
+                                      e-ng-options="t.$id as configCtrl.loadTagname(t) for t in configCtrl.tagsArray | orderBy:'name'">
+                                    {{ configCtrl.showTags(project.tags) }}</span>
                             </div>
                         </div>
                         <div class="md-secondary project-buttons">
@@ -42,7 +42,7 @@
                                 <span ng-show="confirm">
                                     <md-button class="md-icon-button md-primary"
                                                title="Are you sure? Yes, delete it!"
-                                               ng-click="projectsCtrl.deleteItem('project', project.$id)">
+                                               ng-click="configCtrl.deleteItem('project', project.$id)">
                                         <md-icon>delete</md-icon>
                                     </md-button>
                                     <md-button class="md-icon-button"
@@ -59,7 +59,7 @@
                                 </md-button>
                                 <md-button class="md-icon-button" type="button"
                                            ng-disabled="editableForm.$waiting"
-                                           ng-click="projectsCtrl.cancelProject(project); editableForm.$cancel()">
+                                           ng-click="configCtrl.cancelProject(project); editableForm.$cancel()">
                                     <md-icon>highlight_off</md-icon>
                                 </md-button>
                             </div>
@@ -69,16 +69,16 @@
             </md-list>
         </md-tab>
         <md-tab label="Tags">
-            <md-button class="md-raised md-accent" ng-click="projectsCtrl.createTag()">
+            <md-button class="md-raised md-accent" ng-click="configCtrl.createTag()">
                 <md-icon class="material-icons">add</md-icon>
                 Add new Tag
             </md-button>
             <md-list class="projectlist">
-                <md-list-item ng-repeat="(key,tag) in projectsCtrl.tagsArray | orderBy:'name':false"
+                <md-list-item ng-repeat="(key,tag) in configCtrl.tagsArray | orderBy:'name':false"
                     class="projectlistelement">
                     <form layout="row" class="project-form" editable-form name="editableForm"
-                          onaftersave="projectsCtrl.updateTag($data, tag.$id)"
-                          shown="projectsCtrl.newTag.name == tag.name">
+                          onaftersave="configCtrl.updateTag($data, tag.$id)"
+                          shown="configCtrl.newTag.name == tag.name">
                         <div class="md-list-item-text projects-inputs">
                             <div class="project-name">
                                 <label for="tagsName{{key}}">Tag</label>
@@ -110,7 +110,7 @@
                                 <span ng-show="confirm">
                                     <md-button class="md-icon-button md-primary"
                                                title="Are you sure? Yes, delete it!"
-                                               ng-click="projectsCtrl.deleteItem('tag', tag.$id)">
+                                               ng-click="configCtrl.deleteItem('tag', tag.$id)">
                                         <md-icon role="presentation" aria-hidden="true">delete</md-icon>
                                         <span class="md-visually-hidden">Yes, really delete this tag!</span>
                                     </md-button>
@@ -130,7 +130,7 @@
                                 </md-button>
                                 <md-button class="md-icon-button" type="button"
                                            ng-disabled="editableForm.$waiting"
-                                           ng-click="projectsCtrl.cancelTag(tag); editableForm.$cancel()">
+                                           ng-click="configCtrl.cancelTag(tag); editableForm.$cancel()">
                                     <md-icon role="presentation" aria-hidden="true">highlight_off</md-icon>
                                     <span class="md-visually-hidden">Don't save any changes. End edit mode.</span>
                                 </md-button>

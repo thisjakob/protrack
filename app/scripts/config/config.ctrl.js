@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('protrack')
-        .controller('ProjectsCtrl', ['dataService', 'authData', function (dataService, authData) {
-            var projectsCtrl = this;
+        .controller('ConfigCtrl', ['dataService', 'authData', function (dataService, authData) {
+            var configCtrl = this;
             var path = 'users/';
 
             path = path + authData.uid + '/';
@@ -11,33 +11,33 @@
             /**
              * initialize
              */
-            projectsCtrl.init = function() {
-                projectsCtrl.projectsArray = dataService.getData(path + 'projects', true);
-                projectsCtrl.tags = dataService.getData(path + 'tags', false);
-                projectsCtrl.tagsArray = dataService.getData(path + 'tags', true);
+            configCtrl.init = function() {
+                configCtrl.projectsArray = dataService.getData(path + 'projects', true);
+                configCtrl.tags = dataService.getData(path + 'tags', false);
+                configCtrl.tagsArray = dataService.getData(path + 'tags', true);
             };
 
             /**
              * create project and save in DB
              */
-            projectsCtrl.createProject = function () {
-                projectsCtrl.newProject = {
+            configCtrl.createProject = function () {
+                configCtrl.newProject = {
                     name: '',
                     tags: ''
                 };
-                dataService.addData(path + 'projects', projectsCtrl.newProject);
+                dataService.addData(path + 'projects', configCtrl.newProject);
             };
 
             /**
              * create tag and save in DB
              */
-            projectsCtrl.createTag = function () {
-                projectsCtrl.newTag = {
+            configCtrl.createTag = function () {
+                configCtrl.newTag = {
                     name: '',
                     desc: '',
                     project: false
                 };
-                dataService.addData(path + 'tags', projectsCtrl.newTag);
+                dataService.addData(path + 'tags', configCtrl.newTag);
             };
 
             /**
@@ -45,7 +45,7 @@
              * @param data
              * @param key
              */
-            projectsCtrl.updateProject = function (data, key) {
+            configCtrl.updateProject = function (data, key) {
                 console.log('update project: ' + key);
                 angular.forEach(data.tags, function(tagid){
                     dataService.updateData(path + 'tags', tagid, {project: true});
@@ -58,7 +58,7 @@
              * @param data
              * @param key
              */
-            projectsCtrl.updateTag = function (data, key) {
+            configCtrl.updateTag = function (data, key) {
                 console.log('update tag: ' + data.name + ': ' + data.desc + ' with key: ' + key);
                 dataService.updateData(path + 'tags', key, data);
             };
@@ -68,7 +68,7 @@
              * @param tag
              * @returns {string}
              */
-            projectsCtrl.loadTagname = function (tag) {
+            configCtrl.loadTagname = function (tag) {
                 return tag.name + ": " + tag.desc;
             };
 
@@ -77,9 +77,9 @@
              * @param tags
              * @returns {string}
              */
-            projectsCtrl.showTags = function (tags) {
+            configCtrl.showTags = function (tags) {
                 var selected = [];
-                angular.forEach(projectsCtrl.tagsArray, function (tag) {
+                angular.forEach(configCtrl.tagsArray, function (tag) {
                     angular.forEach(tags, function (tagproject) {
                         if (tag.$id.indexOf(tagproject) >= 0) {
                             selected.push(tag.name);
@@ -94,13 +94,13 @@
              * @param item {string}
              * @param id
              */
-            projectsCtrl.deleteItem = function (type, id) {
+            configCtrl.deleteItem = function (type, id) {
                 console.log('Delete ' + type + ': ' + id);
                 // TODO nach delete entsprechende Referenzen entfernen
 
                 dataService.delData(path + type + 's', id);
             };
             
-            projectsCtrl.init();
+            configCtrl.init();
         }]);
 })();
