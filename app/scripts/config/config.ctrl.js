@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('protrack')
-        .controller('ConfigCtrl', ['dataService', 'authData', function (dataService, authData) {
+        .controller('ConfigCtrl', ['dataService', 'authData', 'toastr', 'showData', function (dataService, authData, toastr, showData) {
             var configCtrl = this;
             var path = 'users/';
 
@@ -15,6 +15,7 @@
                 configCtrl.projectsArray = dataService.getData(path + 'projects', true);
                 configCtrl.tags = dataService.getData(path + 'tags', false);
                 configCtrl.tagsArray = dataService.getData(path + 'tags', true);
+                configCtrl.tracksArray = dataService.getData(path + 'tracks', true);
             };
 
             /**
@@ -89,18 +90,60 @@
                 return selected.length ? selected.sort().join(', ') : 'No tags';
             };
 
+
             /**
              * delete item with id in DB
              * @param item {string}
              * @param id
              */
             configCtrl.deleteItem = function (type, id) {
-                console.log('Delete ' + type + ': ' + id);
-                // TODO nach delete entsprechende Referenzen entfernen
+                var refDeleted = 0;
+                var name = '';
 
+                console.log('Delete ' + type + ': ' + id);
+                if (type === 'tag') {
+                    name = showData.showDataName(configCtrl.tagsArray, id);
+                    refDeleted = deleteReferences(id, 'tags', configCtrl.projectsArray, 'projects');
+                    refDeleted +=  deleteReferences(id, 'tags', configCtrl.tracksArray, 'tracks');
+                } else if (type === 'project') {
+                    name = showData.showDataName(configCtrl.projectsArray, id);
+                    refDeleted = deleteReferences(id, 'project', configCtrl.tracksArray, 'tracks');
+                }
                 dataService.delData(path + type + 's', id);
+                toastr.success("Deleted " + type + " " + name + " and " + refDeleted + " references!");
             };
-            
+
+            /**
+             * delete all references
+             * @param array
+             * @param tagid
+             */
+            var deleteReferences = function (id, typeid, array, typearray) {
+                var haveDeleted = 0;
+                // loop over array
+                angular.forEach(array, function (item) {
+                    if (item[typeid] !== undefined) {
+                        if (Array.isArray(item[typeid])) {
+                            // loop over array
+                            angular.forEach(item[typeid], function (ref, i) {
+                                // delete item with id
+                                if (ref === id) {
+                                    dataService.delData(path + typearray + '/' + item.$id + '/' + typeid, i);
+                                    haveDeleted++;
+                                }
+                            });
+                        } else {
+                            // check simple item
+                            if (item[typeid] === id) {
+                                dataService.delData(path + typearray + '/' + item.$id, typeid);
+                                haveDeleted++;
+                            }
+                        }
+                    }
+                });
+                return haveDeleted;
+            };
+
             configCtrl.init();
         }]);
 })();
