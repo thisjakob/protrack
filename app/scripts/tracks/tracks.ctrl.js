@@ -61,7 +61,7 @@
 
                     // expand new or changed tracks as well
                     tracksCtrl.tracksArray.$watch(function(obj){
-                        if ( obj.event === 'child_added' ||  obj.event === 'child_added' ) {
+                        if ( obj.event === 'child_added' ||  obj.event === 'child_added' ||  obj.event === 'child_changed') {
                             var track = getTrackById(obj.key);
                             track.starttimestamp = moment(track.starttime, 'DD.MM.YYYY HH:mm:ss').format('X');
                             expandTrack(track);
