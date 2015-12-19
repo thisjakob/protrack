@@ -110,7 +110,7 @@
                     refDeleted = deleteReferences(id, 'project', configCtrl.tracksArray, 'tracks');
                 }
                 dataService.delData(path + type + 's', id);
-                toastr.success("Deleted " + type + " " + name + " and " + refDeleted + " references!");
+                toastr.success(type + " " + name + " was deleted with " + refDeleted + " references!");
             };
 
             /**
