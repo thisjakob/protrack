@@ -5,7 +5,7 @@
                 <div layout="row" layout-sm="column" layout-align="space-around">
                     <md-input-container flex layout-sm="column">
                         <label for="currentDesc">Working On...</label>
-                        <input name="desc" id="currentDesc" ng-model="tracksCtrl.current.desc" ng-change="tracksCtrl.checkDesc()" />
+                        <input name="desc" id="currentDesc" ng-model="tracksCtrl.current.desc" ng-blur="tracksCtrl.descChanged()" ng-change="tracksCtrl.checkDesc()" />
                     </md-input-container>
                     <md-datepicker flex class="track-date" ng-model="tracksCtrl.current.date" md-placeholder="Enter date"></md-datepicker>
                     <div layout="row" flex>

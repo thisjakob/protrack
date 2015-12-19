@@ -273,7 +273,16 @@
             };
 
             /**
+             * handle changes the description
+             * save changed description to running timer
+             */
+            tracksCtrl.descChanged = function(){
+                tracksCtrl.tagChanged();
+            };
+
+            /**
              * handle changes on the tag select control
+             * save changed description to running timer
              */
             tracksCtrl.tagChanged = function(){
                 if (tracksCtrl.current.record) {
