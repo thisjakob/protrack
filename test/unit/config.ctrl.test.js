@@ -9,7 +9,7 @@ describe('controller config', function() {
         ctrl = $controller('ConfigCtrl', {$scope: scope});
     }));
 
-    it('test create tag', inject(function () {
+    it('test create tag', inject(function ($firebase) {
         //fireSync = $firebase(new Firebase('https://protrack.firebaseio.com'));
 
         var name = 'James';

@@ -8,13 +8,16 @@ module.exports = function (config) {
         files: [ //!\\ Ignored through gulp-karma //!\\
             'app/bower_components/angular/angular.js',
             'app/bower_components/angular-route/angular-route.js',
+            'app/bower_components/angular-material/angular-material.js',
+            'app/bower_components/angular-aria/angular-aria.js',
             'app/bower_components/angular-mocks/angular-mocks.js',
             'app/bower_components/angular-animate/angular-animate.js',
             'app/bower_components/angular-cookies/angular-cookies.js',
             'app/bower_components/angular-touch/angular-touch.js',
             'app/bower_components/angular-sanitize/angular-sanitize.js',
             'app/bower_components/angular-xeditable/dist/js/xeditable.js',
-            'app/bower_components/**/angular*.js',
+            'app/bower_components/angular-toastr/dist/angular-toastr.js',
+            'app/bower_components/angular-ui-router/release/angular-ui-router.js',
             'app/bower_components/angularfire/dist/angularfire.js',
             'app/bower_components/firebase/firebase.js',
             'app/bower_components/ng-csv/build/ng-csv.js',
@@ -23,7 +26,8 @@ module.exports = function (config) {
             'app/*.js',
             'app/scripts/**/*.js',
             'test/unit/calcTime.service.test.js',
-            'test/unit/showData.test.js'
+            'test/unit/showData.test.js'//,
+            //'test/unit/config.ctrl.test.js'
         ],
         autoWatch: false,
 
@@ -42,7 +46,7 @@ module.exports = function (config) {
             foldAll: false // reports start folded (only with preserveDescribeNesting)
         },
 
-        browsers: ['Chrome'],
+       browsers: ['Chrome'],
         plugins: [
             'karma-chrome-launcher',
             'karma-jasmine',
