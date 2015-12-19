@@ -4,8 +4,8 @@
     // TODO icon google api lokal speichern!
     angular.module('protrack')
         .controller('TracksCtrl',
-        ['dataService', 'calcTime', '$filter', '$interval', 'authData', '$state', 'runningTimer', 'allProjects', 'allTags', 'allTracks', '$anchorScroll', '$timeout',
-        function (dataService, calcTime, $filter, $interval, authData, $state, runningTimer ,allProjects, allTags, allTracks, $anchorScroll, $timeout) {
+        ['dataService', 'calcTime', '$filter', '$interval', 'authData', '$state', 'runningTimer', 'allProjects', 'allTags', 'allTracks', '$anchorScroll', '$timeout', 'toastr',
+        function (dataService, calcTime, $filter, $interval, authData, $state, runningTimer ,allProjects, allTags, allTracks, $anchorScroll, $timeout, toastr) {
 
             var tracksCtrl = this;
             tracksCtrl.tracksArray = [];
@@ -433,8 +433,37 @@
              * delete track with given id from DB
              */
             tracksCtrl.deleteTrack = function (id) {
-                dataService.delData(path + 'tracks', id);
-                $state.go($state.current, {}, {reload: true});
+                var track = getTrackById(id);
+                tracksCtrl.deletedTrack = mapDBData( track );
+
+                tracksCtrl.tracksArray.$remove( track )
+                    .then(function(removedItem){
+                        toastr.info(
+                            'Click this message to undo.',
+                            'Item Deleted! Undo?',
+                            {
+                                closeButton: true,
+                                allowHtml:true,
+                                progressBar:true,
+                                onTap:tracksCtrl.restoreTrack,
+                                timeout: 10000,
+                                extendedTimeOut: 2000
+                            }
+                        );
+                    }).catch(function(error){
+                        console.log(error);
+                    });
+            };
+
+
+            /**
+             * Restore the previously deleted track
+             */
+            tracksCtrl.restoreTrack = function(){
+                tracksCtrl.tracksArray.$add( mapTrackData(tracksCtrl.deletedTrack) )
+                    .then(function(){
+                        toastr.success('The tracks was restored successfully');
+                    });
             };
 
             /**
