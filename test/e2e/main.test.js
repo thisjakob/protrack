@@ -13,12 +13,12 @@ describe('main tests', function () {
 
     it('login and write first timer', function () {
         browser.setLocation('login');
-        element(by.css('#email')).sendKeys('gip@swissonline.ch');
-        element(by.css('#password')).sendKeys('sw1ssonline');
-        element(by.css('.btn-primary')).click();
-        browser.sleep(2000);
-        browser.setLocation('timer2');
-        browser.sleep(3000);
+        element(by.css('#email')).sendKeys('test@protrack.com');
+        element(by.css('#password')).sendKeys('protrack');
+        element(by.partialButtonText('Login')).click();
+        browser.sleep(200);
+        browser.setLocation('timer');
+        browser.sleep(300);
         element(by.css('#currentDesc')).sendKeys('first timer');
     });
 
