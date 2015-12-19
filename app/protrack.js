@@ -69,7 +69,7 @@
                         }],
                         'allProjects' : ['dataService', 'authData', function(dataService, authData) {
                             var path = 'users/' + authData.uid + '/';
-                            return dataService.getData(path + 'config', true).$loaded();
+                            return dataService.getData(path + 'projects', true).$loaded();
                         }],
                         'allTags' : ['dataService', 'authData', function(dataService, authData) {
                             var path = 'users/' + authData.uid + '/';
