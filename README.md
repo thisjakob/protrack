@@ -40,4 +40,11 @@ vulcan: firebase inspector and editor for chrome devtools
 
 ## Known Issues
 - The editing experience in the configuration area is not the same as it is in the tracks area. => this needs to be aligned.
+- Undo deleted tracks only works correctly when user is online.
+- The auto-complete tag selection for tracks sometimes causes the page to become unusable.
+  This is caused by known issue in the auto-complete component of angular-material
+  (https://github.com/angular/material/issues/3287). Although this specific issue seems to be closed
+  some users confirm that the issue is still around.
+- tracks.ctrl.js is way overloaded.
+
 
