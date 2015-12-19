@@ -32,9 +32,9 @@
 
                     if (error.code === 'EMAIL_TAKEN') {
                         regCtrl.error = 'This e-mail address is already in use.';
-                        toastr.warning('It seems that you are already registered. '
-                            + 'Please login to use the service. '
-                            + 'Use the reset password function if necessary.',
+                        toastr.warning('It seems that you are already registered. ' +
+                            'Please login to use the service. ' +
+                            'Use the reset password function if necessary.',
                             {
                                 closeButton: true,
                                 progressBar: true
