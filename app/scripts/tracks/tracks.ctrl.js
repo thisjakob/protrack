@@ -448,7 +448,7 @@
                                 allowHtml:true,
                                 progressBar:true,
                                 onTap:tracksCtrl.restoreTrack,
-                                timeout: 10000,
+                                timeout: 15000,
                                 extendedTimeOut: 2000
                             }
                         );
