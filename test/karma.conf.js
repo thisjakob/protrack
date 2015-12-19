@@ -15,12 +15,15 @@ module.exports = function (config) {
             'app/bower_components/angular-sanitize/angular-sanitize.js',
             'app/bower_components/angular-xeditable/dist/js/xeditable.js',
             'app/bower_components/**/angular*.js',
+            'app/bower_components/angularfire/dist/angularfire.js',
+            'app/bower_components/firebase/firebase.js',
             'app/bower_components/ng-csv/build/ng-csv.js',
             'app/bower_components/moment/moment.js',
             'app/bower_components/angular-moment/angular-moment.js',
             'app/*.js',
             'app/scripts/**/*.js',
-            'test/unit/*.js'
+            'test/unit/calcTime.service.test.js',
+            'test/unit/showData.test.js'
         ],
         autoWatch: false,
 
@@ -36,14 +39,15 @@ module.exports = function (config) {
             reportName: 'unittest', // report summary filename; browser info by default
             // experimental
             preserveDescribeNesting: false, // folded suites stay folded
-            foldAll: false, // reports start folded (only with preserveDescribeNesting)
+            foldAll: false // reports start folded (only with preserveDescribeNesting)
         },
 
         browsers: ['Chrome'],
         plugins: [
             'karma-chrome-launcher',
             'karma-jasmine',
-            'karma-html-reporter'
+            'karma-html-reporter',
+            'mockfirebase'
         ]
     });
 };
