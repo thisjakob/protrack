@@ -14,21 +14,32 @@
                     email: regCtrl.email,
                     password: regCtrl.password
                 }).then(function (userData) {
-                    regCtrl.message = "User created with uid: " + userData.uid;
-
-                    dataService.setData('/users/' + userData.uid, {
-                        firstname: regCtrl.firstName,
-                        lastname: regCtrl.lastName,
-                        email: regCtrl.email
+                    Auth.$authWithPassword({
+                        email: regCtrl.email,
+                        password: regCtrl.password
+                    }).then(function(){
+                        dataService.setData('/users/' + userData.uid, {
+                            firstname: regCtrl.firstName,
+                            lastname: regCtrl.lastName,
+                            email: regCtrl.email
+                        });
+                        toastr.success("Registered  " + regCtrl.firstName + " " + regCtrl.lastName + " " + regCtrl.email);
+                        $state.go('timer');
                     });
 
-                    toastr.success("Registered  " + regCtrl.firstName + " " + regCtrl.lastName + " " + regCtrl.email);
-
-                    $state.go('timer');
                 }).catch(function (error) {
                     regCtrl.message = '';
+
                     if (error.code === 'EMAIL_TAKEN') {
-                        regCtrl.error = 'This e-mail address is already in use. Use the reset password function if necessary.';
+                        regCtrl.error = 'This e-mail address is already in use.';
+                        toastr.warning('It seems that you are already registered. '
+                            + 'Please login to use the service. '
+                            + 'Use the reset password function if necessary.',
+                            {
+                                closeButton: true,
+                                progressBar: true
+                            }
+                        );
                     }
                 });
             };
