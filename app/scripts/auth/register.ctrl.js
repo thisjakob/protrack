@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('protrack')
-        .controller('RegisterCtrl', ['Auth', 'dataService', '$state', function (Auth, dataService, $state) {
+        .controller('RegisterCtrl', ['Auth', 'dataService', '$state', 'toastr', function (Auth, dataService, $state, toastr) {
             var regCtrl = this;
 
             regCtrl.register = function () {
@@ -21,6 +21,8 @@
                         lastname: regCtrl.lastName,
                         email: regCtrl.email
                     });
+
+                    toastr.success("Registered  " + regCtrl.firstName + " " + regCtrl.lastName + " " + regCtrl.email);
 
                     $state.go('timer');
                 }).catch(function (error) {
