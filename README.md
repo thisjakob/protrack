@@ -12,11 +12,10 @@ Record working time. Try it out online: https://protrack.firebaseapp.com
 - Synchronisation between pc and mobile over firebase
 - Offline feature. Editing possible after login (reload not possible)
 - Responsive design (collapse navigation, layout optimised for mobile)
-- Angular Material Design
 - Improved accessibility
 - Messaging with toastr.
 - Tags and projects editable with x-editable
-- Unit, e2e and usertests
+- Angular 1.4.7 and Angular Material Design
 
 # components
 
@@ -39,6 +38,17 @@ Data handling with firebase db. Add, set, get and delete data on firebase databa
 
 ### calculate time
 Calculating and formating date and time.
+
+# tests
+
+## unit test
+factory and services
+
+## e2e test
+E2e test of main feature as add / delete tag and project, add, delete and start timer. Every test has a screenshot (see protrack/test/report/e2e/e2eReport.html).
+
+## user test
+User test with protocol and actionlist (see protrack/test/usertest and protrack/test/usertest.jpg).
 
 # developer part
 
