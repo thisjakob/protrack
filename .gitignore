@@ -5,5 +5,3 @@ node_modules
 .tmp/**
 dist/**
 test/report/**
-
-todo.mjak.md
