@@ -3,7 +3,7 @@
 bower_components
 node_modules
 .tmp/**
-.idea/workspace.xml
 dist/**
+test/report/**
 
 todo.mjak.md
