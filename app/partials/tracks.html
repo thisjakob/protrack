@@ -11,15 +11,15 @@
                     <div layout="row" flex>
                         <md-input-container class="track-time" flex>
                             <label>Start Time</label>
-                            <input type="tel" ng-model="tracksCtrl.current.startTime" ng-change="tracksCtrl.changeTime('start')" ng-blur="tracksCtrl.formatTime('startTime')">
+                            <input id="inp_starttime" type="tel" ng-model="tracksCtrl.current.startTime" ng-change="tracksCtrl.changeTime('start')" ng-blur="tracksCtrl.formatTime('startTime')">
                         </md-input-container>
                         <md-input-container class="track-time" flex>
                             <label>End Time</label>
-                            <input type="tel" ng-model="tracksCtrl.current.endTime" ng-change="tracksCtrl.changeTime('end')" ng-blur="tracksCtrl.formatTime('endTime')">
+                            <input id="inp_endtime" type="tel" ng-model="tracksCtrl.current.endTime" ng-change="tracksCtrl.changeTime('end')" ng-blur="tracksCtrl.formatTime('endTime')">
                         </md-input-container>
                         <md-input-container class="track-time" flex>
                             <label>Duration</label>
-                            <input type="tel" ng-model="tracksCtrl.current.duration" ng-change="tracksCtrl.changeTime('duration')" ng-blur="tracksCtrl.formatTime('duration')">
+                            <input id="inp_duration" type="tel" ng-model="tracksCtrl.current.duration" ng-change="tracksCtrl.changeTime('duration')" ng-blur="tracksCtrl.formatTime('duration')">
                         </md-input-container>
                     </div>
                 </div>
@@ -32,7 +32,6 @@
                             </md-option>
                         </md-select>
                     </md-input-container>
-
                     <md-chips flex-gt-sm="70" ng-model="tracksCtrl.current.tags" readonly="tracksCtrl.readonly" md-autocomplete-snap
                               md-transform-chip="tracksCtrl.transformChip($chip)"
                               md-require-match="tracksCtrl.requireMatch"

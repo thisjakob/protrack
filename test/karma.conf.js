@@ -26,8 +26,7 @@ module.exports = function (config) {
             'app/*.js',
             'app/scripts/**/*.js',
             'test/unit/calcTime.service.test.js',
-            'test/unit/showData.test.js'//,
-            //'test/unit/config.ctrl.test.js'
+            'test/unit/showData.test.js'
         ],
         autoWatch: false,
 

@@ -12,7 +12,7 @@ describe('controller config', function() {
     it('test create tag', inject(function ($firebase) {
         //fireSync = $firebase(new Firebase('https://protrack.firebaseio.com'));
 
-        var name = 'James';
+        var name = 'tag1';
         ctrl.createTag();
         expect(ctrl.createTag()).toBe(name);
     }));
