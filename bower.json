@@ -1,6 +1,6 @@
 {
   "name": "protrack",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "dependencies": {
     "modernizr": "2.8.x",
     "angular": "~1.4.7",
@@ -24,10 +24,6 @@
   },
   "devDependencies": {},
   "resolutions": {
-    "angular": "1.2.x",
-    "modernizr": "2.8.x",
-    "jquery": "2.x.x",
-    "firebase": "1.0.x",
-    "angularfire": "0.8.x"
+    "angular": "1.4.x"
   }
 }
