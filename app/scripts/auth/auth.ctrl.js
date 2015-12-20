@@ -6,7 +6,6 @@
             var authCtrl = this;
 
             authCtrl.authData = false;
-            authCtrl.message = null;
             authCtrl.auth = Auth;
 
             // redirect to tracks if already logged in
@@ -35,8 +34,14 @@
                         $state.go('timer');
                     })
                     .catch(function (error) {
-                        toastr.error('It seems that you are offline. Try to login when you are back online. (' + error + ')');
-                        authCtrl.error = error;
+                        if (error.code === 'NETWORK_ERROR')
+                            toastr.error('You need to be connected to the internet to login.', 'You are offline');
+
+                        if (error.code === 'INVALID_EMAIL')
+                            toastr.error('The given e-mail address seems to be invalid. Please correct it.', 'Invalid e-mail address');
+
+                        if (error.code === 'INVALID_PASSWORD' || error.code === 'INVALID_USER' || error.code === 'INVALID_CREDENTIALS')
+                            toastr.error('The provided credentials are not valid.', 'Invalid credentials');
                     });
             };
 
@@ -44,15 +49,14 @@
                 if (authCtrl.email) {
                     Auth.$resetPassword({
                         email: authCtrl.email
-                    }, function (error) {
-                        if (error === null) {
-                            authCtrl.message = 'Password reset e-mail was sent to: ' + authCtrl.email;
-                        } else {
-                            authCtrl.message = 'Error sending password reset email:' + error;
-                        }
-                    });
+                    }).then(function(){
+                            toastr.info('Password reset e-mail was sent to: ' + authCtrl.email, 'Reset e-mail sent');
+                        })
+                        .catch(function(error){
+                            toastr.error('The specified e-mail address is either invalid or does not exist in our database.','Error sending reset e-mail');
+                        });
                 } else {
-                    authCtrl.message = 'Please provide your e-mail address.';
+                    toastr.error('Please provide your e-mail address.');
                 }
             };
 

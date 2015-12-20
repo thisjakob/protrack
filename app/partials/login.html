@@ -5,16 +5,16 @@
     <form ng-hide="authCtrl.authData" ng-submit="authCtrl.login()" name="form" layout="column">
         <md-input-container>
             <label for="email">E-Mail</label>
-            <input name="email" id="email" ng-model="authCtrl.email" type="text">
+            <input name="email" id="email" ng-model="authCtrl.email" type="text" required>
         </md-input-container>
         <md-input-container>
             <label for="password">Password</label>
-            <input name="password" id="password" ng-model="authCtrl.password" type="password">
+            <input name="password" id="password" ng-model="authCtrl.password" type="password" required>
         </md-input-container>
         <div class="form-actions" layout="row">
             <md-button type="submit" class="md-raised md-accent">Login</md-button>
             <md-button type="submit" class="md-raised md-primary">Register</md-button>
-            <a ng-href="#" ng-click="authCtrl.sendPwdReset()" class="login-reset-link">Reset Password</a>
+            <a ng-href="#/login" ng-click="authCtrl.sendPwdReset()" class="login-reset-link">Reset Password</a>
         </div>
 
     </form>
