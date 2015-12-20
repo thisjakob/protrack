@@ -4,6 +4,19 @@
 
     angular.module('protrack').factory('dataService', ['$firebaseArray', '$firebaseObject', 'FBURL', function ($firebaseArray, $firebaseObject, FBURL) {
         var firebaseRef = new Firebase(FBURL);
+        var openFBObjs = [];
+
+        /**
+         * destroy all firebase objects
+         * to be called before logout
+         * if objects are not destroyed, logout will throw tons of errors to the console.
+         * @returns
+         */
+        var destroyAllFBObj = function(){
+            for(var i = 0; i < openFBObjs.length; i++){
+                openFBObjs[i].$destroy();
+            }
+        };
 
         /**
          * get Url of firebase DB
@@ -38,12 +51,18 @@
          */
         var getData = function (path, isArray) {
             var ref = getNodes(path);
+            var fbObj;
+
             if (isArray) {
                 console.log('dataService get data as array from ' + path);
-                return $firebaseArray(ref);
+                fbObj = $firebaseArray(ref);
+                openFBObjs.push(fbObj);
+                return fbObj;
             } else {
                 console.log('dataService get data as object from ' + path);
-                return $firebaseObject(ref);
+                fbObj = $firebaseArray(ref);
+                openFBObjs.push(fbObj);
+                return fbObj;
             }
         };
 
@@ -112,7 +131,8 @@
             getData: getData,
             delData: delData,
             updateData: updateData,
-            getNodes: getNodes
+            getNodes: getNodes,
+            destroyAllFBObj: destroyAllFBObj
         };
 
         return service;
