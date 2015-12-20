@@ -16,13 +16,18 @@ describe('main tests:', function () {
             },
             track: {
                 desc: 'track1',
+                desc2: 'track2',
                 starttime: '08:23',
                 endtime: '10:47',
-                duration: '02:24:00'
+                duration: '02:24:00',
+                duration2: '00:00:05'
             }
         }
     };
 
+    /**
+     * login with registered email and password
+     */
     it('login', function () {
         browser.get('http://localhost:3000');
         browser.setLocation('login');
@@ -30,9 +35,14 @@ describe('main tests:', function () {
         element(by.css('#email')).sendKeys(testdata.input.login.email);
         element(by.css('#password')).sendKeys(testdata.input.login.pw);
         element(by.partialButtonText('Login')).click();
-        browser.sleep(2000);
+        browser.sleep(1000);
     });
 
+    /**
+     * configurate tag and project
+     * - add tag with name and description
+     * - add project with name and defined tag
+     */
     it('config tag and project', function () {
         browser.setLocation('config');
         browser.sleep(2000);
@@ -53,7 +63,7 @@ describe('main tests:', function () {
 
             // Configuration.projects
             tabs[0].click();
-            browser.sleep(2000);
+            browser.sleep(1000);
             // add new project
             element(by.cssContainingText('button span', 'Add new Project')).click();
             browser.sleep(500);
@@ -67,6 +77,13 @@ describe('main tests:', function () {
         expect(tag.getText()).toEqual(testdata.input.tag.name);
     });
 
+    /**
+     * add track
+     * - input description and start- and endtime.
+     * - set project
+     * - add timer
+     * - check timer in list
+     */
     it('input track', function () {
         browser.setLocation('timer');
         browser.sleep(200);
@@ -87,10 +104,10 @@ describe('main tests:', function () {
         });
         // set project
         element.all(by.css('md-select')).each(function (eachElement, index) {
-            eachElement.click();                    //select the select
-            browser.driver.sleep(500);              //wait for the renderings to take effect
-            element(by.css('md-option')).click();   //select the first md-option
-            browser.driver.sleep(500);              //wait for the renderings to take effect
+            eachElement.click();
+            browser.driver.sleep(500);
+            element(by.css('md-option')).click();
+            browser.driver.sleep(500);
         });
 
         // add track
@@ -101,36 +118,85 @@ describe('main tests:', function () {
         expect(element(by.css('md-chip')).getText()).toBe(testdata.input.project.name);
     });
 
+    /**
+     * delete track
+     */
     it('delete track', function () {
         element(by.cssContainingText('button md-icon', 'delete')).click();
         browser.sleep(1000);
     });
 
+    /**
+     * start timer
+     * - input description
+     * - start timer
+     * - wait 5s
+     * - stop timer
+     * - check duration
+     * - delete track
+     */
+    it('start timer', function () {
+        browser.setLocation('timer');
+        browser.sleep(2000);
+
+        // create track2
+        element(by.css('#currentDesc')).sendKeys(testdata.input.track.desc2);
+        browser.sleep(200);
+
+        // start timer
+        element(by.cssContainingText('button', 'Start Timer')).click();
+        browser.sleep(5000);
+        element(by.cssContainingText('button', 'Stop Timer')).click();
+        browser.sleep(500);
+
+        // check duration
+        element(by.cssContainingText('button md-icon', 'mode_edit')).click();
+        browser.sleep(500);
+        var tag = element(by.css("#inp_duration"));
+        tag.getAttribute('value').then(function (value) {
+            expect(value).toEqual(testdata.input.track.duration2);
+        });
+        browser.sleep(500);
+        element(by.cssContainingText('button md-icon', 'mode_edit')).click();
+        browser.sleep(500);
+        element(by.cssContainingText('button md-icon', 'save')).click();
+        browser.sleep(500);
+        element(by.cssContainingText('button md-icon', 'delete')).click();
+        browser.sleep(500);
+    });
+
+    /**
+     * delete tag and project
+     * - delete tag
+     * - check tags in project, if it is deleted
+     * - delete project
+     */
     it('delete tag and project', function () {
         browser.setLocation('config');
-        browser.sleep(2000);
+        browser.sleep(1000);
         element.all(by.css('md-tab-item')).then(function (tabs) {
             // Configuration.tags
             tabs[1].click();
-            browser.sleep(5000);
+            browser.sleep(1000);
 
             // delete tag
-            element(by.cssContainingText('button md-icon', 'delete')).click();
-            browser.sleep(20000);
-            element(by.cssContainingText('button md-icon', 'delete')).click();
-            browser.sleep(2000);
+            element(by.css('.e2e-del-t md-icon')).click();
+            browser.sleep(1000);
+            element(by.css('.e2e-del-t-conf md-icon')).click();
+            browser.sleep(1000);
 
             // Configuration.projects
             tabs[0].click();
-            browser.sleep(2000);
+            browser.sleep(1000);
         });
+        // check tags in project
         var tag = element(by.css("span.project-tag"));
-        expect(tag.getText()).toEqual('No tag');
+        expect(tag.getText()).toEqual('No tags');
 
         // delete project
-        element(by.cssContainingText('button md-icon', 'delete')).click();
+        element(by.cssContainingText('.e2e-del-p md-icon', 'delete')).click();
         browser.sleep(200);
-        element(by.cssContainingText('button md-icon', 'delete')).click();
+        element(by.cssContainingText('.e2e-del-p-conf md-icon', 'delete')).click();
         browser.sleep(2000);
     });
 });

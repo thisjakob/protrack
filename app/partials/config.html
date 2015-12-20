@@ -35,12 +35,12 @@
                                                ng-click="editableForm.$show()">
                                         <md-icon>mode_edit</md-icon>
                                     </md-button>
-                                    <md-button class="md-icon-button" type="button" ng-click="confirm=true">
+                                    <md-button class="md-icon-button e2e-del-p" type="button" ng-click="confirm=true">
                                         <md-icon>delete</md-icon>
                                     </md-button>
                                 </span>
                                 <span ng-show="confirm">
-                                    <md-button class="md-icon-button md-primary"
+                                    <md-button class="md-icon-button md-primary e2e-del-p-conf"
                                                title="Are you sure? Yes, delete it!"
                                                ng-click="configCtrl.deleteItem('project', project.$id)">
                                         <md-icon>delete</md-icon>
@@ -102,13 +102,13 @@
                                         <md-icon role="presentation" aria-hidden="true">mode_edit</md-icon>
                                         <span class="md-visually-hidden">Edit this tag</span>
                                     </md-button>
-                                    <md-button class="md-icon-button" type="button" ng-click="confirm=true">
+                                    <md-button class="md-icon-button e2e-del-t" type="button" ng-click="confirm=true">
                                         <md-icon role="presentation" aria-hidden="true">delete</md-icon>
                                         <span class="md-visually-hidden">Delete this tag</span>
                                     </md-button>
                                 </span>
                                 <span ng-show="confirm">
-                                    <md-button class="md-icon-button md-primary"
+                                    <md-button class="md-icon-button md-primary e2e-del-t-conf"
                                                title="Are you sure? Yes, delete it!"
                                                ng-click="configCtrl.deleteItem('tag', tag.$id)">
                                         <md-icon role="presentation" aria-hidden="true">delete</md-icon>
