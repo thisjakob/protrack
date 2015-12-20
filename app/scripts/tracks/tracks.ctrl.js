@@ -1,7 +1,6 @@
 /* global moment */
 ;(function () {
     'use strict';
-    // TODO icon google api lokal speichern!
     angular.module('protrack')
         .controller('TracksCtrl',
         ['dataService', 'calcTime', '$filter', '$interval', 'authData', '$state', 'runningTimer', 'allProjects', 'allTags', 'allTracks', '$anchorScroll', '$timeout', 'toastr',

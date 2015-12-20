@@ -54,12 +54,10 @@
             var fbObj;
 
             if (isArray) {
-                console.log('dataService get data as array from ' + path);
                 fbObj = $firebaseArray(ref);
                 openFBObjs.push(fbObj);
                 return fbObj;
             } else {
-                console.log('dataService get data as object from ' + path);
                 fbObj = $firebaseObject(ref);
                 openFBObjs.push(fbObj);
                 return fbObj;
@@ -83,7 +81,6 @@
          * @returns {*}
          */
         var setData = function (path, data) {
-            console.log('dataService set data: ' + path + ' : ' + data);
             var ref = getNodes(path);
             return ref.set(data);
         };
@@ -95,7 +92,6 @@
          * @returns {*}
          */
         var addData = function (path, data) {
-            console.log('dataService add data: ' + path + ' : ' + data);
             var ref = getNodes(path);
             return ref.push(data);
         };
@@ -107,7 +103,6 @@
          * @param data
          */
         var updateData = function (path, id, data) {
-            console.log('dataService update data: ' + path + '/' + id + ' with ' + data);
             var itemRef = new Firebase(FBURL + '/' + path + '/' + id);
             itemRef.update(data);
         };
@@ -118,7 +113,6 @@
          * @param id
          */
         var delData = function (path, id) {
-            console.log('dataService remove data: ' + path + '/' + id);
             var itemRef = new Firebase(FBURL + '/' + path + '/' + id);
             itemRef.remove();
         };
