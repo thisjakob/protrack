@@ -23,9 +23,12 @@
                 <md-icon>settings</md-icon>
                 <p>Configuration</p>
             </md-list-item>
-            <md-list-item id="logout" md-ink-ripple layout="row" ui-sref="home" ng-click="homeNavCtrl.logout()">
-                <md-icon>account_box</md-icon>
-                <p>Logout</p>
+            <md-list-item id="logout" class="logout" md-ink-ripple layout="row" ui-sref="home" ng-click="homeNavCtrl.logout()">
+                <md-icon role="presentation" aria-hidden="true">account_box</md-icon>
+                <p>
+                    {{homeNavCtrl.userFirstname.$value}} {{homeNavCtrl.userLastname.$value}}<br>
+                    Logout
+                </p>
             </md-list-item>
         </md-list>
         <md-list  ng-hide="homeNavCtrl.authData">

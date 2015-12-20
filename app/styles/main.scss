@@ -41,6 +41,10 @@ md-sidenav md-content {
   border-right: 1px solid #e0e0e0;
 }
 
+.md-sidenav-left .logout .md-button {
+  line-height: 1;
+}
+
 main {
   width: 100%;
 }
