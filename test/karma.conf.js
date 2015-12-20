@@ -49,8 +49,7 @@ module.exports = function (config) {
         plugins: [
             'karma-chrome-launcher',
             'karma-jasmine',
-            'karma-html-reporter',
-            'mockfirebase'
+            'karma-html-reporter'
         ]
     });
 };
