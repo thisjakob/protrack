@@ -9,13 +9,6 @@
             var homeNavCtrl = this;
             homeNavCtrl.authData = authData;
 
-            // get the users name
-            // => displayed next to the logout entry
-            if ( authData && authData ) {
-                homeNavCtrl.userFirstname = dataService.getData('/users/' + authData.uid + '/firstname', false);
-                homeNavCtrl.userLastname = dataService.getData('/users/' + authData.uid + '/lastname', false);
-            }
-
             /**
              * Log the current user out
              */
