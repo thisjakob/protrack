@@ -36,7 +36,6 @@
     "karma-jasmine": "^0.1.5",
     "karma-phantomjs-launcher": "^0.1.4",
     "main-bower-files": "^1.0",
-    "mockfirebase": "^0.12.0",
     "protractor": "^3.0.0",
     "protractor-jasmine2-screenshot-reporter": "^0.1.7",
     "require-dir": "^0.1",
