@@ -7,8 +7,6 @@
 
             regCtrl.register = function () {
                 // register for a new account with username/password
-                regCtrl.message = null;
-                regCtrl.error = null;
 
                 Auth.$createUser({
                     email: regCtrl.email,
@@ -28,17 +26,14 @@
                     });
 
                 }).catch(function (error) {
-                    regCtrl.message = '';
+                    if (error.code === 'NETWORK_ERROR'){
+                        toastr.error('You need to be connected to the internet to register.', 'You are offline');
+                    }
 
                     if (error.code === 'EMAIL_TAKEN') {
-                        regCtrl.error = 'This e-mail address is already in use.';
                         toastr.warning('It seems that you are already registered. ' +
                             'Please login to use the service. ' +
-                            'Use the reset password function if necessary.',
-                            {
-                                closeButton: true,
-                                progressBar: true
-                            }
+                            'Use the reset password function if necessary.', 'Already registered'
                         );
                     }
                 });
