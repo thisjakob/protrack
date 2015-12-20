@@ -2,20 +2,20 @@
 Record working time. Try it out online: https://protrack.firebaseapp.com
 
 ## tutorial
-- first register and login
-- define tags and projects
-- add timer, write description in "Working on...", choose project and tags
-- start timer or add timer with writing start and end time or duration 
-- restart corresponding timer with timer icon
+- first register and login.
+- define tags and projects.
+- add timer, write description in "Working on...", choose project and tags.
+- start timer or add timer with writing start and end time or duration.
+- restart corresponding timer with timer icon.
 
 # features
-- Synchronisation between pc and mobile over firebase
-- Offline feature. Editing possible after login (reload not possible)
-- Responsive design (collapse navigation, layout optimised for mobile)
-- Improved accessibility
+- Synchronisation between users devices via firebase.
+- Some offline capabilities. Editing possible when offline and no reload happens. Register and login require network connection.
+- Responsive design (collapse navigation, layout optimised for mobile).
+- Some support for assistive technology.
 - Messaging with toastr.
-- Tags and projects editable with x-editable
-- Angular 1.4.7 and Angular Material Design
+- Tags and projects editable with x-editable.
+- Angular 1.4.7 and Angular Material Design.
 
 # components
 
@@ -45,10 +45,10 @@ Calculating and formating date and time.
 factory and services
 
 ## e2e test
-E2e test of main feature as add / delete tag and project, add, delete and start timer. Every test has a screenshot (see protrack/test/report/e2e/e2eReport.html).
+E2e test of main feature as add / delete tag and project, add, delete and start timer. Every test has a screenshot (see https://github.com/thisjakob/protrack/blob/master/test/report/e2e/e2eReport.html).
 
 ## user test
-User test with protocol and actionlist (see protrack/test/usertest and protrack/test/usertest.jpg).
+User test with protocol and actionlist (see https://github.com/thisjakob/protrack/blob/master/test/usertest and https://github.com/thisjakob/protrack/blob/master/test/usertest.jpg).
 
 # developer part
 
