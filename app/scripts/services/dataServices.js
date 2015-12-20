@@ -60,7 +60,7 @@
                 return fbObj;
             } else {
                 console.log('dataService get data as object from ' + path);
-                fbObj = $firebaseArray(ref);
+                fbObj = $firebaseObject(ref);
                 openFBObjs.push(fbObj);
                 return fbObj;
             }
