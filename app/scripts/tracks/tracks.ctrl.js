@@ -46,7 +46,7 @@
                 checkForRunningTimer();
 
                 // config vars for the edit form
-                tracksCtrl.readonly = false;
+                tracksCtrl.readonly = true;
                 tracksCtrl.requireMatch = false;
                 tracksCtrl.searchTextTag = null;
                 tracksCtrl.selectedTag = null;

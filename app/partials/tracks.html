@@ -32,7 +32,7 @@
                             </md-option>
                         </md-select>
                     </md-input-container>
-                    <md-chips flex-gt-sm="70" ng-model="tracksCtrl.current.tags" readonly="tracksCtrl.readonly" md-autocomplete-snap
+                    <md-chips flex-gt-sm="70" ng-model="tracksCtrl.current.tags" md-require-match="tracksCtrl.readonly" md-autocomplete-snap
                               md-transform-chip="tracksCtrl.transformChip($chip)"
                               md-require-match="tracksCtrl.requireMatch"
                               md-on-add="tracksCtrl.tagChanged()" md-on-remove="tracksCtrl.tagChanged()">
